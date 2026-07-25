@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NaN — คุณแนน · Chiang Mai</title>
+<meta name="description" content="NaN — builder, fixer, developer in Chiang Mai. It gets done today. Tools, tradition, and field services at the seam of the digital and the old.">
+<meta name="color-scheme" content="dark">
+
+<!-- Open Graph / share card -->
+<meta property="og:type" content="profile">
+<meta property="og:title" content="NaN — คุณแนน">
+<meta property="og:description" content="Builder · fixer · developer in Chiang Mai. It gets done today.">
+<meta property="og:site_name" content="NaNoBotCo">
+
+<style>
+  /* ------------------------------------------------------------------ *
+   *  NaN — personal portal.  Réunion Saint-Expédit red · auspicious gold
+   *  Zero dependencies. Offline-safe. Big & readable by design.
+   * ------------------------------------------------------------------ */
+  :root{
+    --ink:#0b0a0c;
+    --ink-2:#131013;
+    --paper:#f5efe4;
+    --muted:rgba(245,239,228,.60);
+    --shrine:#d81f2c;        /* les niches rouges — Réunion shrine red */
+    --shrine-lit:#ff3b47;
+    --shrine-deep:#7c0d14;
+    --gold:#e7c66c;          /* auspicious */
+    --gold-deep:#b8933b;
+    --glass:rgba(255,255,255,.045);
+    --glass-line:rgba(245,239,228,.10);
+    --shadow:0 30px 80px -30px rgba(0,0,0,.8);
+    --r:22px;
+    --maxw:1080px;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,"Cascadia Code",Consolas,monospace;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--ink); color:var(--paper);
+    font-family:var(--sans); font-size:19px; line-height:1.6;
+    letter-spacing:.005em;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  /* grain + shrine glow field */
+  body::before{
+    content:""; position:fixed; inset:0; z-index:-2; pointer-events:none;
+    background:
+      radial-gradient(1200px 700px at 82% -8%, rgba(216,31,44,.20), transparent 60%),
+      radial-gradient(900px 600px at 6% 108%, rgba(231,198,108,.10), transparent 60%),
+      linear-gradient(180deg,#0b0a0c 0%, #100c0e 55%, #0b0a0c 100%);
+  }
+  body::after{
+    content:""; position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.05;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  a{color:inherit}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px}
+
+  /* ----------------------------------------------------------------- HERO */
+  header.hero{ padding:clamp(56px,10vw,120px) 0 clamp(30px,6vw,64px); text-align:center; position:relative}
+  .kicker{ font-family:var(--mono); font-size:13px; letter-spacing:.42em; text-transform:uppercase;
+    color:var(--muted); margin:0 0 30px}
+
+  /* the red niche — a roadside shrine holding the name */
+  .niche{
+    width:min(360px,74vw); margin:0 auto; aspect-ratio:1/1.18;
+    border-radius:50% 50% 16px 16px / 62% 62% 16px 16px;
+    background:
+      radial-gradient(120% 90% at 50% 22%, rgba(255,59,71,.34), transparent 60%),
+      linear-gradient(180deg, var(--shrine) 0%, var(--shrine-deep) 100%);
+    box-shadow: inset 0 2px 0 rgba(255,255,255,.18), inset 0 -40px 80px rgba(0,0,0,.45),
+      0 40px 90px -30px rgba(216,31,44,.55);
+    display:grid; place-items:center; position:relative; isolation:isolate;
+    border:1px solid rgba(255,255,255,.08);
+  }
+  .niche::before{ /* inner arch lip */
+    content:""; position:absolute; inset:14px; border-radius:inherit;
+    border:1px solid rgba(255,255,255,.12);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.14);
+  }
+  .niche .name{
+    font-family:var(--serif); font-weight:700; color:#fff;
+    font-size:clamp(76px,20vw,150px); line-height:.9; letter-spacing:.01em;
+    text-shadow:0 2px 0 rgba(0,0,0,.25), 0 24px 50px rgba(0,0,0,.45);
+  }
+  .niche .name small{ display:block; font-family:var(--mono); font-weight:500;
+    font-size:13px; letter-spacing:.32em; opacity:.82; margin-top:14px}
+  /* little votive flame */
+  .flame{ position:absolute; bottom:-9px; left:50%; transform:translateX(-50%);
+    width:16px; height:22px; border-radius:50% 50% 46% 46%;
+    background:radial-gradient(circle at 50% 70%, #fff2c4, var(--gold) 45%, #ff8a3b 78%, transparent 82%);
+    filter:blur(.3px); animation:flick 2.6s ease-in-out infinite; transform-origin:50% 100%}
+  @keyframes flick{0%,100%{transform:translateX(-50%) scale(1) rotate(-2deg)}
+    50%{transform:translateX(-52%) scale(1.08,1.14) rotate(2deg)}}
+
+  .names{ margin:40px 0 10px; font-family:var(--serif); font-size:clamp(28px,5vw,44px); letter-spacing:.01em}
+  .names .th{ color:var(--paper)}
+  .names .sep{ color:var(--shrine-lit); padding:0 .35em}
+  .names .en{ color:var(--gold)}
+  .veil{ font-family:var(--serif); font-style:italic; font-size:clamp(20px,3.2vw,27px);
+    color:var(--paper); max-width:20ch; margin:6px auto 0; line-height:1.35; opacity:.95}
+  .locus{ font-family:var(--mono); font-size:13px; letter-spacing:.26em; text-transform:uppercase;
+    color:var(--muted); margin-top:22px}
+
+  /* HODIE wax seal */
+  .seal{ display:inline-flex; align-items:center; gap:12px; margin-top:34px;
+    padding:11px 20px 11px 14px; border-radius:100px;
+    background:var(--glass); border:1px solid var(--glass-line); backdrop-filter:blur(8px)}
+  .seal b{ font-family:var(--mono); letter-spacing:.28em; font-size:12.5px; color:var(--gold)}
+  .seal .today{ font-family:var(--serif); font-style:italic; color:var(--paper); font-size:17px}
+  .seal .disc{ width:26px; height:26px; border-radius:50%; display:grid; place-items:center;
+    background:radial-gradient(circle at 40% 35%, var(--shrine-lit), var(--shrine-deep));
+    color:#fff; font-size:14px; box-shadow:inset 0 1px 0 rgba(255,255,255,.4)}
+
+  /* ----------------------------------------------------------------- NOTE */
+  section{padding:clamp(40px,7vw,84px) 0}
+  .note{ max-width:640px; margin:0 auto; text-align:center}
+  .note p{ font-family:var(--serif); font-size:clamp(20px,2.7vw,24px); line-height:1.62; margin:0 0 1em}
+  .note .lead::first-letter{ font-size:2.9em; float:left; line-height:.82; padding:6px 12px 0 0;
+    color:var(--shrine-lit); font-weight:700}
+  .note .sign{ font-family:var(--mono); font-size:13px; letter-spacing:.24em; color:var(--muted);
+    text-transform:uppercase; margin-top:8px}
+
+  .rule{ width:64px; height:2px; margin:0 auto; border:0;
+    background:linear-gradient(90deg,transparent,var(--shrine-lit),transparent)}
+
+  /* ----------------------------------------------------------- CONSTELLATIONS */
+  .h-eyebrow{ text-align:center; font-family:var(--mono); font-size:12.5px; letter-spacing:.34em;
+    text-transform:uppercase; color:var(--gold); margin:0 0 8px}
+  .h-title{ text-align:center; font-family:var(--serif); font-size:clamp(28px,4.4vw,40px);
+    margin:0 0 40px; font-weight:700}
+
+  .doors{ display:grid; gap:18px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .door{
+    position:relative; display:block; text-decoration:none; padding:26px 24px 24px;
+    border-radius:var(--r); background:var(--glass); border:1px solid var(--glass-line);
+    backdrop-filter:blur(10px); box-shadow:var(--shadow); overflow:hidden;
+    transition:transform .18s cubic-bezier(.2,.9,.25,1.2), border-color .25s, box-shadow .25s;
+    will-change:transform;
+  }
+  .door::after{ /* red edge-light that wakes on hover */
+    content:""; position:absolute; inset:0; border-radius:inherit; padding:1px;
+    background:linear-gradient(140deg, rgba(216,31,44,.9), rgba(231,198,108,.55) 60%, transparent);
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor; mask-composite:exclude; opacity:0; transition:opacity .3s}
+  .door:hover{ border-color:transparent; box-shadow:0 40px 90px -30px rgba(216,31,44,.5)}
+  .door:hover::after{opacity:1}
+  .door:active{ transform:scale(.985)!important}
+  .door .glyph{ font-size:28px; margin-bottom:14px; display:block; filter:saturate(1.1)}
+  .door h3{ margin:0 0 6px; font-family:var(--serif); font-size:23px; letter-spacing:.01em}
+  .door p{ margin:0; color:var(--muted); font-size:15.5px; line-height:1.5}
+  .door .go{ margin-top:16px; font-family:var(--mono); font-size:12px; letter-spacing:.2em;
+    text-transform:uppercase; color:var(--gold); display:inline-flex; align-items:center; gap:7px}
+  .door .go .arw{ transition:transform .25s}
+  .door:hover .go .arw{ transform:translateX(5px)}
+  .door[data-state="soon"] .go, .door[data-state="quiet"] .go{ color:var(--muted)}
+  .badge{ position:absolute; top:16px; right:16px; font-family:var(--mono); font-size:10.5px;
+    letter-spacing:.18em; text-transform:uppercase; padding:4px 9px; border-radius:100px;
+    border:1px solid var(--glass-line); color:var(--muted); background:rgba(0,0,0,.25)}
+  .badge.live{ color:#8ff0b5; border-color:rgba(143,240,181,.35)}
+  .badge.live::before{ content:"●"; margin-right:5px; color:#3ee07f; font-size:8px; vertical-align:1px}
+
+  /* ---------------------------------------------------------- LIVE INSTRUMENTS */
+  .instruments{ display:grid; gap:20px; grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  .inst{ border-radius:var(--r); overflow:hidden; background:#000;
+    border:1px solid var(--glass-line); box-shadow:var(--shadow); position:relative}
+  .inst a.frame{ display:block; position:relative; aspect-ratio:4/3; text-decoration:none;
+    background:radial-gradient(circle at 50% 38%,#1a1418,#0a0809); overflow:hidden;
+    transition:transform .3s cubic-bezier(.2,.9,.25,1.2)}
+  .inst a.frame:hover{ transform:scale(1.02)}
+  .inst .still{ position:absolute; inset:0; width:100%; height:100%}
+  .inst .peek{ position:absolute; bottom:12px; right:14px; font-family:var(--mono); font-size:10.5px;
+    letter-spacing:.2em; text-transform:uppercase; color:var(--paper); opacity:.0; transition:opacity .3s;
+    background:rgba(0,0,0,.4); padding:5px 10px; border-radius:100px; backdrop-filter:blur(4px)}
+  .inst a.frame:hover .peek{ opacity:.9}
+  .inst .cap{ display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:15px 18px; background:var(--glass); border-top:1px solid var(--glass-line)}
+  .inst .cap b{ font-family:var(--serif); font-size:19px; font-weight:600}
+  .inst .cap span{ color:var(--muted); font-size:13.5px}
+  .inst .cap a{ font-family:var(--mono); font-size:11.5px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--gold); text-decoration:none; white-space:nowrap}
+
+  /* ----------------------------------------------------------------- EXITS */
+  .exits{ display:grid; gap:20px; grid-template-columns:1fr 1fr}
+  @media(max-width:720px){ .exits{grid-template-columns:1fr} }
+  .exit{ border-radius:var(--r); padding:34px 30px; border:1px solid var(--glass-line);
+    background:var(--glass); backdrop-filter:blur(10px); box-shadow:var(--shadow)}
+  .exit.work{ background:linear-gradient(160deg, rgba(216,31,44,.16), var(--glass))}
+  .exit.close{ background:linear-gradient(160deg, rgba(231,198,108,.12), var(--glass))}
+  .exit h3{ margin:0 0 4px; font-family:var(--serif); font-size:27px}
+  .exit .sub{ color:var(--muted); font-size:14px; margin:0 0 18px; font-family:var(--mono);
+    letter-spacing:.14em; text-transform:uppercase}
+  .exit p{ margin:0 0 22px; font-size:17px; line-height:1.55; color:var(--paper)}
+  .btn{ display:inline-flex; align-items:center; gap:10px; text-decoration:none;
+    font-family:var(--mono); font-size:13px; letter-spacing:.14em; text-transform:uppercase;
+    padding:14px 22px; border-radius:100px; transition:transform .16s, box-shadow .25s, background .25s}
+  .btn:active{transform:scale(.96)}
+  .btn.primary{ background:var(--shrine); color:#fff; box-shadow:0 16px 40px -14px rgba(216,31,44,.8)}
+  .btn.primary:hover{ background:var(--shrine-lit); box-shadow:0 20px 50px -14px rgba(255,59,71,.7)}
+  .btn.ghost{ border:1px solid var(--glass-line); color:var(--paper)}
+  .btn.ghost:hover{ border-color:var(--gold); color:var(--gold)}
+  .exit .row{ display:flex; gap:12px; flex-wrap:wrap}
+
+  /* -------------------------------------------------------- EX-VOTO / FOOTER */
+  .votive{ text-align:center; padding:clamp(50px,8vw,90px) 0 30px}
+  .plaque{ display:inline-block; padding:22px 40px; border-radius:8px;
+    background:linear-gradient(160deg,#efe9dd,#cdc4b2); color:#3a2f2c;
+    box-shadow:0 20px 50px -18px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.7);
+    border:1px solid rgba(0,0,0,.12); position:relative}
+  .plaque .merci{ font-family:var(--serif); font-weight:700; font-size:clamp(26px,4vw,34px);
+    letter-spacing:.06em; color:var(--shrine-deep)}
+  .plaque .to{ font-family:var(--serif); font-size:15px; letter-spacing:.2em; text-transform:uppercase;
+    margin-top:6px; color:#6b5a52}
+  .plaque .hodie{ font-family:var(--mono); font-size:11.5px; letter-spacing:.3em; margin-top:14px;
+    color:#8a4a1f}
+  footer{ text-align:center; padding:30px 0 60px; color:var(--muted); font-family:var(--mono);
+    font-size:12px; letter-spacing:.16em}
+  footer .cras{ text-decoration:line-through; opacity:.5}
+  footer a{ color:var(--gold); text-decoration:none}
+
+  @media (prefers-reduced-motion:reduce){ *{animation:none!important; transition:none!important; scroll-behavior:auto} }
+</style>
+</head>
+<body>
+
+<!-- ============================================================= HERO -->
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">NaNoBotCo · Chiang Mai · เชียงใหม่</p>
+    <div class="niche" id="niche">
+      <div class="name">NaN<small>NOT A NUMBER</small></div>
+      <span class="flame"></span>
+    </div>
+    <div class="names">
+      <span class="th">คุณแนน</span><span class="sep">·</span><span class="en">Khun Nan</span>
+    </div>
+    <p class="veil">A builder at the seam of the digital and the old.</p>
+    <p class="locus">Developer · Fixer · Maker of small strange tools</p>
+    <div class="seal">
+      <span class="disc">✶</span>
+      <b>HODIE</b>
+      <span class="today">— it gets done today.</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================= THE NOTE -->
+<section>
+  <div class="wrap note">
+    <p class="lead">I make little tech gadgets, run a few quiet businesses, write code for hire, and move between worlds — Thai, Indian, American, and the ones you can't put on a map.</p>
+    <p>I'm hyperfocused and I keep a veil over most of it, not to hide, but because the whole of it is a lot to hand a stranger at once. So: here are the doors. Open the ones that call you.</p>
+    <p>I keep a shrine to <em>Saint-Expédit</em> — the red one, the roadside kind. You ask, it gets done today, and the debt gets honored. That's how I work too.</p>
+    <p class="sign">— NaN</p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ============================================================= DOORS -->
+<section>
+  <div class="wrap">
+    <p class="h-eyebrow">The Doors</p>
+    <h2 class="h-title">One node, many rooms</h2>
+    <div class="doors">
+
+      <a class="door" href="https://wichaa.net" data-state="live">
+        <span class="badge live">Live</span>
+        <span class="glyph">📜</span>
+        <h3>Tradition &amp; Knowledge</h3>
+        <p>wichaa.net — a living archive of Lanna manuscripts, wat maps, amulets, and the old sciences, made legible without losing the soul.</p>
+        <span class="go">Enter wichaa <span class="arw">→</span></span>
+      </a>
+
+      <a class="door" href="https://wichaa.net/widgets" data-state="live">
+        <span class="badge live">Live</span>
+        <span class="glyph">🛠️</span>
+        <h3>Tools &amp; Instruments</h3>
+        <p>Small strange working things — a moon complication, a Jupiter jovilabe, a payont that earns its keep. Instruments, not toys.</p>
+        <span class="go">See the workbench <span class="arw">→</span></span>
+      </a>
+
+      <a class="door" href="https://defiant.to" data-state="live">
+        <span class="badge live">Live</span>
+        <span class="glyph">🧭</span>
+        <h3>Field Services</h3>
+        <p>Defiant — expat &amp; medical-tourism concierge for Chiang Mai. The wider fixer / developer work runs through here too.</p>
+        <span class="go">Get help on the ground <span class="arw">→</span></span>
+      </a>
+
+      <a class="door" href="https://nanobotco.github.io/skipdjt" data-state="live">
+        <span class="badge live">Live</span>
+        <span class="glyph">🎲</span>
+        <h3>Play &amp; Experiments</h3>
+        <p>Games and oddments — a VCR-clock puzzle, a Chiang Mai smuggler's tale, fare-finders, oracles. The stuff I build for the joy of it.</p>
+        <span class="go">Come play <span class="arw">→</span></span>
+      </a>
+
+      <a class="door" href="#work" data-state="quiet">
+        <span class="badge">Unlisted</span>
+        <span class="glyph">👁️</span>
+        <h3>The Unlisted Work</h3>
+        <p>Some things never go behind glass. I've carried messages across borders that aren't on any map, and left offerings for things that answered back. If you already know why you're knocking, you'll know how to ask.</p>
+        <span class="go">Knock three times <span class="arw">→</span></span>
+      </a>
+
+      <a class="door" href="#close" data-state="quiet">
+        <span class="badge">Human</span>
+        <span class="glyph">🌙</span>
+        <h3>The Person, Not the Résumé</h3>
+        <p>Spirits, magic, a wild and precious life — occasional pictures and video. If you're here to make a friend, not a hire, start here.</p>
+        <span class="go">Come closer <span class="arw">→</span></span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= INSTRUMENTS -->
+<section>
+  <div class="wrap">
+    <p class="h-eyebrow">Living Proof</p>
+    <h2 class="h-title">A couple of things I made, still ticking</h2>
+    <div class="instruments">
+      <div class="inst">
+        <a class="frame" href="https://wichaa.net/moon" target="_blank" rel="noopener" aria-label="Open the moon complication">
+          <svg class="still" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+            <defs>
+              <radialGradient id="moonlit" cx="38%" cy="34%" r="75%">
+                <stop offset="0%" stop-color="#fbf3d6"/><stop offset="55%" stop-color="#e7c66c"/>
+                <stop offset="100%" stop-color="#b8933b"/>
+              </radialGradient>
+            </defs>
+            <g fill="#f5efe4">
+              <circle cx="58" cy="44" r="1.3" opacity=".8"/><circle cx="330" cy="66" r="1.6" opacity=".9"/>
+              <circle cx="300" cy="30" r="1" opacity=".6"/><circle cx="92" cy="250" r="1.2" opacity=".7"/>
+              <circle cx="350" cy="230" r="1.4" opacity=".8"/><circle cx="40" cy="150" r="1" opacity=".5"/>
+            </g>
+            <!-- dial ring -->
+            <circle cx="200" cy="150" r="104" fill="none" stroke="rgba(231,198,108,.35)" stroke-width="1"/>
+            <g stroke="rgba(231,198,108,.55)" stroke-width="1.4">
+              <line x1="200" y1="40" x2="200" y2="52"/><line x1="200" y1="248" x2="200" y2="260"/>
+              <line x1="90" y1="150" x2="102" y2="150"/><line x1="298" y1="150" x2="310" y2="150"/>
+              <line x1="123" y1="73" x2="131" y2="81"/><line x1="269" y1="219" x2="277" y2="227"/>
+              <line x1="277" y1="73" x2="269" y2="81"/><line x1="131" y1="219" x2="123" y2="227"/>
+            </g>
+            <!-- red index at top -->
+            <path d="M200 34 l6 12 h-12 z" fill="#ff3b47"/>
+            <!-- the moon: waxing gibbous carved by an offset ink disc -->
+            <circle cx="200" cy="150" r="74" fill="url(#moonlit)"/>
+            <circle cx="168" cy="150" r="74" fill="#0c0a0b"/>
+            <circle cx="200" cy="150" r="74" fill="none" stroke="rgba(255,255,255,.10)" stroke-width="1"/>
+          </svg>
+          <span class="peek">Open live ↗</span>
+        </a>
+        <div class="cap"><div><b>The Moon Complication</b><br><span>An analog moon dial, taught to a machine.</span></div>
+          <a href="https://wichaa.net/moon" target="_blank" rel="noopener">Open ↗</a></div>
+      </div>
+      <div class="inst">
+        <a class="frame" href="https://wichaa.net/hun" target="_blank" rel="noopener" aria-label="Open Hun Payont">
+          <svg class="still" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+            <defs>
+              <radialGradient id="aura" cx="50%" cy="46%" r="55%">
+                <stop offset="0%" stop-color="rgba(255,59,71,.42)"/><stop offset="100%" stop-color="rgba(255,59,71,0)"/>
+              </radialGradient>
+            </defs>
+            <rect x="0" y="0" width="400" height="300" fill="url(#aura)"/>
+            <!-- concentric yant squares, rotated -->
+            <g transform="translate(200 150)" fill="none" stroke="#e7c66c" stroke-opacity=".5">
+              <rect x="-78" y="-78" width="156" height="156" transform="rotate(45)"/>
+              <rect x="-58" y="-58" width="116" height="116" transform="rotate(45)" stroke="#ff5560" stroke-opacity=".55"/>
+              <rect x="-40" y="-40" width="80" height="80"/>
+            </g>
+            <!-- unalom spiral -->
+            <path d="M200 96 c-16 6 -16 26 0 30 c14 3 14 -18 2 -20 c-8 -1 -8 10 0 11" fill="none"
+                  stroke="#f5efe4" stroke-opacity=".7" stroke-width="1.6" stroke-linecap="round"/>
+            <!-- standing effigy silhouette -->
+            <g fill="#f5efe4" fill-opacity=".92">
+              <circle cx="200" cy="150" r="10"/>
+              <path d="M200 160 c-14 0 -20 12 -20 30 l0 26 c0 6 8 6 8 0 l0 -22 l4 0 l0 34 c0 6 8 6 8 0 l0 -34 l4 0 l0 22 c0 6 8 6 8 0 l0 -26 c0 -18 -6 -30 -20 -30 z"/>
+            </g>
+            <circle cx="200" cy="150" r="98" fill="none" stroke="rgba(255,59,71,.3)" stroke-width="1"/>
+          </svg>
+          <span class="peek">Open live ↗</span>
+        </a>
+        <div class="cap"><div><b>Hun Payont</b><br><span>An effigy you forge, consecrate, and carry — it earns.</span></div>
+          <a href="https://wichaa.net/hun" target="_blank" rel="noopener">Open ↗</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= EXITS -->
+<section>
+  <div class="wrap">
+    <div class="exits">
+      <div class="exit work" id="work">
+        <h3>Work with me</h3>
+        <p class="sub">The reciprocal contract</p>
+        <p>You bring a knot — code, a Chiang Mai errand, a thing that needs a fixer who actually delivers. I untie it today. You honor the debt. Clean and reciprocal, the way the red saint likes it.</p>
+        <!-- CONTACT: swap primary href to mailto:<her-address> once she approves it -->
+        <div class="row">
+          <a class="btn primary" href="https://defiant.to">Bring me a knot →</a>
+          <a class="btn ghost" href="https://wichaa.net">See what I make →</a>
+        </div>
+      </div>
+      <div class="exit close" id="close">
+        <h3>Come closer</h3>
+        <p class="sub">For friends, not hires</p>
+        <p>If you found your way here and you're simply curious about the person — the spirits, the making, the wild precious life — that door isn't locked. It opens slower, and only to a knock.</p>
+        <!-- FOLLOW: add her social link here once she picks one -->
+        <div class="row">
+          <a class="btn ghost" href="https://github.com/NaNoBotCo">The workshop →</a>
+          <a class="btn ghost" href="https://wichaa.net">Wander the archive →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= EX-VOTO -->
+<div class="votive">
+  <div class="wrap">
+    <div class="plaque">
+      <div class="merci">MERCI</div>
+      <div class="to">Saint-Expédit · La Réunion</div>
+      <div class="hodie">HODIE · NON CRAS</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    TODAY <span class="cras">not tomorrow</span> · NaNoBotCo · เชียงใหม่ · <a href="https://github.com/NaNoBotCo">github</a>
+  </div>
+</footer>
+
+<script>
+  /* magnetic hover on the doors — subtle, respects reduced motion */
+  const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  if(!reduce){
+    document.querySelectorAll('.door').forEach(d=>{
+      d.addEventListener('pointermove', e=>{
+        const r=d.getBoundingClientRect();
+        const x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+        d.style.transform=`translate(${x*7}px, ${y*7}px) rotateX(${ -y*4 }deg) rotateY(${ x*5 }deg)`;
+      });
+      d.addEventListener('pointerleave', ()=> d.style.transform='');
+    });
+  }
+</script>
+</body>
+</html>
