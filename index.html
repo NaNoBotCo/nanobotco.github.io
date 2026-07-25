@@ -142,7 +142,11 @@
   .takhaap-rule{ display:flex; justify-content:center; padding:8px 0 2px }
   .takhaap-rule svg{ width:min(440px,74vw); height:auto; overflow:visible }
   .takhaap-rule .body{ fill:none; stroke:var(--gold); stroke-width:1.3; stroke-linecap:round;
-    stroke-opacity:.52 }
+    stroke-opacity:.34 }
+  /* binary katha riding the spine — 1729, one bit per segment; the number is the incantation */
+  .takhaap-rule .tk-code text{ font-family:var(--mono) }
+  .takhaap-rule .tk-one{ fill:var(--gold); fill-opacity:.74 }
+  .takhaap-rule .tk-zero{ fill:var(--gold); fill-opacity:.30 }
   .takhaap-rule .legs{ fill:none; stroke:var(--gold); stroke-width:1.15; stroke-linecap:round;
     stroke-opacity:.42 }
   .takhaap-rule .head{ fill:none; stroke:var(--gold); stroke-width:1.2; stroke-linecap:round;
@@ -404,6 +408,20 @@
       M530,41 c -4,-5 -5,-11 -1,-16  M530,43 c -4,5 -5,11 -1,16"/>
     <!-- spine -->
     <path class="body" d="M24,45 Q70,41 93,45 Q116,49 139,46 Q162,43 185,45 Q208,47 231,44.5 Q254,42 277,44 Q300,46 323,44 Q346,42 369,45 Q392,48 415,45.5 Q438,43 461,45 Q484,47 507,44.5 Q530,42 553,43.5 Q576,45 578,45"/>
+    <!-- the katha: 1729 in binary, one bit per body segment (reads tail→head) -->
+    <g class="tk-code" font-size="11" text-anchor="middle" dominant-baseline="central">
+      <text class="tk-one"  x="70"  y="41">1</text>
+      <text class="tk-one"  x="116" y="49">1</text>
+      <text class="tk-zero" x="162" y="43">0</text>
+      <text class="tk-one"  x="208" y="47">1</text>
+      <text class="tk-one"  x="254" y="42">1</text>
+      <text class="tk-zero" x="300" y="46">0</text>
+      <text class="tk-zero" x="346" y="42">0</text>
+      <text class="tk-zero" x="392" y="48">0</text>
+      <text class="tk-zero" x="438" y="43">0</text>
+      <text class="tk-zero" x="484" y="47">0</text>
+      <text class="tk-one"  x="530" y="42">1</text>
+    </g>
     <!-- head tendrils + tail curl -->
     <path class="head" d="M578,45 c 22,-3 38,-13 44,-27 c 3,-8 13,-10 18,-3
                           M578,45 c 22,3 38,13 44,27 c 3,8 13,10 18,3
