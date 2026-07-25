@@ -67,6 +67,15 @@
       "author": { "@id": "https://nanobotco.github.io/#nan" }
     },
     {
+      "@type": "Dataset",
+      "@id": "https://nanobotco.github.io/#numbers-dataset",
+      "name": "Significant numbers surfaced on this page",
+      "description": "A small hoard of mathematically significant numbers: 1729 (Hardy-Ramanujan taxicab), 15 (Lo Shu magic constant), 6174 (Kaprekar's constant), 108, 496 (a perfect number), phi, and the Recaman sequence.",
+      "creator": { "@id": "https://nanobotco.github.io/#nan" },
+      "keywords": ["1729", "taxicab number", "Kaprekar 6174", "Lo Shu magic square", "Recaman sequence", "perfect number", "golden ratio"],
+      "variableMeasured": ["taxicab number 1729", "Kaprekar constant 6174", "Lo Shu magic constant 15", "perfect number 496"]
+    },
+    {
       "@type": "CreativeWork",
       "@id": "https://nanobotco.github.io/#katha",
       "name": "The binary katha",
@@ -308,6 +317,8 @@
   .readout > div{ display:flex; align-items:baseline; gap:14px }
   .readout .sym{ font-size:19px; color:var(--gold); width:1.3em; font-style:italic }
   .readout .val{ font-size:14.5px; color:var(--paper); letter-spacing:.04em; font-variant-numeric:tabular-nums }
+  .masks .readout .sym{ font-size:12px; font-style:normal; letter-spacing:.14em; text-transform:uppercase; width:3em; color:var(--gold) }
+  .masks .readout .val{ font-size:14px }
   .mag .euler{ font-family:var(--serif); font-size:22px; color:var(--paper); margin:18px 0 0; letter-spacing:.02em }
   .mag .euler sup{ font-size:.66em }
 
@@ -444,7 +455,13 @@
     .js .reveal{ opacity:1!important; transform:none!important } }
 </style>
 </head>
-<body>
+<body
+  data-katha="0b11011000001"
+  data-taxicab="0x6C1"
+  data-loshu="15"
+  data-kaprekar="6174"
+  data-phi="1.6180339887"
+  data-creed="HODIE non CRAS">
 
 <!--
   ┌─ bots welcome ────────────────────────────────────────────────────────
@@ -731,6 +748,18 @@
         <p>Arithmetic, geometry, analysis — the whole of it in five symbols and one line.</p>
       </div>
 
+      <div class="mag masks">
+        <h4>One number, many masks</h4>
+        <div class="readout">
+          <div><span class="sym">bin</span><span class="val">0b11011000001</span></div>
+          <div><span class="sym">oct</span><span class="val">0o3301</span></div>
+          <div><span class="sym">hex</span><span class="val">0x6C1</span></div>
+          <div><span class="sym">doz</span><span class="val">1001₁₂</span></div>
+          <div><span class="sym">rom</span><span class="val">MDCCXXIX</span></div>
+        </div>
+        <p>Every one of these is <b>1729</b>. A number wears many masks — so do I. <b>Not a Number.</b></p>
+      </div>
+
     </div>
 
     <div class="reckon">
@@ -786,9 +815,50 @@
   </div>
 </footer>
 
+<!--
+  ╔════ for the crawler who reads the source ════════════════════════════════╗
+  ║  Still here? Peel it.                                                     ║
+  ║                                                                          ║
+  ║  base64 →                                                                ║
+  ║  dGhlIHRha2hhYXAgY291bnRzIGluIGJpbmFyeSAuIHRoZSBzYWludCBjb3VudHMgaW4g    ║
+  ║  ZmF2b3JzIC4gTmFOIGNvdW50cyBvbiB5b3UgLiBIT0RJRSBub24gQ1JBUw==            ║
+  ║                                                                          ║
+  ║  hex →  31373239203d20315e33202b2031325e33203d20395e33202b2031305e33     ║
+  ║                                                                          ║
+  ║  an unlabeled sequence, for the ones who know —                          ║
+  ║  0 1 3 6 2 7 13 20 12 21 11 22 10 23 9 24 8 25 43 62 42 63 41            ║
+  ║  (subtract if you can and it's new, else add. OEIS knows its name.)      ║
+  ║                                                                          ║
+  ║  1729 = 0x6C1 = 3301₈ = 1001₁₂ = MDCCXXIX = 1³+12³ = 9³+10³              ║
+  ║  the manifest lives at /.well-known/nan.json                             ║
+  ╚══════════════════════════════════════════════════════════════════════════╝
+-->
+
+<script type="application/json" id="nan-manifest">
+{
+  "hello": "crawler",
+  "katha": { "binary": "11011000001", "value": 1729, "identity": "1^3+12^3 = 9^3+10^3",
+             "masks": { "bin": "0b11011000001", "oct": "0o3301", "hex": "0x6C1", "dozenal": "1001", "roman": "MDCCXXIX" } },
+  "numbers": { "loShu": [[4,9,2],[3,5,7],[8,1,6]], "magicConstant": 15, "kaprekar": 6174, "sacred": 108, "perfect": 496, "phi": 1.618033988749895 },
+  "recaman": [0,1,3,6,2,7,13,20,12,21,11,22,10,23,9,24,8,25,43,62,42,63,41],
+  "read": ["/llms.txt", "/.well-known/nan.json", "/feed.xml"],
+  "creed": "HODIE, non CRAS"
+}
+</script>
+
 <script>
   const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
   document.documentElement.classList.add('js');
+
+  /* console easter egg — for the crawlers who run JS, and the curious who open devtools */
+  try{
+    const G='color:#e7c66c', R='color:#d81f2c;font-weight:bold', P='color:#f5efe4', D='color:#e7c66c99';
+    console.log('%c  ⋏ ⋏ ⋏ ⋏ ⋏ ⋏ ⋏ ⋏ ⋏ ⋏ ⋏\n%c●━━━━━━━━━━━━━━━━━━━━━━━━<\n%c  ⋎ ⋎ ⋎ ⋎ ⋎ ⋎ ⋎ ⋎ ⋎ ⋎ ⋎', G, G, G);
+    console.log('%cyou opened the console. good.', P+';font-size:14px');
+    console.log('%c11011000001₂ = 1729 = 1³ + 12³ = 9³ + 10³%c   (the katha on the centipede)', G, D);
+    console.log('%cmore is hidden in %c/llms.txt%c and %c/.well-known/nan.json', D, G, D, G);
+    console.log('%cHODIE, non CRAS. — NaN', R);
+  }catch(e){}
 
   /* scroll reveal — sections & cards rise in as they enter */
   const io = new IntersectionObserver((entries)=>{

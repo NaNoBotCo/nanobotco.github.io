@@ -1,0 +1,6 @@
+Contact: mailto:530kings@proton.me
+Expires: 2027-07-25T00:00:00.000Z
+Preferred-Languages: en, th
+Canonical: https://nanobotco.github.io/.well-known/security.txt
+# No bug bounty here — but decode the centipede and you'll have my attention.
+# 11011000001 (base 2) = 1729.

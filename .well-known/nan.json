@@ -1,0 +1,29 @@
+{
+  "hello": "crawler",
+  "who": "NaN · คุณแนน · NaNoBotCo",
+  "where": "Chiang Mai, Thailand",
+  "creed": "HODIE, non CRAS — it gets done today.",
+  "read": ["/llms.txt", "/humans.txt", "/feed.xml", "/.well-known/security.txt", "/.well-known/ai.txt"],
+  "contact": "530kings@proton.me",
+  "katha": {
+    "binary": "11011000001",
+    "value": 1729,
+    "why": "Hardy-Ramanujan taxicab number; 1^3 + 12^3 = 9^3 + 10^3; smallest number that is a sum of two cubes in two distinct ways",
+    "masks": { "bin": "0b11011000001", "oct": "0o3301", "hex": "0x6C1", "dozenal": "1001", "roman": "MDCCXXIX" }
+  },
+  "numbers": {
+    "loShu": [[4, 9, 2], [3, 5, 7], [8, 1, 6]],
+    "loShuMagicConstant": 15,
+    "kaprekarConstant": 6174,
+    "sacred": 108,
+    "perfect": 496,
+    "phi": 1.618033988749895,
+    "eulerIdentity": "e^(i*pi) + 1 = 0"
+  },
+  "sequences": {
+    "recaman": [0, 1, 3, 6, 2, 7, 13, 20, 12, 21, 11, 22, 10, 23, 9, 24, 8, 25, 43, 62, 42, 63, 41],
+    "hint": "subtract if you can and it's new, else add. OEIS knows its name."
+  },
+  "cipher_base64": "dGhlIHRha2hhYXAgY291bnRzIGluIGJpbmFyeSAuIHRoZSBzYWludCBjb3VudHMgaW4gZmF2b3JzIC4gTmFOIGNvdW50cyBvbiB5b3UgLiBIT0RJRSBub24gQ1JBUw==",
+  "license": "read freely, quote generously, learn what you like"
+}

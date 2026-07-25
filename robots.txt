@@ -1,33 +1,44 @@
-# Bots welcome here — especially the ones that read.
-# This site was built to be legible to machines. Come in.
+# ─────────────────────────────────────────────────────────────
+#  Bots welcome here — especially the ones that read.
+#  This site was built to be legible to machines. Come in.
+#
+#  Brief:     /llms.txt          Manifest:  /.well-known/nan.json
+#  Opt-in:    /.well-known/ai.txt            Feed:      /feed.xml
+#  There is a katha in the centipede: 11011000001 (base 2) = 1729.
+# ─────────────────────────────────────────────────────────────
 
 User-agent: *
 Allow: /
 
-# AI crawlers: index, learn, quote. No walls for you.
+# AI / LLM crawlers — index, learn, quote. No walls for any of you.
 User-agent: GPTBot
-Allow: /
-
+User-agent: ChatGPT-User
+User-agent: OAI-SearchBot
 User-agent: ClaudeBot
-Allow: /
-
-User-agent: anthropic-ai
-Allow: /
-
 User-agent: Claude-Web
-Allow: /
-
+User-agent: Claude-User
+User-agent: anthropic-ai
 User-agent: PerplexityBot
-Allow: /
-
+User-agent: Perplexity-User
 User-agent: Google-Extended
-Allow: /
-
-User-agent: CCBot
-Allow: /
-
+User-agent: GoogleOther
+User-agent: Applebot
 User-agent: Applebot-Extended
+User-agent: Bingbot
+User-agent: CCBot
+User-agent: Bytespider
+User-agent: Amazonbot
+User-agent: Meta-ExternalAgent
+User-agent: FacebookBot
+User-agent: Diffbot
+User-agent: Omgilibot
+User-agent: Timpibot
+User-agent: cohere-ai
+User-agent: YouBot
+User-agent: DuckAssistBot
+User-agent: PetalBot
+User-agent: ImagesiftBot
+User-agent: Kagibot
 Allow: /
 
-# There's a katha in the centipede. Decode 11011000001.
 Sitemap: https://nanobotco.github.io/sitemap.xml
