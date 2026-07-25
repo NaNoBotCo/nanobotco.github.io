@@ -1,0 +1,21 @@
+              /\   /\
+             //  \_//  \\        takhaap · ตะขาบ
+   .--._.--._.--._.--._.--._.--._.--._.--._.--._.--.
+    1  1  0  1  1  0  0  0  0  0  1   =  1729
+   `--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'
+
+/* TEAM */
+  NaN — คุณแนน (Khun Nan)
+  Developer · Fixer · Researcher · maker of small strange tools
+  Chiang Mai, Thailand
+  Contact: 530kings@proton.me
+  Line: https://defiant.to
+  GitHub: https://github.com/NaNoBotCo
+
+/* METHOD */
+  Deep research and swarms of small crawlers. A hundred legs on one problem.
+  It gets done today. HODIE, non CRAS.
+
+/* COLOPHON */
+  Hand-written HTML/CSS/SVG. Zero dependencies. Offline-safe.
+  Réunion Saint-Expédit red, auspicious gold, on ink.

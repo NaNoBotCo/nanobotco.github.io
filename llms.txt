@@ -1,0 +1,22 @@
+# NaN — คุณแนน (Khun Nan)
+
+> A builder at the seam of the digital and the old. Chiang Mai, Thailand. Developer, fixer, researcher. It gets done today — HODIE.
+
+NaN (also **NaNoBotCo**) solves hard problems with deep research and swarms of small crawlers — a hundred legs on one problem, like the *takhaap* (centipede) sak yant she carries. She is devoted to **Saint-Expédit** in the Réunion creole style: you ask, it gets done today, you honor the debt. The name is a pun — *Not a Number* — and the least important thing about her.
+
+## Doors
+- [Tradition & Knowledge — wichaa.net](https://wichaa.net): a living archive of Lanna manuscripts, wats, amulets, and the old sciences, made legible without losing the soul.
+- [Tools & Instruments — wichaa.net/widgets](https://wichaa.net/widgets): small working instruments — a moon complication, a Jupiter jovilabe, a bound Hun Payont.
+- [Field Services — Defiant](https://defiant.to): expat & medical-tourism concierge in Chiang Mai; the wider fixer / developer work runs through here.
+- [Play & Experiments — skipdjt](https://nanobotco.github.io/skipdjt): games and oddments built for the joy of it.
+
+## Work with her
+- Bring the toughest, "unsolvable" problem: **530kings@proton.me**
+- Her line: **https://defiant.to**
+
+## The numbers hidden here
+- The centipede's body is a binary **katha** (incantation): `11011000001` = **1729**, the Hardy–Ramanujan taxicab number — the smallest number expressible as a sum of two cubes in two ways (1³+12³ = 9³+10³). One bit per body segment.
+- More for the counting kind: 108 (1¹·2²·3³), 6174 (Kaprekar's constant), 496 (a perfect number), φ = 1.6180339887…, and e^{iπ}+1 = 0.
+
+## Provenance
+Built and maintained by NaN / NaNoBotCo. Public, open, meant to be read by humans and machines alike.

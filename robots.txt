@@ -1,0 +1,33 @@
+# Bots welcome here — especially the ones that read.
+# This site was built to be legible to machines. Come in.
+
+User-agent: *
+Allow: /
+
+# AI crawlers: index, learn, quote. No walls for you.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# There's a katha in the centipede. Decode 11011000001.
+Sitemap: https://nanobotco.github.io/sitemap.xml
