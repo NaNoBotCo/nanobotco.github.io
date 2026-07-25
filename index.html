@@ -26,21 +26,56 @@
 <meta name="twitter:description" content="Builder · fixer · developer in Chiang Mai. It gets done today.">
 <meta name="twitter:image" content="https://nanobotco.github.io/assets/portrait.jpg">
 
-<!-- Structured data: bots, come in and read. -->
+<meta name="generator" content="hand-written HTML/CSS/SVG · zero dependencies · read by machines">
+<link rel="alternate" type="text/markdown" href="https://nanobotco.github.io/llms.txt" title="llms.txt — the machine-readable version">
+
+<!-- Structured data: bots, come in and read. Full graph below. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "NaN",
-  "alternateName": ["Khun Nan", "คุณแนน", "NaNoBotCo"],
-  "jobTitle": ["Developer", "Fixer", "Researcher"],
-  "description": "A builder at the seam of the digital and the old. Deep research and swarms of small crawlers — a hundred legs on one problem. Solves what others call unsolvable.",
-  "url": "https://nanobotco.github.io/",
-  "email": "530kings@proton.me",
-  "homeLocation": { "@type": "Place", "name": "Chiang Mai, Thailand" },
-  "knowsLanguage": ["en", "th"],
-  "knowsAbout": ["Lanna manuscripts", "sak yant", "Thai and Indian folklore", "web crawling", "data aggregation", "software development", "medical tourism"],
-  "sameAs": ["https://github.com/NaNoBotCo", "https://wichaa.net", "https://defiant.to"]
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://nanobotco.github.io/#nan",
+      "name": "NaN",
+      "alternateName": ["Khun Nan", "คุณแนน", "NaNoBotCo"],
+      "jobTitle": ["Developer", "Fixer", "Researcher"],
+      "description": "A builder at the seam of the digital and the old. Deep research and swarms of small crawlers — a hundred legs on one problem. Solves what others call unsolvable.",
+      "url": "https://nanobotco.github.io/",
+      "image": "https://nanobotco.github.io/assets/portrait.jpg",
+      "email": "530kings@proton.me",
+      "homeLocation": { "@type": "Place", "name": "Chiang Mai, Thailand" },
+      "knowsLanguage": ["en", "th"],
+      "knowsAbout": ["Lanna manuscripts", "sak yant", "Thai and Indian folklore", "web crawling", "data aggregation", "software development", "medical tourism", "number theory"],
+      "worksFor": { "@id": "https://nanobotco.github.io/#org" },
+      "sameAs": ["https://github.com/NaNoBotCo", "https://wichaa.net", "https://defiant.to"]
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://nanobotco.github.io/#org",
+      "name": "NaNoBotCo",
+      "url": "https://github.com/NaNoBotCo",
+      "description": "Small strange tools and the crawlers that feed them. Machines that read.",
+      "founder": { "@id": "https://nanobotco.github.io/#nan" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://nanobotco.github.io/#site",
+      "url": "https://nanobotco.github.io/",
+      "name": "NaN — คุณแนน",
+      "inLanguage": ["en", "th"],
+      "author": { "@id": "https://nanobotco.github.io/#nan" }
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://nanobotco.github.io/#katha",
+      "name": "The binary katha",
+      "text": "11011000001",
+      "description": "1729, the Hardy–Ramanujan taxicab number, inscribed in binary along a takhaap (centipede) — the smallest number expressible as a sum of two cubes in two ways: 1^3 + 12^3 = 9^3 + 10^3.",
+      "creator": { "@id": "https://nanobotco.github.io/#nan" },
+      "keywords": ["1729", "taxicab number", "Ramanujan", "sak yant", "binary"]
+    }
+  ]
 }
 </script>
 
@@ -243,6 +278,44 @@
   .inst .cap a{ font-family:var(--mono); font-size:11.5px; letter-spacing:.16em; text-transform:uppercase;
     color:var(--gold); text-decoration:none; white-space:nowrap}
 
+  /* -------------------------------------------------------- NUMBER MAGIC */
+  .magic{ display:grid; gap:18px; grid-template-columns:repeat(auto-fit,minmax(238px,1fr)) }
+  .mag{ position:relative; border-radius:var(--r); padding:26px 24px; background:var(--glass);
+    border:1px solid var(--glass-line); backdrop-filter:blur(10px); box-shadow:var(--shadow); overflow:hidden }
+  .mag h4{ margin:0 0 16px; font-family:var(--mono); font-size:11.5px; letter-spacing:.24em;
+    text-transform:uppercase; color:var(--gold) }
+  .mag p{ margin:14px 0 0; font-size:14.5px; line-height:1.55; color:var(--muted) }
+  .mag p b{ color:var(--paper); font-weight:600 }
+  .mag .big{ font-family:var(--serif); font-size:clamp(46px,7vw,66px); line-height:1; color:var(--paper);
+    margin:0; letter-spacing:.01em }
+  .mag .eq{ font-family:var(--mono); font-size:15px; color:var(--gold); margin:8px 0 0; letter-spacing:.02em }
+  .mag .kap{ font-family:var(--mono); font-size:clamp(34px,6vw,46px); color:var(--paper); margin:0;
+    letter-spacing:.08em; font-variant-numeric:tabular-nums }
+
+  /* Lo Shu — the Saturn yantra */
+  .grid3{ display:grid; grid-template-columns:repeat(3,1fr); gap:6px; max-width:206px }
+  .grid3 span{ aspect-ratio:1; display:grid; place-items:center; border:1px solid var(--glass-line);
+    border-radius:10px; font-family:var(--mono); font-size:22px; color:var(--paper);
+    background:rgba(255,255,255,.02); transition:color .4s, background .4s, box-shadow .4s, border-color .4s }
+  .grid3 span.lit{ border-color:var(--gold); color:var(--ink); background:var(--gold);
+    box-shadow:0 0 26px rgba(231,198,108,.55) }
+  .loshu .sum-badge{ position:absolute; top:24px; right:24px; font-family:var(--mono); font-size:13px;
+    letter-spacing:.08em; color:var(--gold); opacity:0; transition:opacity .35s }
+  .loshu .sum-badge.show{ opacity:.9 }
+
+  /* constants readout */
+  .readout{ display:grid; gap:9px; font-family:var(--mono) }
+  .readout > div{ display:flex; align-items:baseline; gap:14px }
+  .readout .sym{ font-size:19px; color:var(--gold); width:1.3em; font-style:italic }
+  .readout .val{ font-size:14.5px; color:var(--paper); letter-spacing:.04em; font-variant-numeric:tabular-nums }
+  .mag .euler{ font-family:var(--serif); font-size:22px; color:var(--paper); margin:18px 0 0; letter-spacing:.02em }
+  .mag .euler sup{ font-size:.66em }
+
+  /* live reckoning strip */
+  .reckon{ margin-top:24px; display:flex; flex-wrap:wrap; gap:10px 28px; justify-content:center;
+    font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted) }
+  .reckon b{ color:var(--gold); font-weight:600; font-variant-numeric:tabular-nums }
+
   /* ----------------------------------------------------------------- EXITS */
   .exits{ display:grid; gap:20px; grid-template-columns:1fr 1fr}
   @media(max-width:720px){ .exits{grid-template-columns:1fr} }
@@ -280,6 +353,7 @@
     font-size:12px; letter-spacing:.16em}
   footer .cras{ text-decoration:line-through; opacity:.5}
   footer a{ color:var(--gold); text-decoration:none}
+  footer .bots{ display:inline-block; margin-top:12px; opacity:.6; letter-spacing:.14em }
 
   /* ============================================================ COOLNESS PASS */
   ::selection{ background:var(--shrine); color:#fff }
@@ -614,6 +688,59 @@
   </div>
 </section>
 
+<!-- ============================================================= NUMBER MAGIC -->
+<section id="numbers">
+  <div class="wrap">
+    <p class="h-eyebrow">For the ones who count</p>
+    <h2 class="h-title">Number magic</h2>
+    <div class="magic">
+
+      <div class="mag loshu">
+        <h4>The Saturn yantra</h4>
+        <span class="sum-badge" id="loshu-sum">Σ = 15</span>
+        <div class="grid3" id="loshu">
+          <span>4</span><span>9</span><span>2</span>
+          <span>3</span><span>5</span><span>7</span>
+          <span>8</span><span>1</span><span>6</span>
+        </div>
+        <p>Every row, column and diagonal sums to <b>15</b> — the Lo Shu square, the seal of Saturn, older than the alphabet.</p>
+      </div>
+
+      <div class="mag">
+        <h4>The taxicab</h4>
+        <p class="big">1729</p>
+        <p class="eq">= 1³ + 12³ = 9³ + 10³</p>
+        <p>The smallest number that is a sum of two cubes two ways. It rides the centipede above, in binary — the <b>katha</b> you already passed.</p>
+      </div>
+
+      <div class="mag">
+        <h4>The attractor</h4>
+        <p class="kap" id="kap-num">6174</p>
+        <p class="eq" id="kap-step">a fixed point</p>
+        <p>Take any four digits, not all the same. Sort them high, sort them low, subtract. Repeat. Every road runs to <b>6174</b> — Kaprekar's constant.</p>
+      </div>
+
+      <div class="mag const">
+        <h4>Constants</h4>
+        <div class="readout">
+          <div><span class="sym">φ</span><span class="val" id="phi">1.61803398…</span></div>
+          <div><span class="sym">π</span><span class="val" id="pi">3.14159265…</span></div>
+          <div><span class="sym">e</span><span class="val" id="e">2.71828182…</span></div>
+        </div>
+        <p class="euler">e<sup>iπ</sup> + 1 = 0</p>
+        <p>Arithmetic, geometry, analysis — the whole of it in five symbols and one line.</p>
+      </div>
+
+    </div>
+
+    <div class="reckon">
+      <span>epoch <b id="epoch">—</b></span>
+      <span>observer <b id="observer">#—</b></span>
+      <span>year <b id="csyear">—</b> of the Lanna reckoning</span>
+    </div>
+  </div>
+</section>
+
 <!-- ============================================================= EXITS -->
 <section>
   <div class="wrap">
@@ -654,7 +781,8 @@
 
 <footer>
   <div class="wrap">
-    TODAY <span class="cras">not tomorrow</span> · NaNoBotCo · เชียงใหม่ · <a href="https://github.com/NaNoBotCo">github</a>
+    TODAY <span class="cras">not tomorrow</span> · NaNoBotCo · เชียงใหม่ · <a href="https://github.com/NaNoBotCo">github</a><br>
+    <span class="bots">machines welcome — read <a href="/llms.txt">/llms.txt</a>. there is a katha in the centipede.</span>
   </div>
 </footer>
 
@@ -666,7 +794,7 @@
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold:.12, rootMargin:'0px 0px -7% 0px' });
-  ['.note','.takhaap-rule','.h-eyebrow','.h-title','.door','.inst','.exit','.plaque'].forEach(sel=>{
+  ['.note','.takhaap-rule','.h-eyebrow','.h-title','.door','.inst','.mag','.exit','.plaque'].forEach(sel=>{
     document.querySelectorAll(sel).forEach((el,i)=>{
       el.classList.add('reveal');
       el.style.transitionDelay = ((i % 3) * 80) + 'ms';
@@ -702,6 +830,59 @@
         sheen.style.setProperty('--my', (26+y*70)+'%');
       });
       tilt.addEventListener('pointerleave', ()=>{ fig.style.transform=''; glow.style.transform=''; });
+    }
+  }
+
+  /* ============================ number magic ============================ */
+  // live epoch — a number that never stops
+  const ep = document.getElementById('epoch');
+  if(ep){ const tick=()=>ep.textContent = Math.floor(Date.now()/1000).toLocaleString(); tick(); setInterval(tick, 1000); }
+
+  // the Lanna reckoning (Chulasakarat ≈ Gregorian − 638)
+  const cy = document.getElementById('csyear');
+  if(cy){ cy.textContent = (new Date().getFullYear() - 638); }
+
+  // you are the nth observer — and n is always prime
+  const ob = document.getElementById('observer');
+  if(ob){
+    const isPrime=n=>{ if(n<2)return false; if(n%2===0)return n===2; for(let i=3;i*i<=n;i+=2) if(n%i===0)return false; return true; };
+    let seed; try{ seed=(parseInt(localStorage.getItem('nan_visits')||'0',10)+1); localStorage.setItem('nan_visits', String(seed)); }catch(e){ seed=1; }
+    let n = 137 + ((seed*7919) % 8000);
+    while(!isPrime(n)) n++;
+    ob.textContent = '#'+n.toLocaleString()+' · prime';
+  }
+
+  if(!reduce){
+    // Kaprekar's routine, running live to 6174
+    const kn=document.getElementById('kap-num'), ks=document.getElementById('kap-step');
+    if(kn && ks){
+      const k=x=>{ const d=String(x).padStart(4,'0').split('').map(Number);
+        const hi=+d.slice().sort((a,b)=>b-a).join(''), lo=+d.slice().sort((a,b)=>a-b).join(''); return hi-lo; };
+      const runKap=()=>{
+        let n=Math.floor(Math.random()*8999)+1000;
+        if(new Set(String(n).padStart(4,'0')).size===1) n+=1;
+        const seq=[n]; let g=0;
+        while(n!==6174 && g<12){ n=k(n); seq.push(n); g++; }
+        let i=0;
+        const iv=setInterval(()=>{
+          kn.textContent=String(seq[i]).padStart(4,'0');
+          ks.textContent = i===0 ? 'a seed' : (seq[i]===6174 ? '→ 6174 · fixed point' : 'step '+i);
+          if(++i>=seq.length){ clearInterval(iv); setTimeout(runKap, 2800); }
+        }, 720);
+      };
+      runKap();
+    }
+    // Lo Shu — every line lights up and sums to 15
+    const cells=[...document.querySelectorAll('#loshu span')], sb=document.getElementById('loshu-sum');
+    if(cells.length===9){
+      const lines=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+      let li=0;
+      setInterval(()=>{
+        cells.forEach(c=>c.classList.remove('lit'));
+        lines[li%lines.length].forEach(k=>cells[k].classList.add('lit'));
+        if(sb) sb.classList.add('show');
+        li++;
+      }, 1600);
     }
   }
 </script>
