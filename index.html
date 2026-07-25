@@ -232,10 +232,105 @@
   footer .cras{ text-decoration:line-through; opacity:.5}
   footer a{ color:var(--gold); text-decoration:none}
 
-  @media (prefers-reduced-motion:reduce){ *{animation:none!important; transition:none!important; scroll-behavior:auto} }
+  /* ============================================================ COOLNESS PASS */
+  ::selection{ background:var(--shrine); color:#fff }
+
+  /* the glow field breathes & drifts */
+  body::before{ animation:aurora 26s ease-in-out infinite alternate }
+  @keyframes aurora{ 0%{ transform:translate3d(0,0,0) scale(1) }
+    100%{ transform:translate3d(-2%,1.6%,0) scale(1.09) } }
+
+  /* embers drifting up from the dark */
+  .embers{ position:fixed; inset:0; z-index:-1; pointer-events:none; overflow:hidden }
+  .embers i{ position:absolute; bottom:-16px; width:4px; height:4px; border-radius:50%;
+    background:radial-gradient(circle, rgba(231,198,108,.95), rgba(216,31,44,.5) 60%, transparent 72%);
+    filter:blur(.4px); opacity:0; animation:ember linear infinite }
+  @keyframes ember{ 0%{ transform:translateY(0) translateX(0) scale(.6); opacity:0 }
+    12%{ opacity:.8 } 88%{ opacity:.45 }
+    100%{ transform:translateY(-104vh) translateX(26px) scale(1.15); opacity:0 } }
+
+  /* scroll reveal (only when JS is on, so no-JS still shows everything) */
+  .js .reveal{ opacity:0; transform:translateY(28px) scale(.995);
+    transition:opacity .9s cubic-bezier(.2,.9,.25,1), transform .9s cubic-bezier(.2,.9,.25,1) }
+  .js .reveal.in{ opacity:1; transform:none }
+
+  /* section titles get a moving gold sheen */
+  .h-title{ background:linear-gradient(100deg,#f2ead9 20%,#e7c66c 42%,#fffdf5 50%,#e7c66c 58%,#f2ead9 80%);
+    background-size:220% auto; -webkit-background-clip:text; background-clip:text; color:transparent;
+    animation:shine 7s linear infinite }
+  @keyframes shine{ to{ background-position:220% center } }
+
+  /* door cards: cursor spotlight + glyph glow */
+  .door::before{ content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:0;
+    background:radial-gradient(220px 220px at var(--mx,50%) var(--my,50%), rgba(231,198,108,.17), transparent 60%);
+    opacity:0; transition:opacity .3s }
+  .door:hover::before{ opacity:1 }
+  .door > *{ position:relative; z-index:1 }
+  .door .glyph{ transition:transform .3s cubic-bezier(.2,.9,.25,1.4), filter .3s }
+  .door:hover .glyph{ transform:scale(1.14) rotate(-4deg); filter:drop-shadow(0 0 12px rgba(231,198,108,.55)) }
+
+  /* buttons: a light sweeps across on hover */
+  .btn{ position:relative; overflow:hidden }
+  .btn::after{ content:""; position:absolute; top:0; left:-130%; width:55%; height:100%;
+    background:linear-gradient(100deg, transparent, rgba(255,255,255,.4), transparent);
+    transform:skewX(-18deg); transition:left .6s ease }
+  .btn:hover::after{ left:150% }
+
+  /* exit panels: a slow drifting inner glow */
+  .exit{ position:relative; overflow:hidden }
+  .exit::before{ content:""; position:absolute; width:62%; aspect-ratio:1; border-radius:50%;
+    top:-22%; right:-12%; z-index:0; pointer-events:none; filter:blur(42px); opacity:.5;
+    animation:drift 13s ease-in-out infinite alternate }
+  .exit.work::before{ background:radial-gradient(circle, rgba(216,31,44,.55), transparent 70%) }
+  .exit.close::before{ background:radial-gradient(circle, rgba(231,198,108,.42), transparent 70%) }
+  .exit > *{ position:relative; z-index:1 }
+  @keyframes drift{ 0%{ transform:translate(0,0) } 100%{ transform:translate(-16%,20%) } }
+
+  /* ex-voto marble: a slow glint crosses the stone */
+  .plaque{ overflow:hidden }
+  .plaque::before{ content:""; position:absolute; inset:0; pointer-events:none;
+    background:linear-gradient(115deg, transparent 42%, rgba(255,255,255,.65) 50%, transparent 58%);
+    background-size:260% 100%; animation:glint 8s ease-in-out infinite }
+  @keyframes glint{ 0%{ background-position:175% 0 } 55%,100%{ background-position:-75% 0 } }
+  .plaque .merci,.plaque .to,.plaque .hodie{ position:relative }
+
+  /* hero atmosphere: smoke drift, glow breathe, votive heartbeat */
+  .portrait .smoke{ position:absolute; inset:0; z-index:1; pointer-events:none; mix-blend-mode:screen;
+    background:radial-gradient(42% 30% at 60% 34%, rgba(255,255,255,.12), transparent 68%);
+    animation:smoke 9s ease-in-out infinite }
+  @keyframes smoke{ 0%,100%{ transform:translateY(7px) scale(1); opacity:.45 }
+    50%{ transform:translateY(-9px) scale(1.07); opacity:.85 } }
+  .portrait-wrap .glow{ animation:glowBreathe 7s ease-in-out infinite }
+  @keyframes glowBreathe{ 0%,100%{ opacity:.78 } 50%{ opacity:1 } }
+  .seal .disc{ animation:discPulse 3.4s ease-in-out infinite }
+  @keyframes discPulse{ 0%,100%{ box-shadow:inset 0 1px 0 rgba(255,255,255,.4), 0 0 0 0 rgba(255,59,71,.5) }
+    50%{ box-shadow:inset 0 1px 0 rgba(255,255,255,.4), 0 0 16px 3px rgba(255,59,71,.4) } }
+
+  /* the instruments actually turn */
+  .still .spin{ transform-box:fill-box; transform-origin:center; animation:spinCW 90s linear infinite }
+  .still .spin-rev{ transform-box:fill-box; transform-origin:center; animation:spinCCW 120s linear infinite }
+  @keyframes spinCW{ to{ transform:rotate(360deg) } }
+  @keyframes spinCCW{ to{ transform:rotate(-360deg) } }
+  .still .moon-glow{ transform-box:fill-box; transform-origin:center; animation:moonBreathe 6s ease-in-out infinite }
+  @keyframes moonBreathe{ 0%,100%{ opacity:.10; transform:scale(1) } 50%{ opacity:.24; transform:scale(1.06) } }
+  .still .pulse{ animation:auraPulse 5s ease-in-out infinite }
+  @keyframes auraPulse{ 0%,100%{ opacity:.7 } 50%{ opacity:1 } }
+
+  @media (prefers-reduced-motion:reduce){ *{animation:none!important; transition:none!important; scroll-behavior:auto}
+    .js .reveal{ opacity:1!important; transform:none!important } }
 </style>
 </head>
 <body>
+
+<div class="embers" aria-hidden="true">
+  <i style="left:8%;  animation-duration:15s; animation-delay:0s"></i>
+  <i style="left:21%; animation-duration:19s; animation-delay:3s"></i>
+  <i style="left:39%; animation-duration:13s; animation-delay:6.5s"></i>
+  <i style="left:57%; animation-duration:17s; animation-delay:1.8s"></i>
+  <i style="left:69%; animation-duration:21s; animation-delay:4.6s"></i>
+  <i style="left:84%; animation-duration:16s; animation-delay:8.4s"></i>
+  <i style="left:93%; animation-duration:20s; animation-delay:2.4s"></i>
+</div>
 
 <!-- ============================================================= HERO -->
 <header class="hero">
@@ -246,13 +341,14 @@
         <picture>
           <source srcset="assets/portrait.webp" type="image/webp">
           <img src="assets/portrait.jpg" width="999" height="1333" fetchpriority="high"
-               alt="NaN — Chiang Mai, after midnight, a lit golden tower behind.">
+               alt="NaN at the Chiang Rai clocktower at night, its gold lights glowing behind her.">
         </picture>
+        <span class="smoke"></span>
         <span class="sheen"></span>
         <span class="tick tl"></span><span class="tick tr"></span>
         <span class="tick bl"></span><span class="tick br"></span>
       </figure>
-      <p class="portrait-cap">เชียงใหม่ · after midnight</p>
+      <p class="portrait-cap">เชียงราย · the clocktower · an auspicious hour</p>
     </div>
     <div class="hero-copy">
       <p class="kicker">NaNoBotCo · เชียงใหม่</p>
@@ -359,9 +455,10 @@
               <circle cx="300" cy="30" r="1" opacity=".6"/><circle cx="92" cy="250" r="1.2" opacity=".7"/>
               <circle cx="350" cy="230" r="1.4" opacity=".8"/><circle cx="40" cy="150" r="1" opacity=".5"/>
             </g>
+            <circle class="moon-glow" cx="200" cy="150" r="88" fill="url(#moonlit)" opacity="0.12"/>
             <!-- dial ring -->
             <circle cx="200" cy="150" r="104" fill="none" stroke="rgba(231,198,108,.35)" stroke-width="1"/>
-            <g stroke="rgba(231,198,108,.55)" stroke-width="1.4">
+            <g class="spin-rev" stroke="rgba(231,198,108,.55)" stroke-width="1.4">
               <line x1="200" y1="40" x2="200" y2="52"/><line x1="200" y1="248" x2="200" y2="260"/>
               <line x1="90" y1="150" x2="102" y2="150"/><line x1="298" y1="150" x2="310" y2="150"/>
               <line x1="123" y1="73" x2="131" y2="81"/><line x1="269" y1="219" x2="277" y2="227"/>
@@ -387,12 +484,14 @@
                 <stop offset="0%" stop-color="rgba(255,59,71,.42)"/><stop offset="100%" stop-color="rgba(255,59,71,0)"/>
               </radialGradient>
             </defs>
-            <rect x="0" y="0" width="400" height="300" fill="url(#aura)"/>
-            <!-- concentric yant squares, rotated -->
+            <rect class="pulse" x="0" y="0" width="400" height="300" fill="url(#aura)"/>
+            <!-- concentric yant squares, rotated + slowly turning -->
             <g transform="translate(200 150)" fill="none" stroke="#e7c66c" stroke-opacity=".5">
-              <rect x="-78" y="-78" width="156" height="156" transform="rotate(45)"/>
-              <rect x="-58" y="-58" width="116" height="116" transform="rotate(45)" stroke="#ff5560" stroke-opacity=".55"/>
-              <rect x="-40" y="-40" width="80" height="80"/>
+              <g class="spin">
+                <rect x="-78" y="-78" width="156" height="156" transform="rotate(45)"/>
+                <rect x="-58" y="-58" width="116" height="116" transform="rotate(45)" stroke="#ff5560" stroke-opacity=".55"/>
+                <rect x="-40" y="-40" width="80" height="80"/>
+              </g>
             </g>
             <!-- unalom spiral -->
             <path d="M200 96 c-16 6 -16 26 0 30 c14 3 14 -18 2 -20 c-8 -1 -8 10 0 11" fill="none"
@@ -459,14 +558,30 @@
 </footer>
 
 <script>
-  /* magnetic hover on the doors — subtle, respects reduced motion */
   const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  document.documentElement.classList.add('js');
+
+  /* scroll reveal — sections & cards rise in as they enter */
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold:.12, rootMargin:'0px 0px -7% 0px' });
+  ['.note','.h-eyebrow','.h-title','.door','.inst','.exit','.plaque'].forEach(sel=>{
+    document.querySelectorAll(sel).forEach((el,i)=>{
+      el.classList.add('reveal');
+      el.style.transitionDelay = ((i % 3) * 80) + 'ms';
+      io.observe(el);
+    });
+  });
+
+  /* magnetic hover on the doors — tilt + cursor spotlight */
   if(!reduce){
     document.querySelectorAll('.door').forEach(d=>{
       d.addEventListener('pointermove', e=>{
         const r=d.getBoundingClientRect();
         const x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
         d.style.transform=`translate(${x*7}px, ${y*7}px) rotateX(${ -y*4 }deg) rotateY(${ x*5 }deg)`;
+        d.style.setProperty('--mx', (e.clientX-r.left)+'px');
+        d.style.setProperty('--my', (e.clientY-r.top)+'px');
       });
       d.addEventListener('pointerleave', ()=> d.style.transform='');
     });
