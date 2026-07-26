@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>NaN — คุณแนน · Chiang Mai</title>
-<meta name="description" content="NaN — builder, fixer, developer in Chiang Mai. It gets done today. Tools, tradition, and field services at the seam of the digital and the old.">
+<meta name="description" content="NaN — explorer at the seam of the digital and the ancient. A wichaa practitioner who makes things that work like magic, with digital tools. Chiang Mai. It gets done today.">
 <meta name="color-scheme" content="dark">
 
 <meta name="author" content="NaN (Khun Nan · คุณแนน)">
@@ -17,13 +17,13 @@
 <!-- Open Graph / share card -->
 <meta property="og:type" content="profile">
 <meta property="og:title" content="NaN — คุณแนน">
-<meta property="og:description" content="Builder · fixer · developer in Chiang Mai. It gets done today.">
+<meta property="og:description" content="Explorer at the seam of the digital and the ancient. Wichaa practitioner, Chiang Mai. It gets done today.">
 <meta property="og:url" content="https://nanobotco.github.io/">
 <meta property="og:image" content="https://nanobotco.github.io/assets/portrait.jpg">
 <meta property="og:site_name" content="NaNoBotCo">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="NaN — คุณแนน">
-<meta name="twitter:description" content="Builder · fixer · developer in Chiang Mai. It gets done today.">
+<meta name="twitter:description" content="Explorer at the seam of the digital and the ancient. Wichaa practitioner, Chiang Mai. It gets done today.">
 <meta name="twitter:image" content="https://nanobotco.github.io/assets/portrait.jpg">
 
 <meta name="generator" content="hand-written HTML/CSS/SVG · zero dependencies · read by machines">
@@ -39,14 +39,14 @@
       "@id": "https://nanobotco.github.io/#nan",
       "name": "NaN",
       "alternateName": ["Khun Nan", "คุณแนน", "NaNoBotCo"],
-      "jobTitle": ["Developer", "Fixer", "Researcher"],
-      "description": "A builder at the seam of the digital and the old. Deep research and swarms of small crawlers — a hundred legs on one problem. Solves what others call unsolvable.",
+      "jobTitle": ["Wichaa practitioner", "Developer", "Fixer", "Researcher"],
+      "description": "An explorer at the seam of the digital and the ancient. A wichaa practitioner — makes things that work like magic, with digital tools. Deep research and swarms of small crawlers, a hundred legs on one problem. Solves what others call unsolvable.",
       "url": "https://nanobotco.github.io/",
       "image": "https://nanobotco.github.io/assets/portrait.jpg",
       "email": "530kings@proton.me",
       "homeLocation": { "@type": "Place", "name": "Chiang Mai, Thailand" },
       "knowsLanguage": ["en", "th"],
-      "knowsAbout": ["Lanna manuscripts", "sak yant", "Thai and Indian folklore", "web crawling", "data aggregation", "software development", "medical tourism", "number theory"],
+      "knowsAbout": ["wichaa (Thai magico-ritual practice)", "Lanna manuscripts", "sak yant", "Thai and Indian folklore", "web crawling", "data aggregation", "software development", "medical tourism", "number theory"],
       "worksFor": { "@id": "https://nanobotco.github.io/#org" },
       "sameAs": ["https://github.com/NaNoBotCo", "https://wichaa.net", "https://defiant.to"]
     },
@@ -451,6 +451,46 @@
   .still .pulse{ animation:auraPulse 5s ease-in-out infinite }
   @keyframes auraPulse{ 0%,100%{ opacity:.7 } 50%{ opacity:1 } }
 
+  /* -------------------------------------------------------- π ticker */
+  .pi-ticker{ display:flex; align-items:center; gap:12px; width:100%; padding:7px 18px;
+    border-bottom:1px solid var(--glass-line); background:rgba(0,0,0,.28); overflow:hidden }
+  .pi-label{ font-family:var(--serif); font-style:italic; font-size:15px; color:var(--gold); flex:none; opacity:.9 }
+  .pi-window{ flex:1; overflow:hidden; -webkit-mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+    mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent) }
+  .pi-track{ display:inline-flex; white-space:nowrap; animation:pistream 130s linear infinite; will-change:transform }
+  .pi-track span{ font-family:var(--mono); font-size:12px; letter-spacing:.26em; color:var(--gold); opacity:.5 }
+  @keyframes pistream{ from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+  /* -------------------------------------------------------- unalome */
+  svg.una{ fill:none; color:var(--gold); display:inline-block; width:20px; height:60px }
+  .una-crown{ text-align:center; margin:0 auto 6px }
+  .una-crown svg.una{ width:20px; height:58px; opacity:.55 }
+  .unarow{ display:flex; justify-content:center; align-items:flex-end; gap:30px; padding:8px 0 2px; opacity:.6 }
+  .unarow svg.una{ width:18px; height:52px }
+  .unarow svg.una:nth-child(2),.unarow svg.una:nth-child(4){ height:62px }
+  .unarow svg.una:nth-child(3){ height:76px; opacity:1 }
+  .plaque-row{ display:flex; align-items:center; justify-content:center; gap:26px }
+  .una-side{ width:22px; height:78px; opacity:.5; flex:none }
+  .una-ghost{ position:absolute; top:-16px; right:-8px; width:120px; height:340px; opacity:.05; z-index:0; pointer-events:none }
+  .hero-copy{ position:relative }
+  .hero-copy > *{ position:relative; z-index:1 }
+  .hero-copy .una-ghost{ z-index:0 }
+
+  /* -------------------------------------------------------- creed line + kaprekar input */
+  .creed-line{ font-family:var(--serif); font-style:italic; font-size:clamp(16px,2.2vw,19px);
+    color:var(--paper); opacity:.92; margin:14px 0 0; max-width:36ch }
+  .creed-line b{ font-style:normal; color:var(--gold); font-weight:600 }
+  .kap-try{ display:flex; gap:8px; margin-top:16px }
+  .kap-try input{ flex:1; min-width:0; background:rgba(255,255,255,.03); border:1px solid var(--glass-line);
+    border-radius:10px; padding:9px 12px; color:var(--paper); font-family:var(--mono); font-size:15px; letter-spacing:.14em }
+  .kap-try input::placeholder{ color:var(--muted); letter-spacing:.06em }
+  .kap-try input:focus{ outline:none; border-color:var(--gold) }
+  .kap-try button{ flex:none; background:var(--gold); color:var(--ink); border:0; border-radius:10px; padding:9px 15px;
+    font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase; cursor:pointer;
+    transition:transform .15s, background .2s, color .2s }
+  .kap-try button:hover{ background:var(--shrine-lit); color:#fff }
+  .kap-try button:active{ transform:scale(.95) }
+
   @media (prefers-reduced-motion:reduce){ *{animation:none!important; transition:none!important; scroll-behavior:auto}
     .js .reveal{ opacity:1!important; transform:none!important } }
 </style>
@@ -462,6 +502,28 @@
   data-kaprekar="6174"
   data-phi="1.6180339887"
   data-creed="HODIE non CRAS">
+
+<!-- π, streaming — because it never stops -->
+<div class="pi-ticker" aria-hidden="true">
+  <span class="pi-label">π</span>
+  <div class="pi-window"><div class="pi-track">
+    <span>3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460955058223172535940812848111745028410270193852110555964462294895493038196442881097566593344612847564823378678316&nbsp;·&nbsp;</span>
+    <span>3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460955058223172535940812848111745028410270193852110555964462294895493038196442881097566593344612847564823378678316&nbsp;·&nbsp;</span>
+  </div></div>
+</div>
+
+<!-- sacred geometry: the unalome, reused throughout -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="unalome" viewBox="0 0 44 132">
+    <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 99 L22 20"/>
+      <path d="M22 116 C 9 116 9 99 22 99 C 33 99 33 113 22 113 C 15 113 16 104 22 104"/>
+      <path d="M22 34 C 15 31 13 24 18 19"/>
+      <path d="M22 34 C 29 31 31 24 26 19"/>
+    </g>
+    <circle cx="22" cy="12" r="2.6" fill="currentColor"/>
+  </symbol>
+</defs></svg>
 
 <!--
   ┌─ bots welcome ────────────────────────────────────────────────────────
@@ -510,9 +572,11 @@
       <p class="portrait-cap">เชียงราย · the clocktower · an auspicious hour</p>
     </div>
     <div class="hero-copy">
+      <svg class="una una-ghost" aria-hidden="true"><use href="#unalome"/></svg>
       <p class="kicker">NaNoBotCo · เชียงใหม่</p>
-      <h1 class="veil">A builder at the seam of the digital <span class="amp">&amp;</span> the old.</h1>
-      <p class="locus">Developer · Fixer · Maker of small strange tools</p>
+      <h1 class="veil">An explorer at the seam of the digital <span class="amp">and</span> the ancient.</h1>
+      <p class="locus">Wichaa practitioner · Developer · Fixer</p>
+      <p class="creed-line">A <b>wichaa</b> practitioner — I make things that work like magic, with digital tools.</p>
       <div class="seal">
         <span class="disc"></span>
         <b>HODIE</b>
@@ -576,6 +640,7 @@
 <!-- ============================================================= DOORS -->
 <section>
   <div class="wrap">
+    <div class="una-crown"><svg class="una"><use href="#unalome"/></svg></div>
     <p class="h-eyebrow">The Doors</p>
     <h2 class="h-title">One node, many rooms</h2>
     <div class="doors">
@@ -631,6 +696,7 @@
 <!-- ============================================================= INSTRUMENTS -->
 <section>
   <div class="wrap">
+    <div class="una-crown"><svg class="una"><use href="#unalome"/></svg></div>
     <p class="h-eyebrow">Living Proof</p>
     <h2 class="h-title">A couple of things I made, still ticking</h2>
     <div class="instruments">
@@ -708,6 +774,7 @@
 <!-- ============================================================= NUMBER MAGIC -->
 <section id="numbers">
   <div class="wrap">
+    <div class="una-crown"><svg class="una"><use href="#unalome"/></svg></div>
     <p class="h-eyebrow">For the ones who count</p>
     <h2 class="h-title">Number magic</h2>
     <div class="magic">
@@ -735,6 +802,10 @@
         <p class="kap" id="kap-num">6174</p>
         <p class="eq" id="kap-step">a fixed point</p>
         <p>Take any four digits, not all the same. Sort them high, sort them low, subtract. Repeat. Every road runs to <b>6174</b> — Kaprekar's constant.</p>
+        <div class="kap-try">
+          <input id="kap-in" type="text" inputmode="numeric" maxlength="4" placeholder="your 4 digits" aria-label="four digits">
+          <button id="kap-go" type="button">fall →</button>
+        </div>
       </div>
 
       <div class="mag const">
@@ -770,6 +841,14 @@
   </div>
 </section>
 
+<div class="unarow" aria-hidden="true">
+  <svg class="una"><use href="#unalome"/></svg>
+  <svg class="una"><use href="#unalome"/></svg>
+  <svg class="una"><use href="#unalome"/></svg>
+  <svg class="una"><use href="#unalome"/></svg>
+  <svg class="una"><use href="#unalome"/></svg>
+</div>
+
 <!-- ============================================================= EXITS -->
 <section>
   <div class="wrap">
@@ -799,12 +878,14 @@
 
 <!-- ============================================================= EX-VOTO -->
 <div class="votive">
-  <div class="wrap">
+  <div class="wrap plaque-row">
+    <svg class="una una-side" aria-hidden="true"><use href="#unalome"/></svg>
     <div class="plaque">
       <div class="merci">MERCI</div>
       <div class="to">Saint-Expédit · La Réunion</div>
       <div class="hodie">HODIE · NON CRAS</div>
     </div>
+    <svg class="una una-side" aria-hidden="true"><use href="#unalome"/></svg>
   </div>
 </div>
 
@@ -922,26 +1003,36 @@
     ob.textContent = '#'+n.toLocaleString()+' · prime';
   }
 
+  // Kaprekar's routine — auto-runs when idle, and falls for your own four digits
+  const kn=document.getElementById('kap-num'), ks=document.getElementById('kap-step');
+  const kin=document.getElementById('kap-in'), kgo=document.getElementById('kap-go');
+  if(kn && ks){
+    const pad=x=>String(x).padStart(4,'0');
+    const k=x=>{ const d=pad(x).split('').map(Number);
+      const hi=+d.slice().sort((a,b)=>b-a).join(''), lo=+d.slice().sort((a,b)=>a-b).join(''); return hi-lo; };
+    const build=n=>{ const seq=[n]; let g=0; while(n!==6174 && g<12){ n=k(n); seq.push(n); g++; } return seq; };
+    let busy=false, autoT=null;
+    const play=(seq, after)=>{ busy=true; let i=0;
+      const iv=setInterval(()=>{
+        kn.textContent=pad(seq[i]);
+        ks.textContent = i===0 ? 'a seed' : (seq[i]===6174 ? '→ 6174 · fixed point' : 'step '+i);
+        if(++i>=seq.length){ clearInterval(iv); busy=false; after&&after(); }
+      }, 720);
+    };
+    const auto=()=>{ if(reduce||busy) return;
+      let n=Math.floor(Math.random()*8999)+1000; if(new Set(pad(n)).size===1) n+=1;
+      play(build(n), ()=>{ autoT=setTimeout(auto, 2800); }); };
+    const mine=()=>{ const v=(kin&&kin.value||'').replace(/\D/g,'').slice(0,4);
+      if(v.length<4){ ks.textContent='four digits, please'; return; }
+      if(new Set(v).size===1){ ks.textContent='not all the same'; return; }
+      clearTimeout(autoT); if(busy) return; play(build(+v), ()=>{ if(!reduce) autoT=setTimeout(auto, 3200); }); };
+    if(kgo) kgo.addEventListener('click', mine);
+    if(kin){ kin.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); mine(); } });
+      kin.addEventListener('input', ()=>{ kin.value=kin.value.replace(/\D/g,'').slice(0,4); }); }
+    auto();
+  }
+
   if(!reduce){
-    // Kaprekar's routine, running live to 6174
-    const kn=document.getElementById('kap-num'), ks=document.getElementById('kap-step');
-    if(kn && ks){
-      const k=x=>{ const d=String(x).padStart(4,'0').split('').map(Number);
-        const hi=+d.slice().sort((a,b)=>b-a).join(''), lo=+d.slice().sort((a,b)=>a-b).join(''); return hi-lo; };
-      const runKap=()=>{
-        let n=Math.floor(Math.random()*8999)+1000;
-        if(new Set(String(n).padStart(4,'0')).size===1) n+=1;
-        const seq=[n]; let g=0;
-        while(n!==6174 && g<12){ n=k(n); seq.push(n); g++; }
-        let i=0;
-        const iv=setInterval(()=>{
-          kn.textContent=String(seq[i]).padStart(4,'0');
-          ks.textContent = i===0 ? 'a seed' : (seq[i]===6174 ? '→ 6174 · fixed point' : 'step '+i);
-          if(++i>=seq.length){ clearInterval(iv); setTimeout(runKap, 2800); }
-        }, 720);
-      };
-      runKap();
-    }
     // Lo Shu — every line lights up and sums to 15
     const cells=[...document.querySelectorAll('#loshu span')], sb=document.getElementById('loshu-sum');
     if(cells.length===9){
