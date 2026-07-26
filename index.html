@@ -350,6 +350,31 @@
   .exit .row{ display:flex; gap:12px; flex-wrap:wrap}
 
   /* -------------------------------------------------------- EX-VOTO / FOOTER */
+  /* ---------------------------------------------------------- HODIE ledger */
+  .ledger-sub{ max-width:560px; margin:14px auto 34px; text-align:center; color:var(--muted);
+    font-family:var(--serif); font-size:clamp(16px,2.2vw,18px); line-height:1.6 }
+  .ledger{ list-style:none; margin:0 auto; padding:0; max-width:660px;
+    display:flex; flex-direction:column; gap:10px }
+  .ledger-day{ display:flex; align-items:baseline; gap:16px; padding:14px 20px;
+    background:var(--glass); border:1px solid var(--glass-line); border-radius:14px;
+    transition:border-color .35s ease, transform .35s ease, background .35s ease }
+  .ledger-day:hover{ border-color:rgba(231,198,108,.35); transform:translateX(4px);
+    background:rgba(255,255,255,.065) }
+  .ledger-day time{ font-family:var(--mono); font-size:12px; letter-spacing:.16em; color:var(--gold);
+    white-space:nowrap; flex:0 0 auto }
+  .ledger-day .did{ font-family:var(--serif); font-size:17px; line-height:1.55 }
+  .ledger-day .did a{ color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(231,198,108,.4) }
+  .ledger-day .did a:hover{ color:#fffdf5; border-bottom-color:var(--gold) }
+  .ledger-day.today{ border-color:rgba(216,31,44,.45);
+    background:linear-gradient(120deg, rgba(216,31,44,.10), var(--glass) 55%) }
+  .ledger-day.today time{ color:var(--shrine-lit) }
+  .ledger-day .wick{ flex:0 0 auto; width:8px; height:8px; align-self:center; border-radius:50%;
+    background:radial-gradient(circle at 50% 35%, #ffe9a8, var(--gold) 60%, transparent 78%);
+    box-shadow:0 0 10px 2px rgba(231,198,108,.55); animation:wick 2.6s ease-in-out infinite }
+  @keyframes wick{ 0%,100%{ transform:scale(1); opacity:.85 } 50%{ transform:scale(1.3); opacity:1 } }
+  @media (prefers-reduced-motion:reduce){ .ledger-day .wick{ animation:none } .ledger-day:hover{ transform:none } }
+  @media (max-width:560px){ .ledger-day{ flex-wrap:wrap; gap:6px 14px } }
+
   .votive{ text-align:center; padding:clamp(50px,8vw,90px) 0 30px}
   .plaque{ display:inline-block; padding:22px 40px; border-radius:8px;
     background:linear-gradient(160deg,#efe9dd,#cdc4b2); color:#3a2f2c;
@@ -877,6 +902,21 @@
   </div>
 </section>
 
+<!-- ============================================================= HODIE LEDGER -->
+<section id="hodie">
+  <div class="wrap">
+    <div class="una-crown"><svg class="una"><use href="#unalome"/></svg></div>
+    <p class="h-eyebrow">The Ledger</p>
+    <h2 class="h-title">Done today</h2>
+    <p class="ledger-sub">The saint counts in favors, so this page keeps a ledger — one line a day, the finest thing that got finished in the workshop. The workshop writes it itself, each evening.</p>
+    <ol class="ledger" reversed>
+      <!-- HODIE-LEDGER:BEGIN — machine-tended: newest first, at most 9 lines, only the newest carries class "today" and the wick -->
+      <li class="ledger-day today"><span class="wick" aria-hidden="true"></span><time datetime="2026-07-26">26·07·2026</time><span class="did">Opened <a href="https://wichaa.net/need">Find by need</a> on wichaa.net — the amulet archive now answers the way people actually ask: start from what you need, and the right charms come out to meet you.</span></li>
+      <!-- HODIE-LEDGER:END -->
+    </ol>
+  </div>
+</section>
+
 <!-- ============================================================= EX-VOTO -->
 <div class="votive">
   <div class="wrap plaque-row">
@@ -946,7 +986,7 @@
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold:.12, rootMargin:'0px 0px -7% 0px' });
-  ['.note','.takhaap-rule','.h-eyebrow','.h-title','.door','.inst','.mag','.exit','.plaque'].forEach(sel=>{
+  ['.note','.takhaap-rule','.h-eyebrow','.h-title','.door','.inst','.mag','.exit','.ledger-day','.plaque'].forEach(sel=>{
     document.querySelectorAll(sel).forEach((el,i)=>{
       el.classList.add('reveal');
       el.style.transitionDelay = ((i % 3) * 80) + 'ms';
