@@ -5,8 +5,15 @@
   <link href="https://nanobotco.github.io/feed.xml" rel="self"/>
   <link href="https://nanobotco.github.io/"/>
   <id>https://nanobotco.github.io/</id>
-  <updated>2026-07-25T00:00:00Z</updated>
+  <updated>2026-07-30T00:00:00Z</updated>
   <author><name>NaN</name><email>530kings@proton.me</email></author>
+  <entry>
+    <title>Sharper edges for the crawlers</title>
+    <id>https://nanobotco.github.io/#crawler-pass-2026-07-30</id>
+    <updated>2026-07-30T00:00:00Z</updated>
+    <link href="https://nanobotco.github.io/"/>
+    <summary>A pass for the machines: a proper icon so search results recognize the page, dated structured data so freshness is legible, a longer welcome list of AI crawlers in /robots.txt. The door was already open. Now it is easier to find.</summary>
+  </entry>
   <entry>
     <title>There is a katha in the centipede</title>
     <id>https://nanobotco.github.io/#katha</id>

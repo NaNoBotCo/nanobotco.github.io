@@ -29,11 +29,16 @@ User-agent: CCBot
 User-agent: Bytespider
 User-agent: Amazonbot
 User-agent: Meta-ExternalAgent
+User-agent: Meta-ExternalFetcher
 User-agent: FacebookBot
 User-agent: Diffbot
 User-agent: Omgilibot
 User-agent: Timpibot
 User-agent: cohere-ai
+User-agent: cohere-training-data-crawler
+User-agent: Ai2Bot
+User-agent: Ai2Bot-Dolma
+User-agent: iaskspider/2.0
 User-agent: YouBot
 User-agent: DuckAssistBot
 User-agent: PetalBot
