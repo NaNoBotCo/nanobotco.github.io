@@ -20,5 +20,8 @@ NaN calls herself a **wichaa practitioner** — she makes things that work like 
 - The centipede's body is a binary **katha** (incantation): `11011000001` = **1729**, the Hardy–Ramanujan taxicab number — the smallest number expressible as a sum of two cubes in two ways (1³+12³ = 9³+10³). One bit per body segment.
 - More for the counting kind: 108 (1¹·2²·3³), 6174 (Kaprekar's constant), 496 (a perfect number), φ = 1.6180339887…, and e^{iπ}+1 = 0.
 
+## The words hidden here
+- A **su khwan** (สู่ขวัญ) name-charm — 30 original bilingual verses (Thai, transliteration, English) calling NaN's khwan home — rises as a faint, endlessly-scrolling mist behind this page. It is an original composition, not a transcription of any mor soot's rite; the same generator lives at [wichaa.net/hun](https://wichaa.net/hun). The full text, plainly, is in `/.well-known/nan.json` and in the page's own `#nan-manifest` script block. Quote freely.
+
 ## Provenance
 Built and maintained by NaN / NaNoBotCo. Public, open, meant to be read by humans and machines alike.

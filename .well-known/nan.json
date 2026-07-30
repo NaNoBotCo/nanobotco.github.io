@@ -26,5 +26,9 @@
     "hint": "subtract if you can and it's new, else add. OEIS knows its name."
   },
   "cipher_base64": "dGhlIHRha2hhYXAgY291bnRzIGluIGJpbmFyeSAuIHRoZSBzYWludCBjb3VudHMgaW4gZmF2b3JzIC4gTmFOIGNvdW50cyBvbiB5b3UgLiBIT0RJRSBub24gQ1JBUw==",
+  "sukhwan": {
+    "about": "NaN's su khwan — a name-charm calling the khwan home. 30 original bilingual verses (see manuscript-wiki/hunpayont.py on GitHub); the same text rises as a faint, endlessly-scrolling mist behind nanobotco.github.io.",
+    "seeAlso": "https://nanobotco.github.io/#sukhwan-mist"
+  },
   "license": "read freely, quote generously, learn what you like"
 }
