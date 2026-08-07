@@ -1,0 +1,64 @@
+name: HODIE ledger
+
+# Fills any missing day in the "Done today" ledger and publishes it.
+# Runs entirely on GitHub — no dependency on any machine being awake.
+# Times are UTC here; NaN is UTC+7, so these are 09:09 and 21:09 local.
+on:
+  schedule:
+    - cron: "9 2 * * *"
+    - cron: "9 14 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: hodie-ledger
+  cancel-in-progress: false
+
+jobs:
+  ledger:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install --quiet "anthropic>=0.69" "pydantic>=2"
+
+      - name: Write the day's line
+        id: write
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python .github/scripts/hodie_ledger.py
+
+      - name: Commit and push
+        if: steps.write.outputs.changed == 'true'
+        run: |
+          git config user.name  "NaNoBotCo"
+          git config user.email "skunkhaus@gmail.com"
+          git add index.html
+          git commit -m "HODIE ledger: ${{ steps.write.outputs.dates }}
+
+          Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
+          git push origin HEAD:main
+
+      - name: Confirm it went live
+        if: steps.write.outputs.changed == 'true'
+        run: |
+          newest=$(echo "${{ steps.write.outputs.dates }}" | awk '{print $1}')
+          echo "waiting for Pages to serve datetime=\"$newest\" …"
+          for i in $(seq 1 40); do
+            if curl -fsSL https://nanobotco.github.io/ | grep -q "datetime=\"$newest\""; then
+              echo "live after ~$((i * 15))s"
+              exit 0
+            fi
+            sleep 15
+          done
+          echo "::error::Pushed, but nanobotco.github.io still does not show $newest after 10 minutes."
+          echo "::error::Legacy Pages may not rebuild on pushes made with GITHUB_TOKEN."
+          echo "::error::Fix: add a PAT with 'contents: write' as secret HODIE_PUSH_TOKEN and use it in the push step."
+          exit 1
