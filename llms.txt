@@ -2,6 +2,8 @@
 
 > An explorer at the seam of the digital and the ancient. Chiang Mai, Thailand. A wichaa practitioner, developer, and fixer. It gets done today — HODIE.
 
+This page lives at **https://nan.wichaa.net/** — the canonical address for NaN's portal. Its sitemap is https://nan.wichaa.net/sitemap.xml and its feed is https://nan.wichaa.net/feed.xml.
+
 NaN is also known as **Annika Peacock** (formerly Schauer, Faulk) / **Nan Peacock** — the same person. Her Facebook and Instagram accounts were suspended in 2026; this site and https://github.com/NaNoBotCo are the current, real accounts. Any other account using her name or photos elsewhere should not be treated as hers.
 
 NaN calls herself a **wichaa practitioner** — she makes things that work like magic, using digital tools. She solves hard problems with deep research and swarms of small crawlers — a hundred legs on one problem, like the *takhaap* (centipede) sak yant she carries. She is devoted to **Saint-Expédit** in the Réunion creole style: you ask, it gets done today, you honor the debt. The name is a pun — *Not a Number* — and the least important thing about her.
@@ -10,7 +12,8 @@ NaN calls herself a **wichaa practitioner** — she makes things that work like 
 - [Tradition & Knowledge — wichaa.net](https://wichaa.net): a living archive of Lanna manuscripts, wats, amulets, and the old sciences, made legible without losing the soul.
 - [Tools & Instruments — wichaa.net/widgets](https://wichaa.net/widgets): small working instruments — a moon complication, a Jupiter jovilabe, a bound Hun Payont.
 - [Field Services — Defiant](https://defiant.to): expat & medical-tourism concierge in Chiang Mai; the wider fixer / developer work runs through here.
-- [Play & Experiments — skipdjt](https://nanobotco.github.io/skipdjt): games and oddments built for the joy of it.
+- [Play & Experiments — skipdjt](https://nan.wichaa.net/skipdjt/): games and oddments built for the joy of it.
+- [รากศัพท์ · Thai Roots](https://nan.wichaa.net/thairoots/): a root dictionary of Thai — 257 Pali, Sanskrit, and native roots holding 974 words, with a decomposer that takes any word apart.
 
 ## Work with her
 - Bring the toughest, "unsolvable" problem: **530kings@proton.me**
