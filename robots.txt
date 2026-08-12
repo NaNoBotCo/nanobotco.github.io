@@ -46,4 +46,4 @@ User-agent: ImagesiftBot
 User-agent: Kagibot
 Allow: /
 
-Sitemap: https://nanobotco.github.io/sitemap.xml
+Sitemap: https://nan.wichaa.net/sitemap.xml
