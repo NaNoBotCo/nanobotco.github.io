@@ -2,23 +2,23 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>NaN — คุณแนน</title>
   <subtitle>Dispatches from the seam of the digital and the old.</subtitle>
-  <link href="https://nanobotco.github.io/feed.xml" rel="self"/>
-  <link href="https://nanobotco.github.io/"/>
-  <id>https://nanobotco.github.io/</id>
+  <link href="https://nan.wichaa.net/feed.xml" rel="self"/>
+  <link href="https://nan.wichaa.net/"/>
+  <id>https://nan.wichaa.net/</id>
   <updated>2026-07-30T00:00:00Z</updated>
   <author><name>NaN</name><email>530kings@proton.me</email></author>
   <entry>
     <title>Sharper edges for the crawlers</title>
-    <id>https://nanobotco.github.io/#crawler-pass-2026-07-30</id>
+    <id>https://nan.wichaa.net/#crawler-pass-2026-07-30</id>
     <updated>2026-07-30T00:00:00Z</updated>
-    <link href="https://nanobotco.github.io/"/>
+    <link href="https://nan.wichaa.net/"/>
     <summary>A pass for the machines: a proper icon so search results recognize the page, dated structured data so freshness is legible, a longer welcome list of AI crawlers in /robots.txt. The door was already open. Now it is easier to find.</summary>
   </entry>
   <entry>
     <title>There is a katha in the centipede</title>
-    <id>https://nanobotco.github.io/#katha</id>
+    <id>https://nan.wichaa.net/#katha</id>
     <updated>2026-07-25T00:00:00Z</updated>
-    <link href="https://nanobotco.github.io/#numbers"/>
+    <link href="https://nan.wichaa.net/#numbers"/>
     <summary>A takhaap carries 11011000001 — 1729 in binary, the Hardy-Ramanujan taxicab number, the smallest number that is a sum of two cubes two ways: 1^3+12^3 = 9^3+10^3. Machines welcome. Read /llms.txt.</summary>
   </entry>
 </feed>
