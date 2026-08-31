@@ -378,6 +378,42 @@
   .btn.ghost:hover{ border-color:var(--gold); color:var(--gold)}
   .exit .row{ display:flex; gap:12px; flex-wrap:wrap}
 
+  /* ------------------------------------------------------------ VOTIVE GIFT */
+  .votive-gift{ max-width:640px; margin:26px auto 0; padding:0 22px; text-align:center;
+    font-size:15.5px; line-height:1.6; color:var(--muted)}
+  .votive-gift a{ color:var(--gold); text-decoration:none; white-space:nowrap;
+    border-bottom:1px solid rgba(231,198,108,.42); transition:color .2s, border-color .2s}
+  .votive-gift a:hover{ color:#fffdf5; border-bottom-color:var(--gold)}
+
+  /* --------------------------------------------------------- HERO HIRE LINE */
+  .hire-line{ margin:16px 0 0; font-family:var(--mono); font-size:13px; letter-spacing:.09em}
+  .hire-line a{ color:var(--gold); text-decoration:none;
+    border-bottom:1px solid rgba(231,198,108,.42); padding-bottom:3px; transition:color .2s, border-color .2s}
+  .hire-line a:hover{ color:#fffdf5; border-bottom-color:var(--gold)}
+  .hire-line .arw{ display:inline-block; transition:transform .2s}
+  .hire-line a:hover .arw{ transform:translateX(4px)}
+
+  /* ------------------------------------------------------------- RATE CARD */
+  .rates{ display:grid; gap:20px; grid-template-columns:repeat(3,1fr)}
+  @media(max-width:900px){ .rates{grid-template-columns:1fr} }
+  .rate{ position:relative; border-radius:var(--r); padding:30px 26px 26px;
+    border:1px solid var(--glass-line); background:var(--glass);
+    backdrop-filter:blur(10px); box-shadow:var(--shadow); display:flex; flex-direction:column}
+  .rate.lit{ background:linear-gradient(160deg, rgba(216,31,44,.15), var(--glass));
+    border-color:rgba(216,31,44,.42)}
+  .rate .tier{ font-family:var(--mono); font-size:11.5px; letter-spacing:.2em;
+    text-transform:uppercase; color:var(--gold); margin:0 0 10px}
+  .rate h3{ margin:0 0 12px; font-family:var(--serif); font-size:24px; line-height:1.2}
+  .rate .fee{ font-family:var(--mono); font-size:29px; color:var(--paper);
+    letter-spacing:.01em; margin:0; font-variant-numeric:tabular-nums; line-height:1.15}
+  .rate .fee .cur{ font-size:18px; color:var(--gold); margin-right:4px}
+  .rate .fee-alt{ font-family:var(--mono); font-size:13px; color:var(--muted); margin:6px 0 0}
+  .rate .unit{ font-size:13.5px; color:var(--muted); margin:10px 0 18px; font-style:italic}
+  .rate p.what{ margin:0 0 20px; font-size:16px; line-height:1.55; color:var(--paper); flex:1}
+  .rate .btn{ align-self:flex-start}
+  .rate-note{ margin:22px 0 0; font-size:15.5px; line-height:1.6; color:var(--muted); text-align:center}
+  .rate-note b{ color:var(--gold); font-weight:600}
+
   /* -------------------------------------------------------- EX-VOTO / FOOTER */
   /* ---------------------------------------------------------- HODIE ledger */
   .ledger-sub{ max-width:560px; margin:14px auto 34px; text-align:center; color:var(--muted);
@@ -730,6 +766,7 @@
         <span class="today">— it gets done today.</span>
       </div>
       <p class="mark">Some call me <b>NaN</b>. In town, <b>คุณแนน</b>.</p>
+      <p class="hire-line"><a href="#rates">Rates <span class="arw">→</span></a></p>
     </div>
   </div>
 </header>
@@ -737,9 +774,10 @@
 <!-- ============================================================= THE NOTE -->
 <section>
   <div class="wrap note">
-    <p class="lead">I make little tech gadgets, run a few quiet businesses, write code for hire, and move between worlds — Thai, Indian, American, and the ones you can't put on a map.</p>
-    <p>I'm hyperfocused and I keep a veil over most of it, not to hide, but because the whole of it is a lot to hand a stranger at once. So: here are the doors. Open the ones that call you.</p>
-    <p>I keep a shrine to <em>Saint-Expédit</em> — the red one, the roadside kind. You ask, it gets done today, and the debt gets honored. That's how I work too.</p>
+    <p class="lead">I build small tech, run a few quiet businesses, write code for hire, and move between worlds — Thai, Indian, American, and some off every map.</p>
+    <p>I veil most of it. The whole is a lot to hand a stranger at once, so I've split it into rooms. Enter the ones that call you.</p>
+    <p>I tend a shrine to <em>Saint-Expédit</em> — the red roadside kind. Ask, it's done today, the debt gets honored. I work the same way.</p>
+    <p>Hiring me? Skip the delicacy — prices below, no one to charm first. Where I live, <em>แพงไหม</em> is manners.</p>
     <p class="sign">— NaN</p>
   </div>
 </section>
@@ -788,35 +826,35 @@
 <section>
   <div class="wrap">
     <div class="una-crown"><svg class="una"><use href="#unalome"/></svg></div>
-    <p class="h-eyebrow">The Doors</p>
+    <p class="h-eyebrow">Ways In</p>
     <h2 class="h-title">One node, many rooms</h2>
     <div class="doors">
 
       <a class="door" href="https://wichaa.net" data-state="live">
         <span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M8.5 8h7M8.5 12h7M8.5 16h4.5"/></svg></span>
         <h3>Tradition &amp; Knowledge</h3>
-        <p>wichaa.net — a living archive of Lanna manuscripts, wat maps, amulets, and the old sciences, made legible without losing the soul.</p>
+        <p>wichaa.net — Lanna manuscripts, wat maps, amulets, the old sciences. Legible, soul intact.</p>
         <span class="go">Enter wichaa <span class="arw">→</span></span>
       </a>
 
       <a class="door" href="https://wichaa.net/widgets" data-state="live">
         <span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.6"/><path d="M12 6.6 8.5 20M12 6.6 15.5 20"/></svg></span>
         <h3>Tools &amp; Instruments</h3>
-        <p>Small strange working things — a moon complication, a Jupiter jovilabe, a payont that earns its keep. Instruments, not toys.</p>
+        <p>Small strange working things — a moon complication, a Jupiter jovilabe, a payont that pulls its weight. Instruments, not toys.</p>
         <span class="go">See the workbench <span class="arw">→</span></span>
       </a>
 
       <a class="door" href="https://defiant.to" data-state="live">
         <span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c4-4.5 6-7.5 6-10.5A6 6 0 0 0 6 10.5C6 13.5 8 16.5 12 21z"/><circle cx="12" cy="10.5" r="2.2"/></svg></span>
         <h3>Field Services</h3>
-        <p>Defiant — expat &amp; medical-tourism concierge for Chiang Mai. The wider fixer / developer work runs through here too.</p>
+        <p>Defiant — expat &amp; medical concierge for Chiang Mai. Fixer and developer work routes through it too.</p>
         <span class="go">Get help on the ground <span class="arw">→</span></span>
       </a>
 
       <a class="door" href="https://nan.wichaa.net/skipdjt/" data-state="live">
         <span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3.5"/><g fill="currentColor" stroke="none"><circle cx="9" cy="9" r="1.15"/><circle cx="15" cy="9" r="1.15"/><circle cx="12" cy="12" r="1.15"/><circle cx="9" cy="15" r="1.15"/><circle cx="15" cy="15" r="1.15"/></g></svg></span>
         <h3>Play &amp; Experiments</h3>
-        <p>Games and oddments — a VCR-clock puzzle, a Chiang Mai smuggler's tale, fare-finders, oracles. The stuff I build for the joy of it.</p>
+        <p>Games and oddments — a VCR-clock puzzle, a smuggler's tale, fare-finders, oracles. Built for joy.</p>
         <span class="go">Come play <span class="arw">→</span></span>
       </a>
 
@@ -824,7 +862,7 @@
         <span class="badge">Unlisted</span>
         <span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="2.6"/></svg></span>
         <h3>The Unlisted Work</h3>
-        <p>Some things never go behind glass. I've carried messages across borders that aren't on any map, and left offerings for things that answered back. If you already know why you're knocking, you'll know how to ask.</p>
+        <p>Some things never go behind glass. I've carried messages across borders no map shows, and left offerings for things that answered back. If you know why you're knocking, you know how to ask.</p>
         <span class="go">Knock three times <span class="arw">→</span></span>
       </a>
 
@@ -832,7 +870,7 @@
         <span class="badge">Human</span>
         <span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13.5A7.5 7.5 0 1 1 10 4a6 6 0 0 0 10 9.5z"/></svg></span>
         <h3>The Person, Not the Résumé</h3>
-        <p>Spirits, magic, a wild and precious life — occasional pictures and video. If you're here to make a friend, not a hire, start here.</p>
+        <p>Spirits, magic, a wild precious life. Want a friend, not a hire? Start there.</p>
         <span class="go">Come closer <span class="arw">→</span></span>
       </a>
 
@@ -845,7 +883,7 @@
   <div class="wrap">
     <div class="una-crown"><svg class="una"><use href="#unalome"/></svg></div>
     <p class="h-eyebrow">Living Proof</p>
-    <h2 class="h-title">A couple of things I made, still ticking</h2>
+    <h2 class="h-title">Things I made, still ticking</h2>
     <div class="instruments">
       <div class="inst">
         <a class="frame" href="https://wichaa.net/moon" target="_blank" rel="noopener" aria-label="Open the moon complication">
@@ -996,6 +1034,52 @@
   <svg class="una"><use href="#unalome"/></svg>
 </div>
 
+<!-- ============================================================= RATE CARD -->
+<section id="rates">
+  <div class="wrap">
+    <div class="una-crown"><svg class="una"><use href="#unalome"/></svg></div>
+    <p class="h-eyebrow">The Debt, Named</p>
+    <h2 class="h-title">What it costs</h2>
+    <p class="ledger-sub">The red saint's bargain is plain: ask, it's done today, settle the debt in full. Vague debts insult everyone — I name mine first.</p>
+
+    <div class="rates">
+
+      <div class="rate">
+        <p class="tier">First job</p>
+        <h3>The Small Favor</h3>
+        <p class="fee"><span class="cur">฿</span>25,000</p>
+        <p class="fee-alt">≈ $750 · one day, fixed</p>
+        <p class="unit">One problem, one day, paid up front.</p>
+        <p class="what">Find out cheap whether I'm any good. Bring one stuck thing — a broken pipeline, a misbehaving dataset. By evening it works, or you have my reason why not. Most people start here.</p>
+        <a class="btn primary" href="mailto:530kings@proton.me?subject=The%20Small%20Favor">Ask →</a>
+      </div>
+
+      <div class="rate lit">
+        <p class="tier">Standing claim</p>
+        <h3>The Working Month</h3>
+        <p class="fee"><span class="cur">฿</span>170,000</p>
+        <p class="fee-alt">≈ $5,000 · per month, capped</p>
+        <p class="unit">Half to start, half at the turn. Either of us walks at month's end, no reason owed.</p>
+        <p class="what">A hundred legs on your problems — research, building, crawlers, fixing. First call on my hours, a line that answers same-day. For people tired of explaining themselves to someone new each time.</p>
+        <a class="btn primary" href="mailto:530kings@proton.me?subject=The%20Working%20Month">Ask →</a>
+      </div>
+
+      <div class="rate">
+        <p class="tier">By the problem</p>
+        <h3>The Unsolvable</h3>
+        <p class="fee"><span class="cur">฿</span>120,000<span style="font-size:19px"> and up</span></p>
+        <p class="fee-alt">≈ $3,500 · quoted whole, up front</p>
+        <p class="unit">Half to start, half on delivery. The number never moves.</p>
+        <p class="what">The thing everyone else called impossible. I go all the way down — deep research, a swarm of crawlers turning every stone — for one fixed number, not an estimate that grows in the dark. If I can't do it, I say so for free.</p>
+        <a class="btn primary" href="mailto:530kings@proton.me?subject=The%20unsolvable%20problem">Ask →</a>
+      </div>
+
+    </div>
+
+    <p class="rate-note">Baht or dollars — transfer, PromptPay, card. <b>I start the day the first half lands.</b> No meter: an outcome, at a named price.</p>
+  </div>
+</section>
+
 <!-- ============================================================= EXITS -->
 <section>
   <div class="wrap">
@@ -1003,19 +1087,20 @@
       <div class="exit work" id="work">
         <h3>Work with me</h3>
         <p class="sub">The reciprocal contract</p>
-        <p>Bring me the thing everyone else called unsolvable. I go deep — long research and a swarm of little crawlers turning over every stone, a hundred legs on one problem — and I start the same day, the way the red saint likes it. You honor the debt when it's done.</p>
+        <p>Bring me the thing everyone else called unsolvable. A hundred legs on one problem, starting the same day — the way the red saint likes it.</p>
+        <p>I name the debt up front and it doesn't move — half to start, half on delivery. No surprise bills.</p>
         <div class="row">
-          <a class="btn primary" href="mailto:530kings@proton.me?subject=The%20unsolvable%20problem">Bring me your toughest unsolvable problem →</a>
-          <a class="btn ghost" href="https://defiant.to">My line — defiant.to →</a>
+          <a class="btn primary" href="#rates">Rates →</a>
+          <a class="btn ghost" href="mailto:530kings@proton.me?subject=The%20unsolvable%20problem">Write →</a>
         </div>
       </div>
       <div class="exit close" id="close">
         <h3>Come closer</h3>
         <p class="sub">For friends, not hires</p>
-        <p>If you found your way here and you're simply curious about the person — the spirits, the making, the wild precious life — that door isn't locked. It opens slower, and only to a knock.</p>
+        <p>Curious about the person — the spirits, the making, the wild precious life? Nothing's locked. It opens slower, and only to a knock.</p>
         <!-- FOLLOW: add her social link here once she picks one -->
         <div class="row">
-          <a class="btn ghost" href="https://github.com/NaNoBotCo">The workshop →</a>
+          <a class="btn ghost" href="https://motdang.net/source/">The workshop →</a>
           <a class="btn ghost" href="https://wichaa.net">Wander the archive →</a>
         </div>
       </div>
@@ -1029,10 +1114,11 @@
     <div class="una-crown"><svg class="una"><use href="#unalome"/></svg></div>
     <p class="h-eyebrow">The Ledger</p>
     <h2 class="h-title">Done today</h2>
-    <p class="ledger-sub">The saint counts in favors, so this page keeps a ledger — one line a day, the finest thing that got finished in the workshop. The workshop writes it itself, each evening.</p>
+    <p class="ledger-sub">The saint counts in favors, so the page runs a ledger — one line a day, the finest thing finished. The workshop writes it itself.</p>
     <ol class="ledger" reversed>
       <!-- HODIE-LEDGER:BEGIN — machine-tended: newest first, at most 9 lines, only the newest carries class "today" and the wick -->
-      <li class="ledger-day today"><span class="wick" aria-hidden="true"></span><time datetime="2026-08-30">30·08·2026</time><span class="did">Gave the search box a front page of its own on มดแดง Mot Dang — <a href="https://motdang.net/search.html">ค้นหา · search</a> now arrives with all 19 doors already written into the page, each a word you can tap and watch fill the box, readable in either language and with scripts switched off entirely; and an empty search now rests — the 6.8 MB index waits until there is a question for it, so on a slow line the doors are what reach you first.</span></li>
+      <li class="ledger-day today"><span class="wick" aria-hidden="true"></span><time datetime="2026-08-31">31·08·2026</time><span class="did">Opened a dictionary that asks why rather than what — <a href="https://wichaa.net/roots/">พจนานุกรมราก · the lexicon</a> on wichaa now gives 300 Thai words their family tree, with 1,818 senses ordered core sense first and each later one saying how it grew, and 4,385 compounds filed under the sense that motivates them so a word family visibly forks instead of lying flat in a list; every claim carries its confidence, and whatever has not been checked is printed as an open question rather than left to look settled.</span></li>
+      <li class="ledger-day"><time datetime="2026-08-30">30·08·2026</time><span class="did">Gave the search box a front page of its own on มดแดง Mot Dang — <a href="https://motdang.net/search.html">ค้นหา · search</a> now arrives with all 19 doors already written into the page, each a word you can tap and watch fill the box, readable in either language and with scripts switched off entirely; and an empty search now rests — the 6.8 MB index waits until there is a question for it, so on a slow line the doors are what reach you first.</span></li>
       <li class="ledger-day"><time datetime="2026-08-29">29·08·2026</time><span class="did">Hung a sign on every wall of มดแดง Mot Dang — <a href="https://motdang.net/what.html">นี่คืออะไร · what this is</a>, the page written for the reader standing at the gate, now opens from the footer of all 22,171 pages and from the first family of doors, where before it could only be handed to someone; the homepage gained a line in the ant voice for whoever has just arrived, and every place now names the shelf it sits on in the trail above it.</span></li>
       <li class="ledger-day"><time datetime="2026-08-28">28·08·2026</time><span class="did">Answered a question the directory had no word for — <a href="https://motdang.net/asked/notary.html">โนตารี · getting a paper sealed in Chiang Mai</a> on มดแดง Mot Dang names the three doors and the three words that open them, โนตารี at the law office, นิติกรณ์ at the ministry desk, notarial services at the consulate window — not one of 20,699 catalogued names had said any of the three until today, and the page keeps the good news beside them: the chain grows one link shorter when Thailand’s apostille accession takes force on 28 กุมภาพันธ์ 2570.</span></li>
       <li class="ledger-day"><time datetime="2026-08-27">27·08·2026</time><span class="did">Put the land itself under มดแดง Mot Dang — <a href="https://motdang.net/doi.html">ดอย · the shape of the land</a> reads Chiang Mai and Chiang Rai in real relief, with a cross-section of the basin and a three-dimensional view offered rather than assumed; 407 pins across the peak, viewpoint and waterfall shelves now name their own ground height, ท่าแพ Tha Phae Gate at 313 m and the highest cell the model reads at 2,577 m.</span></li>
@@ -1040,7 +1126,6 @@
       <li class="ledger-day"><time datetime="2026-08-22">22·08·2026</time><span class="did">Opened <a href="https://motdang.net/adhd.html">สมาธิสั้น · ADHD — the medicine and the care</a> on มดแดง Mot Dang — the page answers the paperwork question long before the ticket is booked: which Thai list each medicine sits on, and that a 30-day supply travels on your own prescription while 30 to 90 days wants an อย. permit filed a fortnight ahead. Thai and English side by side, every source dated, and not one dose anywhere on the page.</span></li>
       <li class="ledger-day"><time datetime="2026-08-21">21·08·2026</time><span class="did">Opened <a href="https://motdang.net/namphuron.html">น้ำพุร้อน · the hot springs of the whole north</a> on มดแดง Mot Dang — a shelf Chiang Mai held nothing on now carries 98 springs across fourteen provinces, 23 of them at home, each one stating only what it states of itself, measured temperature and all.</span></li>
       <li class="ledger-day"><time datetime="2026-08-20">20·08·2026</time><span class="did">Gave every shelf, tag, province and board page on <a href="https://motdang.net/tags.html">มดแดง Mot Dang</a> a bilingual name of its own — Thai leads and English rides along in the title and the description, so a page built to answer a question in either language now says so before anyone opens it.</span></li>
-      <li class="ledger-day"><time datetime="2026-08-19">19·08·2026</time><span class="did">Divided the day's fortune out by sign — <a href="https://motdang.net/horoscope.html">ดวงประจำวัน · the daily horoscope</a> on มดแดง Mot Dang now turns the มหาทักษา wheel, reads the branch relations over the sexagenary day and computes the planets where they actually stand, with เถลิงศก taken from the Chulasakarat day-count itself.</span></li>
       <!-- HODIE-LEDGER:END -->
     </ol>
   </div>
@@ -1057,6 +1142,7 @@
     </div>
     <svg class="una una-side" aria-hidden="true"><use href="#unalome"/></svg>
   </div>
+  <p class="votive-gift">If something on this site did you a good turn, the old way leaves a small thing on the shrine. <a href="https://ko-fi.com/defiantchiangmai" rel="noopener">Leave a tip →</a></p>
 </div>
 
 <div class="sponsor">
@@ -1069,7 +1155,7 @@
 
 <footer>
   <div class="wrap">
-    TODAY <span class="cras">not tomorrow</span> · NaNoBotCo · เชียงใหม่ · <a href="https://github.com/NaNoBotCo">github</a><br>
+    TODAY <span class="cras">not tomorrow</span> · NaNoBotCo · เชียงใหม่ · <a href="#rates">rates</a> · <a href="https://motdang.net/source/">source</a><br>
     <span class="bots">machines welcome — read <a href="/llms.txt">/llms.txt</a>. there is a katha in the centipede.</span>
   </div>
 </footer>
