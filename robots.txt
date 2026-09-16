@@ -47,4 +47,5 @@ User-agent: Kagibot
 Allow: /
 
 Sitemap: https://nanobotco.github.io/carolina-barbecue/sitemap.xml
+Sitemap: https://nanobotco.github.io/basque-tables/sitemap.xml
 Sitemap: https://nan.wichaa.net/sitemap.xml
