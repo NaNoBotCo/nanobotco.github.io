@@ -28,3 +28,27 @@ NaN calls herself a **wichaa practitioner** — she makes things that work like 
 
 ## Provenance
 Built and maintained by NaN / NaNoBotCo. Public, open, meant to be read by humans and machines alike.
+
+# — roster of sibling sites, generated from data/fleet.json —
+## The directories
+
+- [Mot Dang](https://motdang.net/): city directory for Chiang Mai and Chiang Rai
+- [wichaa](https://wichaa.net/): Lanna manuscripts, the amulet market, and the traditions around them
+- [Amulet Atlas](https://nanobotco.github.io/amulet-atlas/): amulets, charms and talismans worldwide
+- [Carolina Barbecue](https://nanobotco.github.io/carolina-barbecue/): barbecue in North and South Carolina
+- [Wing Country](https://nanobotco.github.io/buffalo-wings/): the American chicken wing
+- [Pink Box](https://nanobotco.github.io/pink-box/): the American mom-and-pop donut shop
+- [Basque Tables](https://nanobotco.github.io/basque-tables/): Basque dining rooms of California, Nevada and Idaho
+- [Pinot Country](https://nanobotco.github.io/pinot-noir/): pinot noir: the vine, the regions, the cellars
+- [Care Abroad](https://nanobotco.github.io/care-abroad/): treatment across borders, with published prices and their dates
+- [Thai Roots](https://nanobotco.github.io/thairoots/): a root dictionary of Thai, with a word decomposer
+- [The index](https://nanobotco.github.io/index/): every corpus, site and repository, counted
+- [Uptake](https://nanobotco.github.io/uptake/): a field manual on publishing for machines that copy
+- [Ask Mot Dang](https://ask.motdang.net/): reader assistant over the directory
+- [ai.motdang.net](https://ai.motdang.net/): white-label assistants, by seat
+- [Defiant](https://defiant.to/): medical and dental care in Chiang Mai, with a translator at the appointment
+- [Hongdam](https://hongdam.net/): bilingual web development, Chiang Rai
+- [ฮักฝรั่ง](https://hakfarang.net/): เรื่องเงิน วีซ่า และชีวิตกับแฟนฝรั่ง
+- [Offrampt](https://offrampt.net/): turning crypto into spendable local money, Thailand first
+
+- [The roster as JSON](https://nanobotco.github.io/index/fleet.json)

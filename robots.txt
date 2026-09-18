@@ -46,7 +46,15 @@ User-agent: ImagesiftBot
 User-agent: Kagibot
 Allow: /
 
+Sitemap: https://motdang.net/sitemap.xml
+Sitemap: https://wichaa.net/sitemap.xml
+Sitemap: https://nanobotco.github.io/amulet-atlas/sitemap.xml
 Sitemap: https://nanobotco.github.io/carolina-barbecue/sitemap.xml
+Sitemap: https://nanobotco.github.io/buffalo-wings/sitemap.xml
+Sitemap: https://nanobotco.github.io/pink-box/sitemap.xml
 Sitemap: https://nanobotco.github.io/basque-tables/sitemap.xml
-Sitemap: https://nan.wichaa.net/sitemap.xml
+Sitemap: https://nanobotco.github.io/pinot-noir/sitemap.xml
+Sitemap: https://nanobotco.github.io/care-abroad/sitemap.xml
+Sitemap: https://nanobotco.github.io/index/sitemap.xml
 Sitemap: https://nanobotco.github.io/uptake/sitemap.xml
+Sitemap: https://nan.wichaa.net/sitemap.xml
