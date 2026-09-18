@@ -31,7 +31,9 @@ def block() -> str:
                 continue
             name = E(s["name"]) + (f' <span class="th">{E(s["th"])}</span>' if s.get("th") else "")
             out.append(f'      <a class="fleet-card" href="{E(s["url"])}"><b>{name}</b><span>{E(s["note"])}</span></a>')
-    out += ['    </div>', '  </div>', '</section>', '<!-- FLEET:END -->']
+    out += ['    </div>',
+            '    ' + fleet.support_html(roster=R),
+            '  </div>', '</section>', '<!-- FLEET:END -->']
     return "\n".join(out)
 
 
@@ -43,6 +45,8 @@ CSS = """
   .fleet-card span{ display:block; font-size:13.5px; opacity:.78; line-height:1.55 }
   .fleet-card .th{ opacity:.7; font-size:14px }
   .fleet-card:hover{ border-color:var(--gold,#e7c66c) }
+  .support{ margin-top:18px; text-align:center; font-size:13.5px; opacity:.8 }
+  .support a{ margin:0 .3rem }
 """
 
 

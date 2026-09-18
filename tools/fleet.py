@@ -19,18 +19,37 @@ def load(path: Path | str | None = None) -> dict:
     return json.loads(Path(path or ROSTER).read_text(encoding="utf-8"))
 
 
-def sites(self_id: str = "", lanes: tuple[str, ...] = ("directory", "meta"), roster: dict | None = None) -> list[dict]:
+def sites(self_id: str = "", lanes: tuple[str, ...] = ("directory", "meta"),
+          roster: dict | None = None, ids: tuple[str, ...] | None = None) -> list[dict]:
+    """The roster minus self: by lane, or by an explicit list of ids when a page
+    wants only the siblings its own readers would use."""
     r = roster or load()
+    if ids is not None:
+        by = {s["id"]: s for s in r["sites"]}
+        return [by[i] for i in ids if i in by and i != self_id]
     return [s for s in r["sites"] if s["id"] != self_id and s.get("lane") in lanes]
 
 
-def row_html(self_id: str = "", label: str = "More from NaNoBotCo", cls: str = "fleet", roster: dict | None = None) -> str:
+def row_html(self_id: str = "", label: str = "More from NaNoBotCo", cls: str = "fleet",
+             roster: dict | None = None, ids: tuple[str, ...] | None = None) -> str:
     """A single footer line of sibling links."""
     out = []
-    for s in sites(self_id, roster=roster):
+    for s in sites(self_id, roster=roster, ids=ids):
         name = html.escape(s["name"])
         out.append(f'<a href="{html.escape(s["url"])}" title="{html.escape(s["note"])}">{name}</a>')
     return f'<div class="{cls}">{html.escape(label)}: ' + " · ".join(out) + "</div>"
+
+
+def support_html(cls: str = "support", roster: dict | None = None) -> str:
+    """The contact and sponsor line Nan asked for on 2026-09-18 — same shape as
+    the one that went on every README."""
+    r = roster or load()
+    links = " · ".join(
+        f'<a href="{html.escape(s["url"])}" rel="noopener" target="_blank">{html.escape(s["name"])}</a>'
+        for s in r["sites"] if s.get("lane") == "support")
+    return (f'<div class="{cls}">Contact: Nan · '
+            f'<a href="mailto:{html.escape(r["contact"])}">{html.escape(r["contact"])}</a>'
+            f' · Sponsor: {links}</div>')
 
 
 def llms_section(self_id: str = "", heading: str = "## Elsewhere from the same publisher", roster: dict | None = None) -> str:
