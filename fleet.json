@@ -95,7 +95,8 @@
       "url": "https://nanobotco.github.io/thairoots/",
       "note": "a root dictionary of Thai, with a word decomposer",
       "lane": "directory",
-      "audience": "th"
+      "audience": "th",
+      "sitemap": "https://nanobotco.github.io/thairoots/sitemap.xml"
     },
     {
       "id": "index",
