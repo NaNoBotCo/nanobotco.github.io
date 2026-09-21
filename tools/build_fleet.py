@@ -97,6 +97,12 @@ def main() -> int:
     shards = [x["sitemap"] for x in R["sites"]
               if x.get("sitemap", "").startswith("https://nanobotco.github.io/")
               and x["id"] != "portal"]
+    # MIGRATING — remove each of these once the new address is indexed.
+    # Hand Poke moved to wichaa.net/handpoke on 2026-09-21 and its 311 addresses
+    # here are redirect stubs. A stub is only useful if the crawler comes back to
+    # look at it, and naming the old sitemap is the one way to ask, so it stays in
+    # the index until Search Console shows the wichaa addresses indexed instead.
+    shards += ["https://nanobotco.github.io/hand-poke/sitemap.xml"]
     idx = ['<?xml version="1.0" encoding="UTF-8"?>',
            '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
            f"  <sitemap><loc>{E('https://nanobotco.github.io/sitemap-fleet.xml')}</loc></sitemap>"]
