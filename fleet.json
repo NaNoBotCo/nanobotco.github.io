@@ -89,6 +89,15 @@
       "sitemap": "https://nanobotco.github.io/care-abroad/sitemap.xml"
     },
     {
+      "id": "hand-poke",
+      "name": "Hand Poke",
+      "url": "https://nanobotco.github.io/hand-poke/",
+      "note": "hand-tattooing traditions worldwide",
+      "lane": "directory",
+      "audience": "world",
+      "sitemap": "https://nanobotco.github.io/hand-poke/sitemap.xml"
+    },
+    {
       "id": "thairoots",
       "name": "Thai Roots",
       "th": "รากศัพท์",

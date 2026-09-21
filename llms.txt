@@ -41,6 +41,7 @@ Built and maintained by NaN / NaNoBotCo. Public, open, meant to be read by human
 - [Basque Tables](https://nanobotco.github.io/basque-tables/): Basque dining rooms of California, Nevada and Idaho
 - [Pinot Country](https://nanobotco.github.io/pinot-noir/): pinot noir: the vine, the regions, the cellars
 - [Care Abroad](https://nanobotco.github.io/care-abroad/): treatment across borders, with published prices and their dates
+- [Hand Poke](https://nanobotco.github.io/hand-poke/): hand-tattooing traditions worldwide
 - [Thai Roots](https://nanobotco.github.io/thairoots/): a root dictionary of Thai, with a word decomposer
 - [The index](https://nanobotco.github.io/index/): every corpus, site and repository, counted
 - [Uptake](https://nanobotco.github.io/uptake/): a field manual on publishing for machines that copy

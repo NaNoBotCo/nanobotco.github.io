@@ -69,7 +69,7 @@ def main() -> int:
 
     p.write_text(s, encoding="utf-8")
 
-    # sitemap: the portal's own page, then every sibling home
+    # sitemap-fleet.xml: the portal's own page, then every sibling home
     urls = ["https://nanobotco.github.io/"] + [x["url"] for x in R["sites"]
                                                if x["url"].startswith("https://nanobotco.github.io/") and x["id"] != "portal"]
     urls += ["https://nan.wichaa.net/", "https://nan.wichaa.net/thairoots/", "https://nan.wichaa.net/skipdjt/"]
@@ -77,7 +77,33 @@ def main() -> int:
     for u in urls:
         sm.append(f"  <url><loc>{E(u)}</loc><changefreq>weekly</changefreq></url>")
     sm.append("</urlset>")
-    (ROOT / "sitemap.xml").write_text("\n".join(sm) + "\n", encoding="utf-8")
+    (ROOT / "sitemap-fleet.xml").write_text("\n".join(sm) + "\n", encoding="utf-8")
+
+    # ONE ADDRESS FOR THE WHOLE HOST — 2026-09-21
+    # -------------------------------------------
+    # Every directory under nanobotco.github.io ships its own sitemap, and the
+    # only thing that ever named them was a Sitemap: line in robots.txt. Search
+    # Console's submit form drops a subdirectory sitemap silently on a young
+    # property, so "submit them one by one" is not a route that can be relied
+    # on. sitemap.xml is therefore the INDEX: submit that one address and every
+    # project's pages come with it.
+    #
+    # A sitemap index may only name sitemaps on its own host, so the two
+    # wichaa-hosted siblings stay in robots.txt and out of here. Sites whose
+    # pages canonicalise to another domain (the Mae Hong Son loop and muay thai
+    # both point at motdang.net) are deliberately NOT listed: offering a
+    # crawler 278 URLs that each name somewhere else spends budget to say
+    # nothing. They belong in motdang's sitemap, where the canonical lives.
+    shards = [x["sitemap"] for x in R["sites"]
+              if x.get("sitemap", "").startswith("https://nanobotco.github.io/")
+              and x["id"] != "portal"]
+    idx = ['<?xml version="1.0" encoding="UTF-8"?>',
+           '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+           f"  <sitemap><loc>{E('https://nanobotco.github.io/sitemap-fleet.xml')}</loc></sitemap>"]
+    for u in shards:
+        idx.append(f"  <sitemap><loc>{E(u)}</loc></sitemap>")
+    idx.append("</sitemapindex>")
+    (ROOT / "sitemap.xml").write_text("\n".join(idx) + "\n", encoding="utf-8")
 
     rb = ROOT / "robots.txt"
     t = re.sub(r"(?m)^Sitemap: .*\n?", "", rb.read_text(encoding="utf-8")).rstrip()
@@ -95,7 +121,8 @@ def main() -> int:
 
     # the roster, served from the portal too
     (ROOT / "fleet.json").write_text(json.dumps(R, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"portal: {len(R['sites'])} sites in the block, {len(urls)} urls in sitemap.xml, robots rewritten")
+    print(f"portal: {len(R['sites'])} sites in the block, {len(urls)} urls in sitemap-fleet.xml, "
+          f"{len(shards) + 1} sitemaps in the index, robots rewritten")
     return 0
 
 

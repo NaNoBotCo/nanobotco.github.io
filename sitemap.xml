@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://nanobotco.github.io/</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://nanobotco.github.io/amulet-atlas/</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://nanobotco.github.io/carolina-barbecue/</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://nanobotco.github.io/buffalo-wings/</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://nanobotco.github.io/pink-box/</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://nanobotco.github.io/basque-tables/</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://nanobotco.github.io/pinot-noir/</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://nanobotco.github.io/care-abroad/</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://nanobotco.github.io/thairoots/</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://nanobotco.github.io/index/</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://nanobotco.github.io/uptake/</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://nan.wichaa.net/</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://nan.wichaa.net/thairoots/</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://nan.wichaa.net/skipdjt/</loc><changefreq>weekly</changefreq></url>
-</urlset>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap><loc>https://nanobotco.github.io/sitemap-fleet.xml</loc></sitemap>
+  <sitemap><loc>https://nanobotco.github.io/amulet-atlas/sitemap.xml</loc></sitemap>
+  <sitemap><loc>https://nanobotco.github.io/carolina-barbecue/sitemap.xml</loc></sitemap>
+  <sitemap><loc>https://nanobotco.github.io/buffalo-wings/sitemap.xml</loc></sitemap>
+  <sitemap><loc>https://nanobotco.github.io/pink-box/sitemap.xml</loc></sitemap>
+  <sitemap><loc>https://nanobotco.github.io/basque-tables/sitemap.xml</loc></sitemap>
+  <sitemap><loc>https://nanobotco.github.io/pinot-noir/sitemap.xml</loc></sitemap>
+  <sitemap><loc>https://nanobotco.github.io/care-abroad/sitemap.xml</loc></sitemap>
+  <sitemap><loc>https://nanobotco.github.io/hand-poke/sitemap.xml</loc></sitemap>
+  <sitemap><loc>https://nanobotco.github.io/thairoots/sitemap.xml</loc></sitemap>
+  <sitemap><loc>https://nanobotco.github.io/index/sitemap.xml</loc></sitemap>
+  <sitemap><loc>https://nanobotco.github.io/uptake/sitemap.xml</loc></sitemap>
+</sitemapindex>
