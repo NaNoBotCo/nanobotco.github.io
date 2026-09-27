@@ -32,8 +32,28 @@ Built and maintained by NaN / NaNoBotCo. Public, open, meant to be read by human
 # — roster of sibling sites, generated from data/fleet.json —
 ## The directories
 
+Made by Hongdam (https://hongdam.net/), a bilingual web studio in Chiang Rai.
+
 - [Mot Dang](https://motdang.net/): city directory for Chiang Mai and Chiang Rai
+- [Chiang Rai, Slowly](https://motdang.net/chiang-rai/): the Golden Triangle, three temples, lantern night, and the slow boat to Laos
+- [The Mae Hong Son Loop](https://nanobotco.github.io/mae-hong-son-loop/): motorcycling the 600 km loop out of Chiang Mai — curves counted, air measured
+- [Muay Thai](https://motdang.net/muay-thai/): the eight limbs, the thirty named techniques, the ceremony, and every gym on the map
+- [Roads of Chiang Mai](https://motdang.net/roads/): the square of 1296, four rings, and what each one did to the city — counted from the map
+- [Field](https://motdang.net/field/): street-level capture for Mot Dang — places added from their own signs, each with its photograph
+- [Golden Triangle](https://nanobotco.github.io/golden-triangle/): where the Ruak meets the Mekong — Sop Ruak, Chiang Saen, the hills and the river
+- [Prostar Magic Shop](https://nanobotco.github.io/prostar-magic/): magic shop on Kotchasarn Road by the Chiang Mai moat — props, shows, lessons
 - [wichaa](https://wichaa.net/): Lanna manuscripts, the amulet market, and the traditions around them
+- [Hand Poke](https://nanobotco.github.io/hand-poke/): 28 traditions of marking skin by hand — the leg-tattoo zone of Burma, the Shan States and Lanna, counted
+- [Black Holes, Drawn](https://nanobotco.github.io/black-holes/): black holes modelled and drawn from the equations — generators, the past, present and future, the legends
+- [Quantum Computing, plainly](https://nanobotco.github.io/quantum-computing/): the history and theory of quantum computing in plain words, with demos; refreshed weekly
+- [Goin' Fast](https://nanobotco.github.io/goin-fast/): a dirt-simple explainer about speed — twenty measured speeds from the ground under the house to light, and what each one costs
+- [The Three-Body Problem](https://nanobotco.github.io/three-body/): the mathematics of the three-body problem in plain words, with the orbits found rather than copied
+- [Chaos, Drawn](https://nanobotco.github.io/chaos/): chaos theory in plain words — every picture drawn from the equation, and the two tools that hold up under it: the law of large numbers and resilient systems
+- [Indra's Net, Drawn](https://nanobotco.github.io/indras-net/): Indra's Net in plain words — the jewel net read sixteen ways, and drawn live from the math of mirrors
+- [Split Screen](https://nanobotco.github.io/split-screen/): RFK Jr. on one side, the thing on the other — a catalog of the pictures since Sept 2023, with the math
+- [Talking Board](https://nanobotco.github.io/talking-board/): A parlour talking board — bots in the empty seats, a lens on the planchette, a notebook for what comes through
+- [Exceptional Magic](https://nanobotco.github.io/exceptional-magic/): the octonions, triality, the magic square and E8, computed and drawn — a plain-spoken reading of one paper
+- [Big Numbers, Split](https://nanobotco.github.io/factoring/): factoring from Eratosthenes to Shor — the records, the Riemann Hypothesis, and what it means for a bitcoin wallet; a hundred zeta zeros computed, every claim beside what it did
 - [Amulet Atlas](https://nanobotco.github.io/amulet-atlas/): amulets, charms and talismans worldwide
 - [Carolina Barbecue](https://nanobotco.github.io/carolina-barbecue/): barbecue in North and South Carolina
 - [Wing Country](https://nanobotco.github.io/buffalo-wings/): the American chicken wing
@@ -41,15 +61,18 @@ Built and maintained by NaN / NaNoBotCo. Public, open, meant to be read by human
 - [Basque Tables](https://nanobotco.github.io/basque-tables/): Basque dining rooms of California, Nevada and Idaho
 - [Pinot Country](https://nanobotco.github.io/pinot-noir/): pinot noir: the vine, the regions, the cellars
 - [Care Abroad](https://nanobotco.github.io/care-abroad/): treatment across borders, with published prices and their dates
-- [Hand Poke](https://wichaa.net/handpoke/): hand-tattooing traditions worldwide
 - [Thai Roots](https://nanobotco.github.io/thairoots/): a root dictionary of Thai, with a word decomposer
 - [The index](https://nanobotco.github.io/index/): every corpus, site and repository, counted
 - [Uptake](https://nanobotco.github.io/uptake/): a field manual on publishing for machines that copy
 - [Ask Mot Dang](https://ask.motdang.net/): reader assistant over the directory
 - [ai.motdang.net](https://ai.motdang.net/): white-label assistants, by seat
+- [Hun Payont](https://hunpayont.net/): free phone apps, free data, and work — made in northern Thailand
+- [One Man Sideshow](https://nanobotco.github.io/onemansideshow/): a sourced city directory run by one person and a fleet of AI agents — the kit free, setup with training ฿25,000 Thai companies / US$25,000 everyone else
 - [Defiant](https://defiant.to/): medical and dental care in Chiang Mai, with a translator at the appointment
 - [Hongdam](https://hongdam.net/): bilingual web development, Chiang Rai
+- [Chiang Mai Visa Desk](https://chiangmaivisadesk.com/): work permits, Thai company registration, retirement extensions, 90-day reports and border runs from Chiang Mai
 - [ฮักฝรั่ง](https://hakfarang.net/): เรื่องเงิน วีซ่า และชีวิตกับแฟนฝรั่ง
 - [Offrampt](https://offrampt.net/): turning crypto into spendable local money, Thailand first
+- [Poplucky](https://poplucky.net/): the Pop Mart collector's catalogue — every blind box in the words collectors use
 
 - [The roster as JSON](https://nanobotco.github.io/index/fleet.json)

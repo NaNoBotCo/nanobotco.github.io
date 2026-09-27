@@ -40,21 +40,64 @@ def row_html(self_id: str = "", label: str = "More from NaNoBotCo", cls: str = "
     return f'<div class="{cls}">{html.escape(label)}: ' + " · ".join(out) + "</div>"
 
 
-def support_html(cls: str = "support", roster: dict | None = None) -> str:
+def support_html(cls: str = "support", roster: dict | None = None, contact: bool = True,
+                 self_id: str = "") -> str:
     """The contact and sponsor line Nan asked for on 2026-09-18 — same shape as
-    the one that went on every README."""
+    the one that went on every README — and, from 2026-09-23, the source link:
+    the site's own repository when the roster names one, else the account."""
     r = roster or load()
     links = " · ".join(
         f'<a href="{html.escape(s["url"])}" rel="noopener" target="_blank">{html.escape(s["name"])}</a>'
         for s in r["sites"] if s.get("lane") == "support")
+    repo = next((s.get("repo") for s in r["sites"] if s["id"] == self_id and s.get("repo")), None) \
+        or r.get("source") or "https://github.com/NaNoBotCo"
+    src = f' · Source: <a href="{html.escape(repo)}" rel="noopener">GitHub</a>'
+    if not contact:
+        # defiant.to and offrampt.net obfuscate every address on purpose and
+        # gate the build on it — a plaintext mailto here would undo that.
+        return f'<div class="{cls}">Sponsor: {links}{src}</div>'
     return (f'<div class="{cls}">Contact: Nan · '
             f'<a href="mailto:{html.escape(r["contact"])}">{html.escape(r["contact"])}</a>'
-            f' · Sponsor: {links}</div>')
+            f' · Sponsor: {links}{src}</div>')
+
+
+def maker(roster: dict | None = None) -> dict:
+    """Who builds these. Carried on the roster so one edit reaches every site that
+    installs it, rather than a line typed into eight footers."""
+    r = roster or load()
+    return r.get("maker") or {"name": "Hongdam", "url": "https://hongdam.net/",
+                              "city": "Chiang Rai", "country": "TH"}
+
+
+def maker_html(cls: str = "support maker", roster: dict | None = None, lang: str = "en") -> str:
+    """The studio byline for a footer. Takes the `support` class so it inherits the
+    footer's own type without a stylesheet change in every repo."""
+    m = maker(roster)
+    url, name, city = html.escape(m["url"]), html.escape(m["name"]), html.escape(m["city"])
+    if lang == "th":
+        th_name = html.escape(m.get("th") or m["name"])
+        th_city = html.escape(m.get("city_th") or m["city"])
+        return (f'<div class="{cls}">จัดทำโดย '
+                f'<a href="{url}" rel="noopener">{th_name}</a> {th_city}</div>')
+    return (f'<div class="{cls}">Made by '
+            f'<a href="{url}" rel="noopener">{name}</a>, {city}.</div>')
+
+
+def maker_line(roster: dict | None = None) -> str:
+    m = maker(roster)
+    return f"Made by {m['name']} ({m['url']}), a bilingual web studio in {m['city']}."
+
+
+def maker_ld(roster: dict | None = None) -> dict:
+    m = maker(roster)
+    return {"@type": "Organization", "name": m["name"], "url": m["url"],
+            "address": {"@type": "PostalAddress", "addressLocality": m["city"],
+                        "addressCountry": m.get("country", "TH")}}
 
 
 def llms_section(self_id: str = "", heading: str = "## Elsewhere from the same publisher", roster: dict | None = None) -> str:
     r = roster or load()
-    lines = [heading, ""]
+    lines = [heading, "", maker_line(r), ""]
     for s in sites(self_id, lanes=("directory", "meta", "product", "company"), roster=r):
         lines.append(f"- [{s['name']}]({s['url']}): {s['note']}")
     lines += ["", f"- [The roster as JSON]({r['canonical']})"]
@@ -146,7 +189,8 @@ def decorate(site_dir, self_id: str, roster: dict | None = None) -> list[str]:
     append("llms.txt", llms_section(self_id, roster=r))
     append("ai.txt", ai_txt_lines(self_id, roster=r))
     append("robots.txt", robots_lines(self_id, roster=r))
-    append("humans.txt", f"/* ELSEWHERE */\nEverything this publisher holds, counted: {r['index']}\n"
+    append("humans.txt", f"/* STUDIO */\n{maker_line(r)}\n\n"
+                         f"/* ELSEWHERE */\nEverything this publisher holds, counted: {r['index']}\n"
                          f"The roster, as JSON: {r['canonical']}\n"
                          + "\n".join(f"{s['name']} — {s['url']}" for s in sites(self_id, roster=r)))
     return touched
