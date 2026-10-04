@@ -35,6 +35,7 @@ Built and maintained by NaN / NaNoBotCo. Public, open, meant to be read by human
 Made by Hongdam (https://hongdam.net/), a bilingual web studio in Chiang Rai.
 
 - [Mot Dang](https://motdang.net/): city directory for Chiang Mai and Chiang Rai
+- [The Plan](https://motdang.net/the-plan/): Mot Dang's pitch deck: a business plan in twelve dimensions, for an audience of robots
 - [Chiang Rai, Slowly](https://motdang.net/chiang-rai/): the Golden Triangle, three temples, lantern night, and the slow boat to Laos
 - [The Mae Hong Son Loop](https://nanobotco.github.io/mae-hong-son-loop/): motorcycling the 600 km loop out of Chiang Mai — curves counted, air measured
 - [Muay Thai](https://motdang.net/muay-thai/): the eight limbs, the thirty named techniques, the ceremony, and every gym on the map
@@ -74,5 +75,35 @@ Made by Hongdam (https://hongdam.net/), a bilingual web studio in Chiang Rai.
 - [ฮักฝรั่ง](https://hakfarang.net/): เรื่องเงิน วีซ่า และชีวิตกับแฟนฝรั่ง
 - [Offrampt](https://offrampt.net/): turning crypto into spendable local money, Thailand first
 - [Poplucky](https://poplucky.net/): the Pop Mart collector's catalogue — every blind box in the words collectors use
+- [What Bots Craaave](https://nanobotco.github.io/bots-crave/): An Idiocracy-style 'splainer: bots crave new information and checkable sources; we've been feeding them links to ourselves. Two reels, one for people, one for bots
+- [The Pacific Crest Trail](https://nanobotco.github.io/pct/): The PCT from Mexico to Canada: the trail, its towns, fire, snow and flood maps, places for sale, trail traditions, and Burney Mountain Guest Ranch at mile 1411
+- [Rain in Chiang Mai](https://nanobotco.github.io/rain-chiang-mai/): Is it raining in Chiang Mai right now? Live radar and forecast, rainfall numbers, the rain clock, royal rainmaking, Ping River floods, and rain legends
+- [Chemtrails? It's ice.](https://nanobotco.github.io/chemtrails/): Why jet trails form and stay, drawn with math, with a live check of whether planes over you will leave them now
+- [The Rhine Deck](https://nanobotco.github.io/rhine/): J.B. Rhine's ESP tests from Duke to play against a server that deals every card, with pooled tallies and a daily forecast, for people and robots
+- [Nitpick](https://nanobotco.github.io/nitpick/): How the Mac reads every sign in a 360 photo first, so a model looks only where it must; a demo on 12 photos of Mahidol Road
+- [All Factored](https://nanobotco.github.io/all-factored/): Post-quantum, drawn with math in English and Thai: factoring, Shor's rhythm trick, curves, lattice locks, and which of our sites are already switched
+- [The Golden Gate Bridge](https://nanobotco.github.io/golden-gate/): The Golden Gate drawn by arithmetic under the live sun, moon, fog and tide: hang the cable, run Kelvin's tide wheels, see what fits under, hear the railing sing, paint it, measure it from where you are
+- [Chains, Drawn](https://nanobotco.github.io/chains-drawn/): ChainsAtlas and the other ways blockchains talk, as toys: a stove in every town, recipe cards with fingerprints, levers, judges, a mule pen and a key rack
+- [Hired Burglars](https://nanobotco.github.io/hired-burglars/): Pen tests, red teams, security licences, white-label resellers, awards and startup equity, as toys in English and Thai
+- [Hodie · Saint Expedite](https://nanobotco.github.io/expedite/): The saint of today, as toys: catch the crow that says tomorrow, turn a list to today, set a red spirit house, count his days, print your thanks
+- [Psar Phnom Penh](https://nanobotco.github.io/phnom-penh/): Phnom Penh near and now: places, river, moon, holidays, Grab rides
+- [Moving Day](https://nanobotco.github.io/moving-day/): Moving from one AI to another, step by step: export your chats, carry your memories and instructions, settle them into the new place. Thai and English
+- [Warp and Weft](https://nanobotco.github.io/warp-and-weft/): Silk and weaving drawn by arithmetic: a loom weaving a Khmer silk hol of humped cattle, the draft as a matrix product, ikat tie-and-dye, seven borders, satins by number theory, a silkworm's cocoon, the Silk Road, Cambodian and Thai weaving. English, Thai, Khmer
+- [Birds of Chiang Mai](https://nanobotco.github.io/birds-chiang-mai/): 23 birds of Chiang Mai drawn by arithmetic under the live sky over Doi Suthep, with real recordings, a live spectrogram, the Coucal Clock that calls at dawn and dusk, a chorus wheel, the mountain from moat to Doi Inthanon, and the birds of the Himmapan
+- [Lersi · the hermit's stretches](https://nanobotco.github.io/lersi/): 41 positions of lersi dat ton drawn with math in a gilt Lanna niche; search, filter, build a routine with breath timing, send it as a link or a picture card
+- [Tham Luang, Drawn](https://nanobotco.github.io/tham-luang/): The 2018 Tham Luang cave rescue drawn with math: eighteen days under the Sleeping Lady, the way in, the 38 × 72 cm squeeze, a billion litres of water, the thinning air, the way out, the ten thousand people, and those remembered, Erik Brown among them
+- [GC-MS: Who Tests It](https://nanobotco.github.io/gc-ms/): GC-MS labs across Thailand on one map, what Chiang Mai University charges, and how the machine works from syringe to spectrum: race the smells of durian, holy basil and jasmine rice
+- [Kranok, Drawn](https://motdang.net/sites/kranok/): Kranok, the flame of Thai ornament, drawn with math: the curl, the one graph that bends a flame, the three-figure kranok, flames on flames, the coiled-stem scroll, seven ways to repeat a border, gold on black lacquer and Lanna lai kham
+- [Play with Fractals](https://nanobotco.github.io/fractals/): Fractals to play with, drawn live: Koch snowflake, chaos game, tree, Barnsley fern, paper-folding dragon, Mandelbrot and Julia explorers, a coastline to measure, and your own fractal with its dimension
+- [Telling Time in Thai](https://nanobotco.github.io/thai-time/): How Thai people tell time: the six-hour clock of gong and drum on a live dial, the king's list of 1900, the coconut water clock, Lanna's sixteen watches and sixty named days, noon by the sun, sounds and a quiz
+- [The Bayeux Tapestry, Unrolled](https://nanobotco.github.io/bayeux-tapestry/): The whole Bayeux Tapestry end to end with all 58 scenes and their Latin, how it was stitched, Halley's Comet of 1066, everywhere it has been from Canterbury to the British Museum, and who came to see it
+- [Khom Loi, Drawn](https://motdang.net/sites/khom-loi/): The Yi Peng sky lantern drawn with the physics of hot air: why it rises, one flight from lighting to landing, where the wind brings forty lanterns down over Chiang Mai, and how many are up at once
+- [Krathong, Drawn](https://motdang.net/sites/krathong/): The Loy Krathong float drawn with math: folding a banana-leaf petal, rings of petals, why it floats and stays upright, and where the Ping carries it
+- [The Voynich Manuscript](https://nanobotco.github.io/voynich/): How people try to read the Voynich manuscript: the book, its owners and date, and live toys for transcription, word statistics, word grammar, repeats, ciphers and hoaxes, run on the full transliteration
+- [Cosmic Weaponry, Drawn](https://nanobotco.github.io/cosmic-weaponry/): Weapons of the gods drawn live with math: Indra's vajra, the Buddhist bell, lightning grown by the 1984 breakdown model, Mekhala and Ramasun's thunder clock, sky-axes and Tutankhamun's meteorite dagger, the discus and trident ground off the sun, Mjolnir's short handle and the Monkey King's staff
+- [Ghosts, Drawn](https://nanobotco.github.io/ghosts-drawn/): Lanna and Thai ghosts as animated cartoons: Krasue, Krahang, Mae Nak, Pret, Phi Kong Koi, Phi Ka and fifteen more, with toys, a night clock and sources, Thai and English
+- [The Bridge Vial](https://nanobotco.github.io/bridge-vial/): How a Thai lab can check new batches of freeze-dried peptide vials against a sister vial Janoshik already tested, and test tadalafil and anabolics against bought standards: GC vs LC, the steps, reading a certificate, costs, in English and Thai
+- [Cursitor](https://nanobotco.github.io/cursitor/): A litigation desk for Claude Code: short file links, deadlines with their arithmetic, pleading paper, exhibits and OCR; pro se US$0, firm US$25,000
+- [Bag Knots](https://nanobotco.github.io/bag-knots/): Every way a Thai shop ties a bag shut, drawn step by step with NaN and Beer, and how to open each one by hand or with scissors cut in the right place; detours for onsen eggs, pad krapow and seven sauce baggies
 
 - [The roster as JSON](https://nanobotco.github.io/index/fleet.json)
