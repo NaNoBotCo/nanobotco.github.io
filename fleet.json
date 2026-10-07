@@ -697,6 +697,17 @@
       "repo": "https://github.com/NaNoBotCo/krathong"
     },
     {
+      "id": "kin-jay",
+      "name": "Kin Jay",
+      "th": "กินเจ",
+      "url": "https://motdang.net/sites/kin-jay/",
+      "note": "The Vegetarian Festival, 10–18 October 2026: the yellow 齋 and เจ flags, the menu, the shrines, halls and jay kitchens of Chiang Mai and Chiang Rai, Thailand's vegetarian groups, and the legends",
+      "lane": "directory",
+      "audience": "all",
+      "sitemap": "https://motdang.net/sites/kin-jay/sitemap.xml",
+      "repo": "https://github.com/NaNoBotCo/kin-jay"
+    },
+    {
       "id": "voynich",
       "name": "The Voynich Manuscript",
       "th": "ข้อเขียนวอยนิช",
