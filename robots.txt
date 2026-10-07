@@ -100,6 +100,7 @@ Sitemap: https://nanobotco.github.io/thai-time/sitemap.xml
 Sitemap: https://nanobotco.github.io/bayeux-tapestry/sitemap.xml
 Sitemap: https://motdang.net/sites/khom-loi/sitemap.xml
 Sitemap: https://motdang.net/sites/krathong/sitemap.xml
+Sitemap: https://motdang.net/sites/kin-jay/sitemap.xml
 Sitemap: https://nanobotco.github.io/voynich/sitemap.xml
 Sitemap: https://nanobotco.github.io/cosmic-weaponry/sitemap.xml
 Sitemap: https://nanobotco.github.io/ghosts-drawn/sitemap.xml
