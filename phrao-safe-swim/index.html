@@ -83,6 +83,7 @@ ol.skills li::before{content:counter(s);position:absolute;left:0;top:.35rem;widt
 .thanks h2{color:var(--heart);margin:0}
 .big{font-size:1.15rem}
 .cartoon{display:block;border:3px solid var(--ink);border-radius:16px;overflow:hidden;box-shadow:6px 6px 0 var(--heart)}
+video.cartoon{width:100%;height:auto;aspect-ratio:16/9;background:#000}
 .frames{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
 .frames img{border-radius:10px;border:2px solid var(--line)}
 .fix{list-style:none;padding:0;margin:0 0 1rem}
@@ -258,14 +259,16 @@ footer ul{padding-left:1.1rem;margin:.2rem 0 1rem}
 </ul>
 <p>The cartoon shows 8-year-olds what lice are and how to get rid of them. A louse is the size of a sesame seed. It crawls; it cannot hop or fly. Lice do not care if you are clean or messy. Children that age took to it, girls most of all, and girls are the ones this message is for.</p>
 <p class="note">The cartoon came out in October 2026, after this year's classes. This year's fall in lice cases came from Warm Heart's work.</p>
-<a class="btn btn-plain" href="https://sites.motdang.net/cwsdpp/w/lice">Watch the cartoon</a>
+<a class="btn btn-plain" href="#cartoon" id="watch">Watch the cartoon</a>
 </div>
 <div>
-<a class="cartoon" href="https://sites.motdang.net/cwsdpp/w/lice" aria-label="Watch the cartoon Lice can't swim. You can!"><img src="img/licecard.webp" alt="Cartoon Nan and Beer beside the title Lice can't swim. You can! เหาว่ายน้ำไม่เป็น แต่เราว่ายเป็น!" width="1200" height="630" loading="lazy"></a>
+<video class="cartoon" id="cartoon" controls playsinline preload="metadata" poster="img/end.webp" width="1280" height="720" aria-label="Cartoon: Lice can't swim. You can!">
+<source src="video/lice-cartoon.mp4" type="video/mp4">
+</video>
 <div class="frames">
 <img src="img/louie.webp" alt="Louie the louse beside a 1 mm scale" loading="lazy" width="1200" height="675">
 <img src="img/steps.webp" alt="Nan and Beer with the steps: good light, make rows, look close to the skin" loading="lazy" width="1200" height="675">
-<img src="img/end.webp" alt="Nan, Beer and friends at the pool: Lice can't swim. YOU CAN!" loading="lazy" width="1200" height="675">
+<img src="img/swan.webp" alt="Nan and Beer in a swan float at the pool" loading="lazy" width="1200" height="675">
 </div>
 </div>
 </div>
@@ -370,11 +373,12 @@ footer ul{padding-left:1.1rem;margin:.2rem 0 1rem}
 <h3>Pictures</h3>
 <ul>
 <li>Phrao pool, float lesson and instructor team: CWSDPP 2025 Year End Report, Chiang Mai International Rotary Club.</li>
-<li>Cartoon frames: Myat Kaung Thant (Marcus), Mot Dang. Nan and Michael's portraits: Mot Dang.</li>
+<li>Cartoon and frames: Myat Kaung Thant (Marcus), Mot Dang. Nan and Michael's portraits: Mot Dang.</li>
 <li>Logos belong to their organizations. Mali font: SIL Open Font License (<a href="fonts/OFL-mali.txt">licence</a>).</li>
 </ul>
 <p>Page by Nan Peacock, Chiang Mai, 17 November 2026.</p>
 </div>
 </footer>
+<script>document.getElementById('watch').addEventListener('click',function(){var v=document.getElementById('cartoon');var p=v.play();if(p)p.catch(function(){})})</script>
 </body>
 </html>
