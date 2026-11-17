@@ -260,7 +260,7 @@ function addSaleStep(){
  pane.querySelectorAll('#sianSetupFee,#sianMonthlyFee,#sianCheckoutUrl,#sianBillingEmail').forEach(input=>{
   const key={sianSetupFee:'setupFee',sianMonthlyFee:'monthlyFee',sianCheckoutUrl:'checkoutUrl',sianBillingEmail:'email'}[input.id];
   input.value=state.sales[key]??'';
-  input.oninput=()=>{state.sales[key]=key==='setupFee'||key==='monthlyFee'?Math.max(0,Number(input.value)||0):input.value;change()};
+  input.oninput=()=>{if((key==='setupFee'||key==='monthlyFee')&&input.value!==''&&(!Number.isFinite(Number(input.value))||Number(input.value)<0)){input.setCustomValidity('Enter zero or a positive THB amount');return}input.setCustomValidity('');state.sales[key]=key==='setupFee'||key==='monthlyFee'?Number(input.value||0):input.value;change()};
  });
  const description=()=>{const p=state.products.filter(p=>!p.demo);return [state.config.brand,'Website setup: ฿'+Number(state.sales.setupFee).toLocaleString('th-TH'),'Monthly hosting/support: '+(state.sales.monthlyFee>0?'฿'+Number(state.sales.monthlyFee).toLocaleString('th-TH'):'To be quoted'),'Product listings: '+p.length,'Includes editable content, individual product pages, image search metadata, LINE sharing and interactive widgets.','Checkout: '+(state.sales.checkoutUrl||'Request payment link'),'Publishing begins after payment is independently confirmed.'].join('\n')};
  $('#sianCopyQuote').onclick=()=>copyText(description(),'LINE quote copied');
