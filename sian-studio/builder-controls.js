@@ -1,0 +1,203 @@
+/* Sian Studio builder v1.3: configurable design, page sections, product media and social selling */
+(function(){
+'use strict';
+const $=s=>document.querySelector(s),$$=s=>Array.from(document.querySelectorAll(s));
+const TYPES={hero:'🏠 Hero',collection:'🪷 Catalogue',story:'📖 About',toy:'✺ Math toy',fidget:'◉ Spinner lab',oracle:'✦ Divination',newsletter:'✉ Newsletter',text:'¶ Text / Story',image:'▣ Image / Gallery',video:'▶ Video',quote:'❞ Testimonial',faq:'? FAQ',cta:'↗ Offer / CTA'};
+const DEFAULT_SECTIONS=['hero','collection','story','fidget','toy','oracle','newsletter'].map((type,i)=>({id:'default-'+type,type,enabled:true,title:TYPES[type],text:'',style:{}}));
+const DEFAULT_STYLE={accent:'#c6a16d',background:'#f4f0e9',ink:'#282921',surface:'#fffdf9',nav:'#14130f',bodyFont:'system',headingFont:'serif',contentWidth:1200,cardRadius:14,sectionSpacing:72,baseSize:16,cardShadow:20,heroAlign:'left',productColumns:3};
+const init=()=>{if(!Array.isArray(state.sections))state.sections=structuredClone(DEFAULT_SECTIONS);if(!state.design||typeof state.design!=='object')state.design={...DEFAULT_STYLE};if(!state.sales)state.sales={setupFee:6500,monthlyFee:390,checkoutUrl:'',email:'',status:'draft'}};
+const safe=s=>String(s??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+const sectionStyle=(v={})=>Object.assign({bg:'#f7f3e8',card:'#ffffff',text:'#292c27',align:'left',padding:68,width:1080,radius:12},v);
+const hex=(v,f)=>/^#[a-f0-9]{6}$/i.test(String(v))?v:f;
+function themeCss(){
+ const d={...DEFAULT_STYLE,...state.design};
+ const fonts={system:'system-ui,-apple-system,"Noto Sans Thai",sans-serif',serif:'Georgia,"Noto Serif Thai",serif',sans:'Arial,"Noto Sans Thai",sans-serif',mono:'ui-monospace,monospace'};
+ const clamp=(v,lo,hi,f)=>Number.isFinite(+v)?Math.max(lo,Math.min(hi,+v)):f;
+ return ':root{--gold:'+hex(d.accent,'#c6a16d')+'!important;--ink:'+hex(d.ink,'#282921')+'!important;--paper:'+hex(d.background,'#f4f0e9')+'!important;--cream:'+hex(d.surface,'#fffdf9')+'!important}'+
+ 'html,body{font-family:'+fonts[d.bodyFont]+'!important;font-size:'+clamp(d.baseSize,13,23,16)+'px!important;background:'+hex(d.background,'#f4f0e9')+'!important}'+
+ 'h1,h2,h3,.story-copy h2,.hero h1{font-family:'+fonts[d.headingFont]+'!important}'+
+ '.header{background:'+hex(d.nav,'#14130f')+'!important}'+
+ '.outer{max-width:'+clamp(d.contentWidth,760,1600,1200)+'px!important}'+
+ '.product-card,.product-art,.detail-art{border-radius:'+clamp(d.cardRadius,0,35,14)+'px!important}'+
+ '.product-card{box-shadow:0 8px '+clamp(d.cardShadow,0,45,20)+'px #0001!important}'+
+ '.hero-copy{text-align:'+(['center','right'].includes(d.heroAlign)?d.heroAlign:'left')+'!important}'+
+ '.section,.story-section,.tarot-section,.kinetic-section{padding-top:'+clamp(d.sectionSpacing,30,130,72)+'px!important;padding-bottom:'+clamp(d.sectionSpacing,30,130,72)+'px!important}'+
+ '@media(min-width:920px){.product-grid{grid-template-columns:repeat('+clamp(d.productColumns,2,5,3)+',minmax(0,1fr))!important}}';
+}
+const originalReplace=replaceStorefront;
+replaceStorefront=function(){
+ init();let page=originalReplace();
+ page=page.replace('</style>',themeCss()+'</style>');
+ const payload=JSON.stringify({sections:state.sections}).replace(/</g,'\\u003c');
+ page=page.replace('</body>','<script type="application/json" id="sianBuilderSiteConfig">'+payload+'<\/script></body>');
+ return page;
+};
+const originalPreview=previewNow;
+previewNow=function(){init();originalPreview()};
+function tab(name,label,after){
+ const b=document.createElement('button');b.className='step';b.dataset.step=name;b.textContent=label;
+ $('.steps').append(b);b.onclick=()=>showStep(name);
+ const pane=document.createElement('section');pane.className='pane';pane.id='pane-'+name;$('.editor').insertBefore(pane,document.querySelector('.editor .foot-note'));pane.innerHTML=after;
+ return pane;
+}
+function renderLookControls(){
+ const pane=$('#pane-look');
+ const wrap=document.createElement('div');wrap.className='sian-control-wrap';
+ wrap.innerHTML='<h3>ละเอียด / Fine style controls</h3><p class="help">Each choice updates the live storefront. Choose colors, fonts, density and layout without editing CSS.</p><div id="sianDesignControls" class="sian-form-grid"></div>';
+ pane.append(wrap);
+ const controls=[
+ ['accent','Accent / Gold','color'],['background','Page background','color'],['ink','Body text','color'],['surface','Cards / surface','color'],['nav','Header background','color'],
+ ['bodyFont','Body font','select',['system','sans','serif','mono']],['headingFont','Heading font','select',['serif','sans','system','mono']],
+ ['baseSize','Base font size (px)','range',13,23,1],['contentWidth','Max content width (px)','range',760,1600,20],
+ ['cardRadius','Card radius','range',0,35,1],['sectionSpacing','Section spacing','range',30,130,2],['cardShadow','Card shadow','range',0,45,1],
+ ['productColumns','Desktop product columns','range',2,5,1],['heroAlign','Hero alignment','select',['left','center','right']]
+ ];
+ for(const [key,label,type,a,b,step] of controls){
+  const f=document.createElement('label');f.className='field';const title=document.createElement('span');title.textContent=label;f.append(title);
+  const input=document.createElement(type==='select'?'select':'input');input.dataset.design=key;
+  if(type==='select'){for(const option of a){const o=document.createElement('option');o.value=o.textContent=option;input.append(o)}}
+  else{input.type=type;if(type==='range'){input.min=a;input.max=b;input.step=step}}
+  input.value=(state.design||DEFAULT_STYLE)[key];f.append(input);
+  if(type==='range'){const val=document.createElement('small');val.textContent=input.value;f.append(val);input.addEventListener('input',()=>val.textContent=input.value)}
+  input.addEventListener('input',()=>{init();state.design[key]=type==='range'?Number(input.value):input.value;change()});
+  $('#sianDesignControls').append(f);
+ }
+ const reset=document.createElement('button');reset.className='btn';reset.textContent='Reset fine styles / คืนค่า';reset.onclick=()=>{state.design={...DEFAULT_STYLE};$$('[data-design]').forEach(input=>{input.value=state.design[input.dataset.design];const small=input.parentElement.querySelector('small');if(small)small.textContent=input.value});change()};wrap.append(reset);
+}
+function getSection(id){return state.sections.find(x=>x.id===id)}
+let currentSection=null;
+function renderSectionList(){
+ init();const list=$('#sianSectionList');list.replaceChildren();
+ state.sections.forEach((sec,i)=>{
+  const row=document.createElement('div');row.className='sian-section-row';row.draggable=true;row.dataset.id=sec.id;
+  const label=document.createElement('button');label.className='sian-section-select'+(sec.id===currentSection?' active':'');label.textContent=(sec.enabled===false?'◌ ':'● ')+(TYPES[sec.type]||sec.type)+(sec.title&&sec.type!==sec.title?' · '+sec.title.slice(0,32):'');
+  label.onclick=()=>{currentSection=sec.id;renderSectionList();renderSectionEditor()};
+  const actions=document.createElement('div');actions.className='sian-section-actions';
+  for(const [txt,fn,disabled] of [
+   ['↑',()=>moveSection(i,-1),i===0],['↓',()=>moveSection(i,1),i===state.sections.length-1],
+   [sec.enabled===false?'◉':'◌',()=>{sec.enabled=sec.enabled===false;renderSectionList();change()},false],
+   ['×',()=>{state.sections.splice(i,1);if(currentSection===sec.id)currentSection=null;renderSectionList();renderSectionEditor();change()},false]]){
+    const b=document.createElement('button');b.type='button';b.textContent=txt;b.disabled=disabled;b.title=txt==='×'?'Remove section':'Reorder or toggle';b.onclick=fn;actions.append(b)
+  }
+  row.append(label,actions);
+  row.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',sec.id);e.dataTransfer.effectAllowed='move'});
+  row.addEventListener('dragover',e=>e.preventDefault());
+  row.addEventListener('drop',e=>{e.preventDefault();const id=e.dataTransfer.getData('text/plain');const from=state.sections.findIndex(x=>x.id===id),to=state.sections.findIndex(x=>x.id===sec.id);if(from>=0&&to>=0&&from!==to){state.sections.splice(to,0,state.sections.splice(from,1)[0]);renderSectionList();change()}});
+  list.append(row);
+ });
+}
+function moveSection(i,d){const j=i+d;if(j<0||j>=state.sections.length)return;state.sections.splice(j,0,state.sections.splice(i,1)[0]);renderSectionList();change()}
+function addInput(parent,label,key,value,kind,onChange){
+ const f=document.createElement('label');f.className='field';const title=document.createElement('span');title.textContent=label;f.append(title);
+ const input=document.createElement(kind==='textarea'?'textarea':'input');
+ if(kind==='color')input.type='color';else if(kind==='number')input.type='number';else if(kind==='url')input.type='url';else if(kind==='checkbox')input.type='checkbox';else input.type='text';
+ if(kind==='checkbox')input.checked=Boolean(value);else input.value=value??'';
+ input.dataset.sectionKey=key;
+ input.addEventListener(kind==='checkbox'?'change':'input',()=>{onChange(kind==='checkbox'?input.checked:kind==='number'?Number(input.value):input.value);change()});
+ f.append(input);parent.append(f);return input;
+}
+function renderSectionEditor(){
+ const box=$('#sianSectionEditor');box.replaceChildren();const s=getSection(currentSection);if(!s)return;
+ const title=document.createElement('h3');title.textContent='Edit · '+(TYPES[s.type]||s.type);box.append(title);
+ addInput(box,'Section label / title','title',s.title,'text',v=>{s.title=v;renderSectionList()});
+ if(['text','image','quote','faq','cta','video'].includes(s.type)){
+  addInput(box,s.type==='faq'?'FAQ lines: Question | Answer':'Body text / Caption','text',s.text,'textarea',v=>s.text=v);
+  if(s.type==='image'){addInput(box,'Image URL (https) or upload below','image',s.image||'','url',v=>s.image=v);addInput(box,'Image alt text','imageAlt',s.imageAlt,'text',v=>s.imageAlt=v);const uploader=document.createElement('input');uploader.type='file';uploader.accept='image/*';uploader.onchange=async e=>{const data=await handlePhoto(e.target.files[0]);if(data){s.image=data;renderSectionEditor();change()}};box.append(uploader)}
+  if(s.type==='video')addInput(box,'Video URL (YouTube / social link)','videoUrl',s.videoUrl,'url',v=>s.videoUrl=v);
+  if(['cta','image','text'].includes(s.type)){addInput(box,'Button URL','url',s.url,'url',v=>s.url=v);addInput(box,'Button text','linkText',s.linkText,'text',v=>s.linkText=v)}
+ }
+ const divider=document.createElement('h3');divider.textContent='Section-specific style / เฉพาะส่วน';box.append(divider);
+ s.style=sectionStyle(s.style);
+ for(const [key,label,kind] of [['bg','Background','color'],['card','Card surface','color'],['text','Text','color'],['padding','Vertical space (px)','number'],['width','Card width (px)','number'],['radius','Corners (px)','number']])addInput(box,label,key,s.style[key],kind,v=>s.style[key]=v);
+ const align=document.createElement('label');align.className='field';align.textContent='Text alignment';const select=document.createElement('select');for(const v of ['left','center','right']){const opt=document.createElement('option');opt.value=opt.textContent=v;select.append(opt)}select.value=s.style.align;select.onchange=()=>{s.style.align=select.value;change()};align.append(select);box.append(align);
+ const n=document.createElement('p');n.className='hint';n.textContent='Built-in sections retain their native layout. Independent backgrounds and copy are most detailed for custom blocks.';box.append(n);
+}
+function buildSectionUI(){
+ const pane=tab('sections','4 · ส่วน','<h2>04 · ส่วนของเว็บไซต์ / Page sections</h2><p class="help">Drag or use ↑ ↓ to reorder. Hide or remove any section. Add text, galleries, video, testimonials, FAQ or offers.</p><div class="sian-add-row"><select id="sianAddType"></select><button class="btn btn-dark" id="sianAddSection">＋ เพิ่มส่วน / Add</button></div><div id="sianSectionList"></div><div id="sianSectionEditor" class="sian-control-wrap"></div>');
+ const select=$('#sianAddType');for(const [key,label] of Object.entries(TYPES)){const o=document.createElement('option');o.value=key;o.textContent=label;select.append(o)}
+ $('#sianAddSection').onclick=()=>{
+  const type=select.value,id='section-'+Date.now().toString(36);
+  if(['hero','collection','story','toy','fidget','oracle','newsletter'].includes(type)&&state.sections.some(x=>x.type===type)){notice('Built-in section already exists. Select it to move or enable.');return}
+  const sec={id,type,enabled:true,title:TYPES[type].replace(/^[^\s]+\s/,'')||type,text:type==='faq'?'พระแท้ไหม? | ดูภาพหน้าหลังและสอบถามกับร้านโดยตรง':type==='quote'?'เรื่องเล่าจากนักสะสม':'',style:sectionStyle()};
+  state.sections.push(sec);currentSection=id;renderSectionList();renderSectionEditor();change();
+ };
+ renderSectionList();
+ const next=$('[data-next="publish"]');if(next){next.dataset.next='sections';next.textContent='ถัดไป · จัดส่วน →'}
+ const button=document.createElement('button');button.className='btn btn-dark';button.textContent='ถัดไป · เผยแพร่ →';button.onclick=()=>showStep('publish');pane.append(button);
+ // Move publish tab to follow sections
+ const p=$('.step[data-step="publish"]');if(p)p.parentElement.append(p);
+}
+function buildProductExtras(){
+ const editor=$('#itemEditor'),anchor=$('#pDescription').closest('.field');
+ const div=document.createElement('div');div.className='sian-product-extra';
+ div.innerHTML='<h3>🔎 Google Lens / Image SEO</h3><p class="hint">Unique photos, exact descriptions and indexable product pages improve discovery; there is no guarantee of rankings.</p><div id="sianSeoFields" class="sian-form-grid"></div><h3>🎥 Live and recorded video</h3><div id="sianVideoFields"></div><h3>↗ Social selling / แชร์สินค้า</h3><div id="sianSocialFields"></div><div class="row-buttons"><button class="btn" id="sianCopyCaption">Copy Thai post</button><button class="btn" id="sianCopyItemLink">Copy product URL</button><button class="btn" id="sianDownloadShare">↓ Social card PNG</button></div><div id="sianItemLinkInfo" class="hint"></div>';
+ anchor.after(div);
+ const specs=[
+ ['teacher','Ajarn / monk / maker'],['year','Year / Buddhist Era'],['province','Province'],['condition','Condition'],['dimensions','Dimensions / size'],['sku','Stock keeping ID / certificate'],
+ ['frontAlt','Front photo description (Thai)'],['backAlt','Back photo description (Thai)'],['keywords','Search terms: temple, edition, material'],['hashtags','Social hashtags']
+ ];
+ const vids=[['videoUrl','Recorded walkthrough URL (YouTube / Facebook / TikTok)'],['liveUrl','Live stream or replay URL'],['captionTh','Manual Thai post caption'],['captionEn','Manual English post caption']];
+ const bind=(arr,target)=>arr.forEach(([key,title])=>{
+  const f=document.createElement('label');f.className='field';const span=document.createElement('span');span.textContent=title;const input=document.createElement(key.startsWith('caption')?'textarea':'input');
+  input.dataset.productExtra=key;if(key.endsWith('Url'))input.type='url';f.append(span,input);target.append(f);
+  input.addEventListener('input',()=>{const product=state.products[selected];if(product){product[key]=input.value;change()}});
+ });
+ bind(specs,$('#sianSeoFields'));bind(vids,$('#sianVideoFields'));
+ const oldLoad=loadSelected;loadSelected=function(){oldLoad();const p=state.products[selected];$$('[data-product-extra]').forEach(input=>input.value=p?.[input.dataset.productExtra]||'');updateProductShare()};
+ const oldChange=change;change=function(){oldChange();updateProductShare()};
+ $('#sianCopyCaption').onclick=()=>copyText(getCaption(),'Caption copied');
+ $('#sianCopyItemLink').onclick=()=>{const u=productUrl();if(!u){notice('Set the shop HTTPS URL in the Publish tab first');showStep('publish')}else copyText(u,'Item URL copied')};
+ $('#sianDownloadShare').onclick=downloadSocialCard;
+}
+function copyText(v,message){if(navigator.clipboard?.writeText)navigator.clipboard.writeText(v).then(()=>notice('✓ '+message)).catch(()=>window.prompt('Copy',v));else window.prompt('Copy',v)}
+function productSlug(p){return String(p.id||'item').replace(/[^a-zA-Z0-9_-]/g,'').slice(0,70)}
+function productUrl(){const p=state.products[selected];if(!p)return '';const root=String(state.config.siteUrl||'').trim();if(!/^https:\/\//.test(root))return '';return root.replace(/\/+$/,'')+'/items/'+productSlug(p)+'.html'}
+function getCaption(){const p=state.products[selected];if(!p)return '';return (p.captionTh||[p.title,p.edition,p.temple,p.material,p.description,'ราคา '+Number(p.price||0).toLocaleString('th-TH')+' บาท','สอบถาม '+(state.config.lineId||'LINE'),p.hashtags,productUrl()||'(link available after publishing)'].filter(Boolean).join('\n'))}
+function updateProductShare(){const el=$('#sianItemLinkInfo');if(!el)return;const url=productUrl();el.textContent=url?'Individual landing-page URL: '+url:'For permanent individual URLs, enter the published HTTPS website address on the Publish tab.'}
+async function downloadSocialCard(){
+ const p=state.products[selected];if(!p)return;
+ const c=document.createElement('canvas');c.width=1080;c.height=1350;const g=c.getContext('2d');
+ g.fillStyle=state.design?.background||'#f4f0e9';g.fillRect(0,0,1080,1350);g.fillStyle=state.design?.nav||'#14130f';g.fillRect(0,0,1080,135);
+ g.fillStyle='#e7c997';g.font='bold 35px sans-serif';g.fillText(String(state.config.brand||'SIAN STUDIO').slice(0,35),45,83);
+ g.fillStyle='#e5ded0';g.fillRect(60,176,960,842);
+ if(p.imagePath){const img=new Image();img.src=p.imagePath;await img.decode().catch(()=>{});if(img.naturalWidth){const sc=Math.min(910/img.naturalWidth,800/img.naturalHeight),w=img.naturalWidth*sc,h=img.naturalHeight*sc;g.drawImage(img,540-w/2,590-h/2,w,h)}}
+ g.fillStyle='#263c33';g.font='bold 43px sans-serif';g.fillText(String(p.title||'Amulet').slice(0,38),55,1110,970);
+ g.font='29px sans-serif';g.fillText(String(p.temple||p.edition||'').slice(0,55),55,1170);
+ g.fillStyle='#8e6540';g.font='bold 42px sans-serif';g.fillText('฿'+Number(p.price||0).toLocaleString('th-TH'),55,1240);
+ c.toBlob(blob=>{if(!blob)return;const a=document.createElement('a'),u=URL.createObjectURL(blob);a.href=u;a.download=productSlug(p)+'-social-1080x1350.png';a.click();setTimeout(()=>URL.revokeObjectURL(u),1500)},'image/png');
+}
+function publishSiteUrl(){
+ const input=document.createElement('label');input.className='field';input.innerHTML='<span>Published HTTPS domain (for SEO and share links)</span><input id="sianSiteUrl" type="url" placeholder="https://your-shop.example/"/>';
+ const ref=$('#pane-publish').querySelector('.publish-card');ref.before(input);
+ const site=$('#sianSiteUrl');site.value=state.config.siteUrl||'';
+ site.addEventListener('change',()=>{state.config.siteUrl=site.value.trim();change()});
+ const tip=document.createElement('div');tip.className='note';tip.innerHTML='<b>Lens / Image Search requirements</b><p>Site bundle should contain HTML product pages, descriptive front/back JPG files, an XML image sitemap, and Product JSON-LD. For Google Lens product-shopping surfaces, Google also recommends a Merchant Center product feed.</p>';input.after(tip);
+}
+function addSaleStep(){
+ const pane=tab('sale','6 · ขาย','<h2>06 · ปิดการขาย / Client handoff</h2><p class="help">Quote → checkout link → verify payment → publish to hosting → hand over URLs. A receipt or admin approval is required: this demo cannot confirm bank payments.</p><label class="field"><span>Setup fee (THB)</span><input type="number" id="sianSetupFee" min="0"></label><label class="field"><span>Monthly hosting / support (THB)</span><input type="number" id="sianMonthlyFee" min="0"></label><label class="field"><span>Hosted checkout / payment link (HTTPS)</span><input id="sianCheckoutUrl" type="url" placeholder="https://your-payment-provider/checkout/..."></label><label class="field"><span>Support or billing email</span><input id="sianBillingEmail" type="email"></label><div class="sian-sales-steps"><p><b>1.</b> Demonstrate the personalized shop and its individual product links.</p><p><b>2.</b> Agree to the quoted setup and monthly hosting terms.</p><p><b>3.</b> Customer pays via the configured external checkout link; verify the provider receipt separately.</p><p><b>4.</b> Export the optimized site bundle and publish to the assigned domain with DNS/HTTPS.</p><p><b>5.</b> Test product pages, QR share links, Google Search Console and LINE enquiries.</p></div><div class="row-buttons"><button class="btn btn-dark" id="sianCopyQuote">Copy LINE quote</button><button class="btn" id="sianOpenCheckout">Open checkout ↗</button><button class="btn" id="sianCopyHandoff">Copy handoff checklist</button></div><div class="note">No payment is processed in Sian Studio and no site is auto-deployed yet. Backend billing verification, domain provisioning and hosted publishing remain integration work.</div>');
+ const tabPublish=$('.step[data-step="publish"]');if(tabPublish)tabPublish.textContent='5 · เผยแพร่';
+ pane.querySelectorAll('#sianSetupFee,#sianMonthlyFee,#sianCheckoutUrl,#sianBillingEmail').forEach(input=>{
+  const key={sianSetupFee:'setupFee',sianMonthlyFee:'monthlyFee',sianCheckoutUrl:'checkoutUrl',sianBillingEmail:'email'}[input.id];
+  input.value=state.sales[key]??'';
+  input.oninput=()=>{state.sales[key]=key==='setupFee'||key==='monthlyFee'?Math.max(0,Number(input.value)||0):input.value;change()};
+ });
+ const description=()=>{const p=state.products.filter(p=>!p.demo);return [state.config.brand,'Website setup: ฿'+Number(state.sales.setupFee).toLocaleString('th-TH'),'Monthly hosting/support: ฿'+Number(state.sales.monthlyFee).toLocaleString('th-TH'),'Product listings: '+p.length,'Includes editable content, individual product pages, image search metadata, LINE sharing and interactive widgets.','Checkout: '+(state.sales.checkoutUrl||'Request payment link'),'Publishing begins after payment is independently confirmed.'].join('\n')};
+ $('#sianCopyQuote').onclick=()=>copyText(description(),'LINE quote copied');
+ $('#sianOpenCheckout').onclick=()=>{try{const u=new URL(state.sales.checkoutUrl);if(u.protocol!=='https:')throw Error();window.open(u.href,'_blank','noopener')}catch{notice('Add a verified HTTPS payment link first.')}};
+ $('#sianCopyHandoff').onclick=()=>copyText('Sian Studio publication checklist\n☐ Confirm customer and product data\n☐ Verify payment receipt directly with provider\n☐ Export and check site bundle\n☐ Upload bundle to verified hosting\n☐ Configure domain/DNS/HTTPS\n☐ Check product URLs, media, LINE, sitemap and Search Console\n☐ Handover live URL and owner access','Handoff checklist copied');
+}
+function css(){
+ const style=document.createElement('style');style.textContent=
+ '.sian-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}'+
+ '.sian-control-wrap{border:1px solid #dce2d7;border-radius:10px;padding:15px;margin:18px 0;background:#fbfcfa}.sian-control-wrap h3,.sian-product-extra h3{margin:13px 0 9px;font-size:15px}'+
+ '.sian-add-row{display:flex;gap:7px;margin:12px 0}.sian-add-row select{min-width:0;flex:1;padding:10px;border:1px solid #cbd6cf;border-radius:8px}'+
+ '.sian-section-row{display:flex;align-items:center;justify-content:space-between;gap:4px;border-bottom:1px solid #e4e7e0;padding:6px 0}'+
+ '.sian-section-select{text-align:left;border:1px solid transparent;background:none;border-radius:6px;min-width:0;flex:1;color:#46574c;padding:7px 5px;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}'+
+ '.sian-section-select.active{border-color:#83aa8a;background:#e8f4e8;font-weight:bold}'+
+ '.sian-section-actions{display:flex;gap:2px}.sian-section-actions button{border:1px solid #ced8cf;background:#f3f6f2;border-radius:5px;min-width:26px;height:30px;font-size:13px}'+
+ '.sian-product-extra{border-top:2px solid #bfd4bf;margin:22px 0;padding:13px 0}.sian-product-extra .hint{line-height:1.6}.sian-sales-steps{border-left:3px solid #c3a36b;padding:7px 13px;margin:16px 0;background:#f8f6ed;font-size:13px}'+
+ '@media(max-width:500px){.sian-form-grid{grid-template-columns:1fr}.sian-add-row{flex-wrap:wrap}}';document.head.append(style);
+}
+init();css();renderLookControls();buildProductExtras();publishSiteUrl();buildSectionUI();addSaleStep();updateProductShare();
+window.SianStudio={init,productSlug,productUrl,getCaption,copyText,DEFAULT_SECTIONS,DEFAULT_STYLE,themeCss};
+})();
