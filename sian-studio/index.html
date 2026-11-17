@@ -2,7 +2,7 @@
 <html lang="th"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#142523">
-<title>Sian Studio — สร้างเว็บร้านพระเครื่อง · Live Site Builder v1.2</title>
+<title>Sian Studio — สร้างเว็บร้านพระเครื่อง · Live Site Builder v1.3</title>
 <style>
 :root{--ink:#182b29;--leaf:#2b5149;--gold:#bc8851;--paper:#f8f5ee;--mute:#6b7872;--edge:#dce2da;--light:#edf1e8}
 *{box-sizing:border-box}
@@ -129,13 +129,13 @@ code{word-break:break-all;background:#eff1ea;padding:2px 4px;border-radius:3px;f
 <section class="pane" id="pane-publish"><h2>05 · บันทึกและเผยแพร่ / Publish</h2><p class="help">The builder is online. Your changes are saved on this device, not yet shared to other visitors.</p>
 <div id="readiness" class="readiness" aria-live="polite"></div>
 <div class="publish-card"><strong>🌐 ตัวอย่างออนไลน์ / Public example</strong><p><a href="./showroom.html" target="_blank" rel="noopener">nanobotco.github.io/sian-studio/showroom.html</a></p><p>This is the fictional showroom, not your personalized draft.</p></div>
-<button class="btn btn-dark" id="downloadSite" style="width:100%">↓ Export personalized website HTML</button>
+<button class="btn btn-dark" id="downloadSite" style="width:100%">↓ Export host-ready site ZIP</button>
 <p class="hint" style="margin:8px 0 14px">Exports a portable one-file website. You still need hosting for a permanent shareable shop URL.</p>
 <div class="row-buttons"><button class="btn" id="saveProject">↓ Save editable project JSON</button><button class="btn" id="importBtn">↑ Restore project</button><input type="file" id="importProject" accept=".json,application/json" hidden></div>
-<div class="note">A downloaded HTML is not automatically public. The builder does not upload customer photos or merchant inventory to any server. Never share its editable JSON backup publicly. Use a hosting account to publish the exported HTML.</div>
+<div class="note">An exported ZIP is not automatically public. The builder does not upload customer photos or merchant inventory to any server. Never share its editable JSON backup publicly. Use a hosting account to publish the exported ZIP contents.</div>
 <div class="row-buttons"><button class="btn" id="resetAll">Start another shop / เริ่มร้านใหม่</button></div>
 </section>
-<div class="foot-note">Sian Studio v1.2 · Drafts are browser-local. Export an editable backup before changing device or clearing data.<br><a href="https://github.com/NaNoBotCo/nanobotco.github.io/tree/main/sian-studio" target="_blank" rel="noopener">View source on GitHub ↗</a></div>
+<div class="foot-note">Sian Studio v1.3 · Drafts are browser-local. Export an editable backup before changing device or clearing data.<br><a href="https://github.com/NaNoBotCo/nanobotco.github.io/tree/main/sian-studio" target="_blank" rel="noopener">View source on GitHub ↗</a></div>
 </aside>
 <section class="preview-area" aria-label="Live storefront preview"><div class="preview-head"><div><strong>● ตัวอย่างเว็บไซต์จริง / Live preview</strong><br><small id="previewLabel">Editing a draft · not published</small><div class="preview-guide">Tap a product to inspect both sides · เปิดดูสินค้าทั้งสองด้าน</div></div><div class="widths" role="group" aria-label="Preview device"><button class="active" data-width="desktop">Desktop</button><button data-width="tablet">Tablet</button><button data-width="phone">Phone</button></div></div><div class="frame-shell"><div class="frame" id="frame"><iframe id="preview" title="Amulet storefront preview"></iframe></div></div><div class="status" id="status" role="status">Loading storefront…</div></section>
 </main>
@@ -244,7 +244,7 @@ function wire(){
  $('#saveProjectTop').onclick=$('#saveProject').onclick=saveProject;
  $('#downloadSiteTop').onclick=$('#downloadSite').onclick=downloadSite;
  $('#importBtn').onclick=()=>$('#importProject').click();
- $('#importProject').onchange=async e=>{try{const j=JSON.parse(await e.target.files[0].text());if(j.format!=='sian-builder-project-v1'||!j.state||!Array.isArray(j.state.products))throw Error('bad format');state=j.state;selected=-1;syncInputs();redrawProducts();change();notice('✓ Project restored')}catch{notice('Import failed. Please choose a Sian Studio project JSON file.')};e.target.value=''};
+ $('#importProject').onchange=async e=>{try{const j=JSON.parse(await e.target.files[0].text());if(j.format!=='sian-builder-project-v1'||!j.state||!Array.isArray(j.state.products))throw Error('bad format');state=j.state;selected=-1;syncInputs();window.SianStudio?.refresh?.();redrawProducts();change();notice('✓ Project restored')}catch{notice('Import failed. Please choose a Sian Studio project JSON file.')};e.target.value=''};
  $('#resetAll').onclick=()=>{if(confirm('Start another shop? This clears the locally saved draft. Export it first if needed.')){localStorage.removeItem(STORAGE);state={config:structuredClone(defaultConfig),products:structuredClone(defaultProducts),theme:'heritage',features:{tarot:true,iching:true,kaucim:true,math:true,newsletter:true}};selected=-1;syncInputs();redrawProducts();change();showStep('shop')}};
 }
 function syncInputs(){
@@ -261,8 +261,11 @@ async function boot(){
  let saved=null;try{saved=JSON.parse(localStorage.getItem(STORAGE)||'null')}catch{}
  if(saved&&saved.config&&Array.isArray(saved.products)){state={...state,...saved,features:{...state.features,...saved.features}}}
  else{state.config=structuredClone(defaultConfig);state.products=structuredClone(defaultProducts)}
- syncInputs();redrawProducts();review();previewNow();
+ syncInputs();window.SianStudio?.refresh?.();redrawProducts();review();previewNow();
  }catch(e){notice('⚠ Could not load the showroom. '+e.message);$('#preview').src='./showroom.html'}
 }
 boot();
-</script></body></html>
+</script>
+<script src="./builder-controls.js"></script>
+<script src="./builder-publisher.js"></script>
+</body></html>
