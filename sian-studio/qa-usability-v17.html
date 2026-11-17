@@ -1,0 +1,79 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sian Studio 1.7 — Automated Usability Regression</title><style>body{font:14px/1.5 system-ui;max-width:1000px;margin:20px auto;padding:0 16px;background:#f5f5ef;color:#1f2e25}h1{font-size:26px}#status{padding:12px;background:#fff;border-radius:9px;font-weight:bold}li{padding:8px 5px;border-bottom:1px solid #d3ddd2}.ok{color:#21633f}.bad{color:#ad3029}iframe{width:100%;height:280px;border:1px solid #b6c7b7}small{color:#596c60}</style>
+<h1>Automated usability regression — Sian Studio 1.7</h1><p>Tests live builder controls in an isolated browser draft. Never runs checkout or publishing; restores the previous localStorage snapshot.</p><div id="status">Initializing…</div><ol id="results"></ol><iframe id="app" title="Sian Studio under test" src="./index.html?qa=ux-control-regression-v17"></iframe>
+<script>
+(async()=>{
+const app=document.getElementById('app'),list=document.getElementById('results'),status=document.getElementById('status');
+const key='sian-studio-guided-builder-v1',original=localStorage.getItem(key);let pass=0,fail=0;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function wait(fn,timeout=17000){const start=Date.now();while(Date.now()-start<timeout){try{const value=fn();if(value)return value}catch{}await sleep(160)}throw Error('Timed out waiting for '+String(fn).slice(0,60))}
+const record=(label,ok,detail='')=>{const li=document.createElement('li');li.className=ok?'ok':'bad';li.textContent=(ok?'✓ ':'✕ ')+label+(detail?' · '+detail:'');list.append(li);ok?pass++:fail++};
+const rgbhex=value=>{const m=String(value).match(/rgba?\(\s*(\d+)[,\s]+(\d+)[,\s]+(\d+)/);return m?'#'+[1,2,3].map(i=>(+m[i]).toString(16).padStart(2,'0')).join(''):null};
+const fire=(el,name='input')=>el.dispatchEvent(new Event(name,{bubbles:true}));
+try{
+ const w=await wait(()=>app.contentWindow?.SianStudio?.selectSection&&app.contentWindow?.SianStyle?.applyPreset&&app.contentWindow?.SianFormQA&&app.contentWindow);
+ const d=app.contentDocument,preview=d.getElementById('preview');
+ record('All seven builder steps exist',d.querySelectorAll('.steps .step').length===7);
+ const steps=['shop','products','look','features','sections','sale','publish'];
+ for(const name of steps){const btn=d.querySelector('.step[data-step="'+name+'"]');btn?.click();record('Tab '+name+' opens',!!d.querySelector('#pane-'+name+'.active'))}
+ record('Eight distinct art directions',d.querySelectorAll('.sian-preset').length===8);
+ record('All export controls labeled',!!d.querySelector('#saveProject')&&!!d.querySelector('#downloadSite')&&!!d.querySelector('#downloadSiteTop'));
+ record('Section controls have accessible labels',[...d.querySelectorAll('.sian-section-actions button')].every(b=>b.getAttribute('aria-label')));
+ w.SianStudio.selectSection('toy','',{skipFocus:true,skipScroll:true});
+ await wait(()=>d.querySelector('#sianSectionEditor .sian-mini-preset'));
+ record('Six local section color palettes',d.querySelectorAll('#sianSectionEditor .sian-mini-preset').length===6);
+ const gold=[...d.querySelectorAll('.sian-mini-preset')].find(b=>b.textContent.includes('Gold'));
+ gold.click();await sleep(800);
+ let ornament=d.querySelector('#sianSectionEditor [data-section-style="decoration"]');
+ ornament.value='dots';fire(ornament);await sleep(1000);
+ const site=await wait(()=>preview.contentDocument?.querySelector('#toy')?.style?.getPropertyValue('background-image')?.includes('radial-gradient')&&preview.contentDocument,9000);
+ const toy=site.querySelector('#toy'),goldBg=rgbhex(site.defaultView.getComputedStyle(toy).backgroundColor);
+ const h=rgbhex(site.defaultView.getComputedStyle(toy.querySelector('.kinetic-copy h2')).color);
+ const body=rgbhex(site.defaultView.getComputedStyle(toy.querySelector('.kinetic-copy .muted')).color);
+ const hratio=w.SianArt.contrast(goldBg,h),bratio=w.SianArt.contrast(goldBg,body);
+ record('Gold + Dots heading is readable',hratio>=4.5,hratio.toFixed(2)+':1');
+ record('Gold + Dots description is readable',bratio>=4.5,bratio.toFixed(2)+':1');
+ record('Ornament runtime is loaded',!!site.querySelector('script[src*="section-readability.js"]'));
+ record('Section meter samples rendered preview',(d.querySelector('.sian-section-contrast')?.textContent||'').includes('Rendered storefront'));
+ ornament=d.querySelector('#sianSectionEditor [data-section-style="decoration"]');ornament.value='lines';fire(ornament);await sleep(700);
+ record('Lines ornament can be selected',d.querySelector('#sianSectionEditor [data-section-style="decoration"]')?.value==='lines');
+ ornament=d.querySelector('#sianSectionEditor [data-section-style="decoration"]');ornament.value='none';fire(ornament);await sleep(700);
+ record('Ornament can be removed again',d.querySelector('#sianSectionEditor [data-section-style="decoration"]')?.value==='none');
+ const sectionCount=d.querySelectorAll('.sian-section-row').length;
+ const oldConfirm=w.confirm;w.confirm=()=>false;
+ d.querySelector('.sian-section-row .sian-section-actions button:last-child')?.click();
+ await sleep(120);record('Deleting section asks permission and honors Cancel',d.querySelectorAll('.sian-section-row').length===sectionCount);w.confirm=oldConfirm;
+ d.querySelector('[data-width="phone"]')?.click();
+ record('Phone preview mode changes frame',d.getElementById('frame')?.classList.contains('phone'));
+ d.querySelector('[data-width="desktop"]')?.click();
+ record('Desktop preview restores frame',!d.getElementById('frame')?.classList.contains('phone'));
+ d.querySelector('.step[data-step="sale"]')?.click();
+ const checkout=d.getElementById('sianCheckoutUrl');checkout.value='http://example.com/checkout';fire(checkout);
+ record('Unsafe HTTP checkout URL flagged',checkout.getAttribute('aria-invalid')==='true');
+ checkout.value='https://example.com/checkout';fire(checkout);
+ record('Valid HTTPS checkout URL accepted',checkout.getAttribute('aria-invalid')==='false');
+ const bill=d.getElementById('sianBillingEmail');bill.value='invalid-email';fire(bill);
+ record('Invalid billing email flagged',bill.getAttribute('aria-invalid')==='true');
+ d.querySelector('.step[data-step="shop"]')?.click();
+ const line=d.getElementById('lineId');line.value='###';fire(line);
+ record('Malformed LINE ID flagged',line.getAttribute('aria-invalid')==='true');
+ line.value='@testmerchant';fire(line);
+ record('Well-formed LINE ID accepted',line.getAttribute('aria-invalid')==='false');
+ d.querySelector('.step[data-step="publish"]')?.click();
+ const shopUrl=d.getElementById('sianSiteUrl');shopUrl.value='not a url';fire(shopUrl);
+ record('Bad shop domain shows actionable validation',shopUrl.getAttribute('aria-invalid')==='true');
+ d.querySelector('.step[data-step="products"]')?.click();
+ const add=d.getElementById('addProduct');add.click();await sleep(250);
+ record('Adding product opens edit form',!d.getElementById('itemEditor').hidden);
+ record('Blank new item shows draft readiness',d.getElementById('sianItemReadiness')?.textContent.includes('Draft listing'));
+ const title=d.getElementById('pTitle');title.value='QA specimen';fire(title);
+ record('Product title is editable',title.value==='QA specimen');
+ const price=d.getElementById('pPrice');price.value='-10';fire(price);
+ record('Negative product price flagged',price.getAttribute('aria-invalid')==='true');
+ const oldConfirm2=w.confirm;w.confirm=()=>false;d.getElementById('deleteProduct').click();await sleep(150);
+ record('Deleting product asks permission and honors Cancel',!d.getElementById('itemEditor').hidden);w.confirm=oldConfirm2;
+ record('Social creative formats exist',d.getElementById('socialFormat')?.options.length===3);
+ record('Front and back media layout choices exist',d.getElementById('socialLayout')?.options.length===3);
+}catch(error){record('Unexpected test exception',false,error.message)}
+finally{if(original===null)localStorage.removeItem(key);else localStorage.setItem(key,original);status.className=fail?'bad':'ok';status.textContent=pass+' passed · '+fail+' failed · original browser project restored'}
+})();
+</script></html>
