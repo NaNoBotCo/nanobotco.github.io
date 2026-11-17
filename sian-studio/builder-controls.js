@@ -185,7 +185,7 @@ function renderSectionEditor(){
  }
  const divider=document.createElement('h3');divider.textContent='Section-specific style / เฉพาะส่วน';box.append(divider);
  s.style=sectionStyle(s.style);
- for(const [key,label,kind] of [['bg','Background','color'],['card','Card surface','color'],['text','Text','color'],['padding','Vertical space (px)','number'],['width','Card width (px)','number'],['radius','Corners (px)','number']])addInput(box,label,key,s.style[key],kind,v=>s.style[key]=v);
+ for(const [key,label,kind] of [['bg','Background','color'],['card','Card surface','color'],['text','Text','color'],['padding','Vertical space (px)','number'],['width','Card width (px)','number'],['radius','Corners (px)','number']])addInput(box,label,key,s.style[key],kind,v=>{s.style[key]=v;if(key==='bg')s.style._colorBg=true;if(key==='text')s.style._colorText=true});
  const align=document.createElement('label');align.className='field';align.textContent='Text alignment';const select=document.createElement('select');for(const v of ['left','center','right']){const opt=document.createElement('option');opt.value=opt.textContent=v;select.append(opt)}select.value=s.style.align;select.onchange=()=>{s.style.align=select.value;change()};align.append(select);box.append(align);
  const n=document.createElement('p');n.className='hint';n.textContent='All sections support background, text color, spacing, alignment and custom headings. Built-in sections retain their native layout.';box.append(n);
  window.SianStyle?.decorateSectionEditor?.(box,s);
