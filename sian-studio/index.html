@@ -2,7 +2,7 @@
 <html lang="th"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#142523">
-<title>Sian Studio — สร้างเว็บร้านพระเครื่อง · Live Site Builder v1.6</title>
+<title>Sian Studio — สร้างเว็บร้านพระเครื่อง · Live Site Builder v1.7</title>
 <style>
 :root{--ink:#182b29;--leaf:#2b5149;--gold:#bc8851;--paper:#f8f5ee;--mute:#6b7872;--edge:#dce2da;--light:#edf1e8}
 *{box-sizing:border-box}
@@ -152,7 +152,7 @@ code{word-break:break-all;background:#eff1ea;padding:2px 4px;border-radius:3px;f
 <div class="note">An exported ZIP is not automatically public. The builder does not upload customer photos or merchant inventory to any server. Never share its editable JSON backup publicly. Use a hosting account to publish the exported ZIP contents.</div>
 <div class="row-buttons"><button class="btn" id="resetAll">Start another shop / เริ่มร้านใหม่</button></div>
 </section>
-<div class="foot-note">Sian Studio v1.6 · Drafts are browser-local. Export an editable backup before changing device or clearing data.<br><a href="https://github.com/NaNoBotCo/nanobotco.github.io/tree/main/sian-studio" target="_blank" rel="noopener">View source on GitHub ↗</a></div>
+<div class="foot-note">Sian Studio v1.7 · Drafts are browser-local. Export an editable backup before changing device or clearing data.<br><a href="https://github.com/NaNoBotCo/nanobotco.github.io/tree/main/sian-studio" target="_blank" rel="noopener">View source on GitHub ↗</a></div>
 </aside>
 <section class="preview-area" aria-label="Live storefront preview"><div class="preview-head"><div><strong>● Live site · click ✎ to edit / คลิกแก้ไขได้เลย</strong><br><small id="previewLabel">Editing a draft · not published</small><div class="preview-guide">Tap a product to inspect both sides · เปิดดูสินค้าทั้งสองด้าน</div></div><div class="widths" role="group" aria-label="Preview device"><button class="active" data-width="desktop">Desktop</button><button data-width="tablet">Tablet</button><button data-width="phone">Phone</button></div></div><div class="frame-shell"><div class="frame" id="frame"><iframe id="preview" title="Amulet storefront preview"></iframe></div></div><div class="status" id="status" role="status">Loading storefront…</div></section>
 </main>
@@ -252,10 +252,10 @@ function wire(){
  async function photoChange(e,key,target){const p=state.products[selected];if(!p)return;try{const photo=await handlePhoto(e.target.files[0]);if(photo){p[key]=photo;p.referenceImage='';p.demo=false;$('#'+target).src=photo;redrawProducts();change()}}catch{notice('Unable to process image / ไม่สามารถใช้ภาพนี้ได้')}}
  $('#pPhotoFile').onchange=e=>photoChange(e,'imagePath','pPreview');
  $('#pBackPhotoFile').onchange=e=>photoChange(e,'backImagePath','pBackPreview');
- $('#removePhotos').onclick=()=>{const p=state.products[selected];if(!p)return;p.imagePath='';p.backImagePath='';loadSelected();change()};
+ $('#removePhotos').onclick=()=>{const p=state.products[selected];if(!p)return;if(!confirm('Clear BOTH front and back photos from this listing? Export a project backup first if you need these images later.'))return;p.imagePath='';p.backImagePath='';loadSelected();change()};
  $('#addProduct').onclick=addProduct;
- $('#clearDemo').onclick=()=>{state.products=state.products.filter(p=>!p.demo);selected=-1;redrawProducts();change()};
- $('#deleteProduct').onclick=()=>{if(selected<0)return;state.products.splice(selected,1);selected=-1;redrawProducts();change()};
+ $('#clearDemo').onclick=()=>{const n=state.products.filter(p=>p.demo).length;if(!n){notice('No sample products to clear.');return}if(!confirm('Clear '+n+' sample products? Your own listings will stay.'))return;state.products=state.products.filter(p=>!p.demo);selected=-1;redrawProducts();loadSelected();change()};
+ $('#deleteProduct').onclick=()=>{if(selected<0)return;const p=state.products[selected];if(!confirm('Delete this amulet listing: '+(p.title||'Untitled draft')+'? This cannot be undone.'))return;state.products.splice(selected,1);selected=-1;redrawProducts();loadSelected();change()};
  $('#productUp').onclick=()=>moveProduct(-1);$('#productDown').onclick=()=>moveProduct(1);
  $$('[data-feature]').forEach(input=>input.onchange=()=>{state.features[input.dataset.feature]=input.checked;change()});
  $$('[data-theme]').forEach(b=>b.onclick=()=>{state.theme=b.dataset.theme;$$('[data-theme]').forEach(x=>x.classList.toggle('active',x===b));change()});
@@ -292,11 +292,12 @@ if(new URLSearchParams(location.search).has('qa')){
  window.addEventListener('unhandledrejection',event=>window.__sianErrors.push(String(event.reason||'rejection')));
 }
 </script>
-<script src="./builder-controls.js?v=20261117-v16-d0500"></script>
-<script src="./style-studio.js?v=20261117-v16-8fb4f"></script>
+<script src="./builder-controls.js?v=20261117-v17-223b"></script>
+<script src="./style-studio.js?v=20261117-v17-f948"></script>
 <script src="./art-directions.js?v=20261117-v16-26f7"></script>
-<script src="./builder-publisher.js?v=20261117-uxfix-c233"></script>
+<script src="./builder-publisher.js?v=20261117-v17-5f1d"></script>
 <script src="./social-assets.js?v=20261117-uxfix-c233"></script>
 <script src="./visual-editor.js?v=20261117-14acd-textarea"></script>
 <script src="./wysiwyg-studio.js?v=20261117-v15"></script>
+<script src="./form-clarity.js?v=20261117-v17-724c"></script>
 </body></html>
