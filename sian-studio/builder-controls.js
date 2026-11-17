@@ -90,7 +90,7 @@ function renderSectionList(){
  init();const list=$('#sianSectionList');list.replaceChildren();
  state.sections.forEach((sec,i)=>{
   const row=document.createElement('div');row.className='sian-section-row';row.draggable=true;row.dataset.id=sec.id;
-  const label=document.createElement('button');label.className='sian-section-select'+(sec.id===currentSection?' active':'');label.textContent=(sec.enabled===false?'◌ ':'● ')+(TYPES[sec.type]||sec.type)+(sec.title&&sec.type!==sec.title?' · '+sec.title.slice(0,32):'');
+  const label=document.createElement('button');label.className='sian-section-select'+(sec.id===currentSection?' active':'');label.textContent=(sec.enabled===false?'◌ ':'● ')+(TYPES[sec.type]||sec.type)+(sec.title&&sec.title!==TYPES[sec.type]?' · '+sec.title.slice(0,32):'');
   label.onclick=()=>{currentSection=sec.id;renderSectionList();renderSectionEditor()};
   const actions=document.createElement('div');actions.className='sian-section-actions';
   for(const [txt,fn,disabled] of [
