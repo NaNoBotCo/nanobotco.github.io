@@ -102,7 +102,7 @@ if(sections){
 }
 
 const themeHero=document.createElement('style');
-themeHero.textContent='.hero-image.sian-has-hero-art>:not(.sian-custom-hero-art){display:none!important}.hero-image .sian-custom-hero-art{display:block;width:100%;height:100%;object-position:center center;position:absolute;inset:0;z-index:4}';
+themeHero.textContent='.hero-image.sian-has-hero-art>:not(.sian-custom-hero-art):not(.sian-edit-spot){display:none!important}.hero-image .sian-custom-hero-art{display:block;width:100%;height:100%;object-position:center center;position:absolute;inset:0;z-index:4}';
 document.head.append(themeHero);
 const hs=document.createElement('style');hs.textContent='.sian-hero-spinner{position:absolute;right:1%;top:30%;width:clamp(160px,24vw,340px);height:clamp(160px,24vw,340px);border:0;background:none;border-radius:50%;padding:4px;cursor:grab;z-index:1;transition:transform 4s cubic-bezier(.1,.4,.13,1);pointer-events:auto}.sian-hero-spinner svg{width:100%;height:100%;filter:drop-shadow(0 2px 15px #9b743d)}.sian-hero-spinner:focus-visible{outline:3px solid #c6a16d}@media(max-width:760px){.sian-hero-spinner{right:0;top:12%;width:135px;height:135px;opacity:.14!important}}@media(prefers-reduced-motion:reduce){.sian-hero-spinner{transition:none!important}}';document.head.append(hs);
 const hero=document.querySelector('main .hero');
