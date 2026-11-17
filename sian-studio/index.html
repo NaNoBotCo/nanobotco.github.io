@@ -247,7 +247,7 @@ function wire(){
  $$('[data-next]').forEach(b=>b.onclick=()=>showStep(b.dataset.next));
  for(const key of ['brand','english','story','lineId']) $('#'+key).addEventListener('input',e=>{state.config[key]=e.target.value;change()});
  for(const [id,key] of [['pTitle','title'],['pEnglish','english'],['pPrice','price'],['pStatus','status'],['pCategory','category'],['pTemple','temple'],['pEdition','edition'],['pMaterial','material'],['pDescription','description']]) $('#'+id).addEventListener('input',e=>{
- const p=state.products[selected];if(!p)return;p[key]=key==='price'?Math.max(0,Number(e.target.value)||0):e.target.value;redrawProducts();change();
+ const p=state.products[selected];if(!p)return;if(key==='price'&&e.target.value!==''&&(e.target.validity.badInput||Number(e.target.value)<0)){e.target.setCustomValidity('Enter a price of 0 THB or higher');return}e.target.setCustomValidity('');p[key]=key==='price'?Number(e.target.value||0):e.target.value;redrawProducts();change();
  });
  async function photoChange(e,key,target){const p=state.products[selected];if(!p)return;try{const photo=await handlePhoto(e.target.files[0]);if(photo){p[key]=photo;p.referenceImage='';p.demo=false;$('#'+target).src=photo;redrawProducts();change()}}catch{notice('Unable to process image / ไม่สามารถใช้ภาพนี้ได้')}}
  $('#pPhotoFile').onchange=e=>photoChange(e,'imagePath','pPreview');
