@@ -278,7 +278,7 @@ function css(){
  '.sian-product-extra{border-top:2px solid #bfd4bf;margin:22px 0;padding:13px 0}.sian-product-extra .hint{line-height:1.6}.sian-sales-steps{border-left:3px solid #c3a36b;padding:7px 13px;margin:16px 0;background:#f8f6ed;font-size:13px}'+
  '@media(max-width:500px){.sian-form-grid{grid-template-columns:1fr}.sian-add-row{flex-wrap:wrap}}';document.head.append(style);
 }
-function selectSection(ref,focusKey=''){
+function selectSection(ref,focusKey='',options={}){
  init();const sec=state.sections.find(s=>s.id===ref||s.type===ref);
  if(!sec){notice('Could not find section: '+ref);return}
  currentSection=sec.id;showStep('sections');renderSectionList();renderSectionEditor();
@@ -286,7 +286,52 @@ function selectSection(ref,focusKey=''){
  const sidebar=$('.editor');
  if(sidebar){const top=editor.getBoundingClientRect().top-sidebar.getBoundingClientRect().top+sidebar.scrollTop-16;sidebar.scrollTo({top,behavior:'smooth'})}
  const field=focusKey?editor.querySelector('[data-section-key="'+focusKey+'"]'):editor.querySelector('input:not([type="file"]),textarea');
- if(field)setTimeout(()=>{field.focus({preventScroll:true});field.classList.add('sian-input-target');setTimeout(()=>field.classList.remove('sian-input-target'),1400)},180);
+ if(field&&!options.skipFocus)setTimeout(()=>{field.focus({preventScroll:true});field.classList.add('sian-input-target');setTimeout(()=>field.classList.remove('sian-input-target'),1400)},180);
+}
+
+function sectionOf(ref){init();return state.sections.find(x=>x.type===ref||x.id===ref)}
+function updateText(ref,key,value,{redraw=true}={}){
+ const next=String(value??'').replace(/\r/g,'').slice(0,2400);
+ if(ref==='identity'){
+  if(!['brand','english','story','lineId'].includes(key))return false;
+  state.config[key]=next;const input=document.getElementById(key);if(input)input.value=next;
+ }else if(String(ref).startsWith('product:')){
+  const id=String(ref).slice(8),p=state.products.find(p=>String(p.id)===id);
+  if(!p||!['title','english','description','price'].includes(key))return false;
+  if(key==='price'){const amount=Number(next.replace(/[฿,\s]/g,''));if(!Number.isFinite(amount)||amount<0)return false;p.price=amount}
+  else p[key]=next;
+  redrawProducts();
+ }else{
+  const sec=sectionOf(ref);if(!sec)return false;
+  if(sec.type==='hero'&&['eyebrowTh','eyebrowEn','firstTh','secondTh','firstEn','secondEn','leadTh','leadEn','primaryTh','primaryEn','secondaryTh','secondaryEn'].includes(key)){
+   if(!sec.hero)sec.hero={...HERO_DEFAULTS};sec.hero[key]=next;
+  }else if(['headlineTh','headlineEn','subtextTh','subtextEn'].includes(key)){
+   if(!sec.copy)sec.copy={...(SECTION_COPY_DEFAULTS[sec.type]||{})};sec.copy[key]=next;
+  }else if(['title','text'].includes(key))sec[key]=next;
+  else return false;
+  if(sec.id===currentSection)renderSectionEditor();
+ }
+ if(redraw)change();else {persist();review()}
+ return true;
+}
+function updateSectionDesign(ref,key,value){
+ const sec=sectionOf(ref);if(!sec)return false;
+ const allowed=['bg','card','text','headingColor','headingSize','padding','radius','width','align','decoration','buttonRadius'];
+ if(!allowed.includes(key))return false;
+ sec.style=sectionStyle(sec.style);
+ if(['bg','card','text','headingColor'].includes(key)){
+  if(!/^#[a-f0-9]{6}$/i.test(value))return false;
+  sec.style[key]=value;
+ }else if(key==='align'){
+  if(!['left','center','right'].includes(value))return false;sec.style.align=value;
+ }else if(key==='decoration'){
+  if(!['none','lines','dots'].includes(value))return false;sec.style.decoration=value;
+ }else{
+  const ranges={headingSize:[22,84],padding:[16,160],radius:[0,50],width:[540,1600],buttonRadius:[0,40]};
+  const n=Number(value),r=ranges[key];if(!Number.isFinite(n)||n<r[0]||n>r[1])return false;sec.style[key]=n;
+ }
+ if(sec.id===currentSection)renderSectionEditor();
+ change();return true;
 }
 function refresh(){
  init();$$('[data-design]').forEach(input=>{const key=input.dataset.design;input.value=state.design[key]??DEFAULT_STYLE[key];const small=input.parentElement.querySelector('small');if(small)small.textContent=input.value});
@@ -295,5 +340,5 @@ function refresh(){
  renderSectionList();renderSectionEditor();updateProductShare();
 }
 init();css();renderLookControls();buildProductExtras();publishSiteUrl();buildSectionUI();addSaleStep();refresh();
-window.SianStudio={init,refresh,selectSection,productSlug,productUrl,getCaption,copyText,DEFAULT_SECTIONS,DEFAULT_STYLE,themeCss};
+window.SianStudio={init,refresh,selectSection,updateText,updateSectionDesign,sectionOf,productSlug,productUrl,getCaption,copyText,DEFAULT_SECTIONS,DEFAULT_STYLE,themeCss};
 })();
