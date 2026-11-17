@@ -2,7 +2,7 @@
 (function(){
 'use strict';
 const $=s=>document.querySelector(s),$$=s=>Array.from(document.querySelectorAll(s));
-const TYPES={hero:'🏠 Hero',collection:'🪷 Catalogue',story:'📖 About',toy:'✺ Math toy',fidget:'◉ Spinner lab',oracle:'✦ Divination',newsletter:'✉ Newsletter',text:'¶ Text / Story',image:'▣ Image / Gallery',video:'▶ Video',quote:'❞ Testimonial',faq:'? FAQ',cta:'↗ Offer / CTA'};
+const TYPES={hero:'🏠 Hero',collection:'🪷 Catalogue',story:'📖 About',toy:'✺ Math toy',fidget:'◉ Spinner lab',oracle:'✦ Divination',newsletter:'✉ Newsletter',text:'¶ Text / Story',image:'▣ Image block',video:'▶ Video link',quote:'❞ Testimonial',faq:'? FAQ',cta:'↗ Offer / CTA'};
 const HERO_DEFAULTS={
  eyebrowTh:'ของแท้จากศรัทธา ไม่ใช่จากคำโฆษณา',
  eyebrowEn:'Objects chosen for trust, not hype',
@@ -82,7 +82,7 @@ function renderLookControls(){
   $('#sianDesignControls').append(f);
  }
  const f=document.createElement('label');f.className='switch-row';f.textContent='Interactive fidget spinner in hero background';const c=document.createElement('input');c.type='checkbox';c.checked=state.design.heroSpinner!==false;c.onchange=()=>{state.design.heroSpinner=c.checked;change()};f.append(c);wrap.append(f);
- const reset=document.createElement('button');reset.className='btn';reset.textContent='Reset fine styles / คืนค่า';reset.onclick=()=>{state.design={...DEFAULT_STYLE};$$('[data-design]').forEach(input=>{input.value=state.design[input.dataset.design];const small=input.parentElement.querySelector('small');if(small)small.textContent=input.value});change()};wrap.append(reset);
+ const reset=document.createElement('button');reset.className='btn';reset.textContent='Reset ALL appearance settings / คืนค่า';reset.onclick=()=>{if(!confirm('Reset this shop’s complete appearance, including the selected art direction? Your products and text will remain.'))return;state.design={...DEFAULT_STYLE};$('[data-design]').forEach(input=>{input.value=state.design[input.dataset.design];const small=input.parentElement.querySelector('small');if(small)small.textContent=input.value});window.SianStyle?.refresh?.();window.SianArt?.refresh?.();change()};wrap.append(reset);
 }
 function getSection(id){return state.sections.find(x=>x.id===id)}
 let currentSection=null;
@@ -91,13 +91,13 @@ function renderSectionList(){
  state.sections.forEach((sec,i)=>{
   const row=document.createElement('div');row.className='sian-section-row';row.draggable=true;row.dataset.id=sec.id;
   const label=document.createElement('button');label.className='sian-section-select'+(sec.id===currentSection?' active':'');label.textContent=(sec.enabled===false?'◌ ':'● ')+(TYPES[sec.type]||sec.type)+(sec.title&&sec.title!==TYPES[sec.type]?' · '+sec.title.slice(0,32):'');
-  label.onclick=()=>{currentSection=sec.id;renderSectionList();renderSectionEditor()};
+  label.setAttribute('aria-label','Edit '+(sec.title||TYPES[sec.type]||sec.type));label.onclick=()=>{currentSection=sec.id;renderSectionList();renderSectionEditor()};
   const actions=document.createElement('div');actions.className='sian-section-actions';
   for(const [txt,fn,disabled] of [
    ['↑',()=>moveSection(i,-1),i===0],['↓',()=>moveSection(i,1),i===state.sections.length-1],
    [sec.enabled===false?'◉':'◌',()=>{sec.enabled=sec.enabled===false;renderSectionList();change()},false],
-   ['×',()=>{state.sections.splice(i,1);if(currentSection===sec.id)currentSection=null;renderSectionList();renderSectionEditor();change()},false]]){
-    const b=document.createElement('button');b.type='button';b.textContent=txt;b.disabled=disabled;b.title=txt==='×'?'Remove section':'Reorder or toggle';b.onclick=fn;actions.append(b)
+   ['×',()=>{if(!confirm('Remove section "'+(sec.title||TYPES[sec.type]||sec.type)+'"? The contents and settings of this section will be lost.'))return;state.sections.splice(i,1);if(currentSection===sec.id)currentSection=state.sections[Math.max(0,i-1)]?.id||null;renderSectionList();renderSectionEditor();change();notice('Section removed. Export a project backup regularly.')},false]]){
+    const b=document.createElement('button');b.type='button';b.textContent=txt;b.disabled=disabled;const actionName=txt==='×'?'Remove section':txt==='↑'?'Move section up':txt==='↓'?'Move section down':sec.enabled===false?'Show section':'Hide section';b.title=actionName+' · '+(sec.title||sec.type);b.setAttribute('aria-label',b.title);b.onclick=fn;actions.append(b)
   }
   row.append(label,actions);
   row.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',sec.id);e.dataTransfer.effectAllowed='move'});
@@ -185,7 +185,7 @@ function renderSectionEditor(){
  }
  const divider=document.createElement('h3');divider.textContent='Section-specific style / เฉพาะส่วน';box.append(divider);
  s.style=sectionStyle(s.style);
- for(const [key,label,kind] of [['bg','Background','color'],['card','Card surface','color'],['text','Text','color'],['padding','Vertical space (px)','number'],['width','Card width (px)','number'],['radius','Corners (px)','number']])addInput(box,label,key,s.style[key],kind,v=>{s.style[key]=v;if(key==='bg')s.style._colorBg=true;if(key==='text')s.style._colorText=true});
+ for(const [key,label,kind] of [['bg','Section background (changes underlying gradient)','color'],['card','Card surface','color'],['text','Text','color'],['padding','Vertical space (px)','number'],['width','Card width (px)','number'],['radius','Corners (px)','number']])addInput(box,label,key,s.style[key],kind,v=>{s.style[key]=v;if(key==='bg')s.style._colorBg=true;if(key==='text')s.style._colorText=true});
  const align=document.createElement('label');align.className='field';align.textContent='Text alignment';const select=document.createElement('select');for(const v of ['left','center','right']){const opt=document.createElement('option');opt.value=opt.textContent=v;select.append(opt)}select.value=s.style.align;select.onchange=()=>{s.style.align=select.value;change()};align.append(select);box.append(align);
  const n=document.createElement('p');n.className='hint';n.textContent='All sections support background, text color, spacing, alignment and custom headings. Built-in sections retain their native layout.';box.append(n);
  window.SianStyle?.decorateSectionEditor?.(box,s);
