@@ -104,7 +104,16 @@ async function exportBundle(){
  else index=index.replace('</head>','<link rel="canonical" href="'+escaped(base+'/index.html')+'"></head>');
  let enhancements='';
  try{const r=await fetch('./site-enhancements.js',{cache:'no-cache'});if(!r.ok)throw Error('HTTP '+r.status);enhancements=await r.text()}catch(e){notice('Cannot include site-enhancements.js: '+e.message);return}
- const files=[{name:'index.html',content:index},{name:'site-enhancements.js',content:enhancements},...prep.files,
+ let artCss='';
+ if(index.includes('art-directions.css')){
+  try{
+   const response=await fetch('./art-directions.css',{cache:'no-cache'});
+   if(!response.ok)throw Error('HTTP '+response.status);
+   artCss=await response.text();
+   if(!artCss.includes('data-sian-art'))throw Error('Not a recognized art direction stylesheet');
+  }catch(error){notice('The selected design cannot be packaged: '+error.message);return}
+ }
+ const files=[{name:'index.html',content:index},{name:'site-enhancements.js',content:enhancements},...(artCss?[{name:'art-directions.css',content:artCss}]:[]),...prep.files,
  ...prep.products.map(p=>({name:'items/'+fileSlug(p)+'.html',content:oneItemPage(p,base)})),
  {name:'product-feed.json',content:JSON.stringify(siteManifest(prep.products,base),null,2)},
  {name:'merchant-center-feed.csv',content:merchantCsv(prep.products,base)},
@@ -116,7 +125,7 @@ async function exportBundle(){
 }
 function mount(){
  const btn=$('#downloadSite'),top=$('#downloadSiteTop');if(btn){btn.textContent='↓ Export host-ready ZIP';btn.onclick=exportBundle}if(top){top.textContent='↓ ZIP เว็บไซต์';top.onclick=exportBundle}
- const pane=$('#pane-publish');if(pane){const p=document.createElement('div');p.className='note';p.textContent='The ZIP contains actual indexable item pages, front/back image files, JSON-LD metadata, a sitemap, and a social feed. Publishing requires verified payment and uploading the ZIP contents to the configured domain.';pane.append(p)}
+ const pane=$('#pane-publish');if(pane){const p=document.createElement('div');p.className='note';p.textContent='The ZIP contains actual indexable item pages, front/back image files, matching art-direction CSS, structured data, a sitemap, and a social feed. Publishing requires verified payment and uploading the ZIP contents to the configured domain.';pane.append(p)}
 }
 mount();
 window.SianPublisher={exportBundle,oneItemPage,zipFiles,sitemapXml};
