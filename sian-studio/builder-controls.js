@@ -188,6 +188,7 @@ function renderSectionEditor(){
  for(const [key,label,kind] of [['bg','Background','color'],['card','Card surface','color'],['text','Text','color'],['padding','Vertical space (px)','number'],['width','Card width (px)','number'],['radius','Corners (px)','number']])addInput(box,label,key,s.style[key],kind,v=>s.style[key]=v);
  const align=document.createElement('label');align.className='field';align.textContent='Text alignment';const select=document.createElement('select');for(const v of ['left','center','right']){const opt=document.createElement('option');opt.value=opt.textContent=v;select.append(opt)}select.value=s.style.align;select.onchange=()=>{s.style.align=select.value;change()};align.append(select);box.append(align);
  const n=document.createElement('p');n.className='hint';n.textContent='All sections support background, text color, spacing, alignment and custom headings. Built-in sections retain their native layout.';box.append(n);
+ window.SianStyle?.decorateSectionEditor?.(box,s);
 }
 function buildSectionUI(){
  const pane=tab('sections','4 · ส่วน','<h2>04 · ส่วนของเว็บไซต์ / Page sections</h2><p class="help">Drag or use ↑ ↓ to reorder. Hide or remove any section. Add text, galleries, video, testimonials, FAQ or offers.</p><div class="sian-add-row"><select id="sianAddType"></select><button class="btn btn-dark" id="sianAddSection">＋ เพิ่มส่วน / Add</button></div><div id="sianSectionEditor" class="sian-control-wrap"></div><h3 class="sian-section-list-heading">↕ Move, add, or hide other sections</h3><div id="sianSectionList"></div>');
