@@ -286,13 +286,13 @@ function styleLook(){
 function sectionPreset(section,presetId){
  const p=SECTION_PRESETS.find(x=>x.id===presetId);if(!p)return;
  const sec=window.SianStudio?.sectionOf?.(section.id);if(!sec)return;
- sec.style={...sec.style,bg:p.bg,card:p.card,text:p.text,headingColor:p.headingColor,_colorBg:true,_colorText:true};
+ sec.style={...sec.style,bg:p.bg,card:p.card,text:p.text,headingColor:p.headingColor,_colorBg:true,_colorText:true,_customCard:true};
  window.SianStudio?.selectSection?.(sec.id,'',{skipFocus:true});change();
 }
 function decorateSectionEditor(box,section){
  if(box.querySelector('.sian-quick-style'))return;
  const quick=document.createElement('section');quick.className='sian-quick-style';quick.id='sianQuickStyle';
- quick.innerHTML='<h4>🎨 Look of this section / สีเฉพาะส่วน</h4><p class="hint">Pick a section look, then fine-tune below.</p><div class="sian-section-presets"></div><div class="sian-section-quick-grid"></div>';
+ quick.innerHTML='<h4>🎨 Look of this section / สีเฉพาะส่วน</h4><p class="hint">These settings affect this section only. Decorative ornaments should not reduce text legibility.</p><div class="sian-section-presets"></div><div class="sian-section-quick-grid"></div>';
  const grid=quick.querySelector('.sian-section-presets');
  for(const p of SECTION_PRESETS){
   const btn=document.createElement('button');btn.type='button';btn.className='sian-mini-preset';btn.title=p.name;
@@ -311,7 +311,7 @@ function decorateSectionEditor(box,section){
   else{input.type=type;if(type==='range'){input.min=min;input.max=max;input.step=step}}
   input.value=key==='headingColor'?section.style.headingColor||'#43392a':key==='headingSize'?section.style.headingSize||46:key==='buttonRadius'?section.style.buttonRadius||6:section.style.decoration||'none';
   f.append(input);const val=document.createElement('small');if(type==='range'){val.textContent=input.value;f.append(val)}
-  input.oninput=()=>{section.style[key]=type==='range'?Number(input.value):input.value;if(type==='range')val.textContent=input.value;change()};advanced.append(f);
+  input.oninput=()=>{section.style[key]=type==='range'?Number(input.value):input.value;if(key==='buttonRadius')section.style._customButtonRadius=true;if(type==='range')val.textContent=input.value;change()};advanced.append(f);
  }
  const divider=[...box.querySelectorAll('h3')].find(x=>x.textContent.includes('Section-specific style'));
  if(divider){
