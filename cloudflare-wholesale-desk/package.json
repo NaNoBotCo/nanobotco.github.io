@@ -1,0 +1,1 @@
+{"name":"wholesale-desk-cloudflare","private":true,"version":"0.3.0","type":"module","scripts":{"deploy":"wrangler deploy","db:migrate":"wrangler d1 migrations apply wholesale_desk --remote"},"devDependencies":{"wrangler":"^4.0.0"}}
