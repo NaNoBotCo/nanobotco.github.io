@@ -24,7 +24,7 @@ function readable(background,requested){
  const dark='#13221E',light='#FFFFFF';
  return contrast(background,dark)>=contrast(background,light)?dark:light;
 }
-const roles=[['Page text','fg','bg',4.5],['Product information','surfaceText','surface',4.5],['Navigation','navText','nav',4.5],['Primary button','accentText','accent',4.5],['Secondary text','muted','bg',4.5],['Info panel','panelText','panel',4.5],['Story section','storyText','story',4.5]];
+const roles=[['Page text','fg','bg',4.5],['Product information','surfaceText','surface',4.5],['Navigation','navText','nav',4.5],['Primary button','accentText','accent',4.5],['Secondary text','muted','bg',4.5],['Info panel','panelText','panel',4.5],['Story section','storyText','story',4.5],['Accent headings','accent','bg',4.5],['Control borders','line','bg',3]];
 function derive(id,design={}){
  const p=PALETTES[id];if(!p)return null;
  const bg=isHex(design.background)?design.background:p.bg;
@@ -76,7 +76,7 @@ function refresh(){
   const value=document.createElement('b');value.textContent=entry.ratio.toFixed(2)+':1';value.className=entry.passed?'sian-contrast-pass':'sian-contrast-fail';
   row.append(left,value);panel.append(row);
  }
- const foot=document.createElement('p');foot.textContent='Theme text/controls: 4.5:1 or higher. Decorative graphics and uploaded photos require separate visual inspection.';panel.append(foot);
+ const foot=document.createElement('p');foot.textContent='Normal text: ≥4.5:1. UI outlines: ≥3:1. These checks cover design-system colors; individual photographs and third-party widgets require visual review.';panel.append(foot);
 }
 function mount(){
  const pane=document.getElementById('pane-look');
