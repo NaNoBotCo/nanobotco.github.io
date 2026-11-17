@@ -285,7 +285,7 @@ function selectSection(ref,focusKey='',options={}){
  currentSection=sec.id;showStep('sections');renderSectionList();renderSectionEditor();
  const editor=$('#sianSectionEditor');
  const sidebar=$('.editor');
- if(sidebar){const top=editor.getBoundingClientRect().top-sidebar.getBoundingClientRect().top+sidebar.scrollTop-16;sidebar.scrollTo({top,behavior:'smooth'})}
+ if(sidebar&&!options.skipScroll){if(window.matchMedia('(max-width:980px)').matches)editor.scrollIntoView({block:'start',behavior:'smooth'});else{const top=editor.getBoundingClientRect().top-sidebar.getBoundingClientRect().top+sidebar.scrollTop-16;sidebar.scrollTo({top,behavior:'smooth'})}}
  const field=focusKey?editor.querySelector('[data-section-key="'+focusKey+'"]'):editor.querySelector('input:not([type="file"]),textarea');
  if(field&&!options.skipFocus)setTimeout(()=>{field.focus({preventScroll:true});field.classList.add('sian-input-target');setTimeout(()=>field.classList.remove('sian-input-target'),1400)},180);
 }
