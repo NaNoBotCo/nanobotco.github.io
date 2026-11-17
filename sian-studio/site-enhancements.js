@@ -67,7 +67,7 @@ if(sections){
      head.style.setProperty('color',st.headingColor,'important');
      head.querySelectorAll('em').forEach(em=>em.style.setProperty('color',st.headingColor,'important'));
     }
-    if(/^#[a-f0-9]{6}$/i.test(st.text||'')&&sub)sub.style.setProperty('color',st.text,'important');
+    if(st._colorText&&/^#[a-f0-9]{6}$/i.test(st.text||'')&&sub)sub.style.setProperty('color',st.text,'important');
     if(Number.isFinite(+st.headingSize)&&+st.headingSize>=22&&+st.headingSize<=84&&head)head.style.setProperty('font-size',st.headingSize+'px','important');
     if(Number.isFinite(+st.buttonRadius)&&+st.buttonRadius>=0&&+st.buttonRadius<=40){
      node.querySelectorAll('.btn,button:not(.sian-edit-spot)').forEach(b=>b.style.setProperty('border-radius',st.buttonRadius+'px','important'));
