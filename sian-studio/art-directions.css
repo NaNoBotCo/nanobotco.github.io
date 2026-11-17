@@ -37,6 +37,8 @@ html[data-sian-art] .product-actions button:first-child{color:var(--ad-action-fg
 html[data-sian-art] .art-badge{background:var(--ad-nav)!important;color:var(--ad-navfg)!important}
 html[data-sian-art] .art-badge.sold{background:var(--ad-accent)!important;color:var(--ad-accentfg)!important}
 html[data-sian-art] .story-section{background:var(--ad-story)!important;color:var(--ad-storyfg)!important}
+html[data-sian-art] :is(.story-section,.sian-spinner,.kinetic-section,.tarot-section,.oracle-section) .overline{color:var(--ad-storyfg)!important}
+
 html[data-sian-art] .story-copy,html[data-sian-art] :is(.story-copy h2,.story-copy h2 em,.story-copy p,.story-art>span,.story-art-foot){color:var(--ad-storyfg)!important}
 html[data-sian-art] .story-copy .text-link{color:var(--ad-storyfg)!important;border-color:var(--ad-storyfg)!important}
 html[data-sian-art] .story-art{background:radial-gradient(circle at center,#ffffff12,var(--ad-story) 85%)!important}
