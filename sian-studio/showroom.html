@@ -935,6 +935,12 @@ async function enquire(p){
  if(/^@?[\w.-]{3,60}$/.test(id)){window.open('https://line.me/R/ti/p/~'+(id.startsWith('@')?id:'@'+id),'_blank','noopener')}
  else { window.prompt(t('ตัวอย่างข้อความสอบถาม · คัดลอกได้เลย','Demo enquiry text · copy if useful'),txt); notify(t('ยังไม่ได้ตั้งค่า LINE OA จริง จึงเปิดข้อความตัวอย่างแทน','LINE OA is not configured yet, so a copyable demo message was opened instead.')); }
 }
+function publishedItemUrl(p){
+ const root=String(CONFIG.siteUrl||'').trim();
+ const id=String(p.id||'').replace(/[^A-Za-z0-9_-]/g,'').slice(0,70);
+ if(!p.demo&&id&&/^https:\/\/[^ ]+/.test(root))return root.replace(/\/+$/,'')+'/items/'+id+'.html';
+ const current=new URL(location.href);current.hash='item='+encodeURIComponent(p.id);return current.href;
+}
 function openProduct(p){const dlg=$('#productDialog');if(!dlg)return;
  const box=make('div','detail-grid'),image=art(p,all.indexOf(p),true),body=make('div','detail-body');
  body.append(make('div','overline',(currentLang==='en'?'OBJECT · ':'OBJECT · ')+p.id),make('h2','',productTitle(p)),make('p','muted',currentLang==='en'?p.title:(p.english||'')),make('div','detail-price',money(p.price)));
@@ -951,10 +957,10 @@ function openProduct(p){const dlg=$('#productDialog');if(!dlg)return;
  if(live){const link=make('a','sian-video-link',t('● ถ่ายทอดสด / ไลฟ์ย้อนหลัง','● Live stream / replay'));link.href=live.href;link.target='_blank';link.rel='noopener';body.append(link)}
 
  const ask=make('button','btn btn-gold',t('สอบถามผ่าน LINE ↗','Ask through LINE ↗'));ask.type='button';ask.disabled=p.status==='sold';ask.onclick=()=>enquire(p);body.append(ask);
- const share=make('button','btn btn-link',t('แชร์ลิงก์สินค้า ↗','Copy product link ↗'));share.type='button';share.onclick=async()=>{const url=new URL(location.href);url.hash='item='+encodeURIComponent(p.id);try{await navigator.clipboard.writeText(url.href);notify(t('คัดลอกลิงก์สินค้าแล้ว','Product link copied.'))}catch{window.prompt(t('ลิงก์สินค้า','Product link'),url.href)}};body.append(share);
+ const share=make('button','btn btn-link',t('แชร์ลิงก์สินค้า ↗','Copy product link ↗'));share.type='button';share.onclick=async()=>{const url=publishedItemUrl(p);try{await navigator.clipboard.writeText(url);notify(t('คัดลอกลิงก์สินค้าแล้ว','Product link copied.'))}catch{window.prompt(t('ลิงก์สินค้า','Product link'),url)}};body.append(share);
  const card=make('button','btn btn-link',t('⬇ ภาพแชร์สินค้า','⬇ Product image'));card.type='button';card.onclick=async()=>{try{await downloadProductCard(p,CONFIG.brand,p.imagePath||null);notify(t('บันทึกภาพแชร์สินค้าแล้ว','Product card saved.'))}catch(err){notify(err.message)}};body.append(card);
  const shareTools=make('div','sian-social-row');
- const page=new URL(location.href);page.hash='item='+encodeURIComponent(p.id);
+ const page={href:publishedItemUrl(p)};
  const captionTh=()=>[p.title,p.edition,p.temple,p.material,p.description,'ราคา '+money(p.price),'สอบถาม '+(CONFIG.lineId||'LINE'),page.href].filter(Boolean).join('\n');
  const socialButton=(label,fn)=>{const btn=make('button','btn btn-link',label);btn.type='button';btn.onclick=fn;shareTools.append(btn)};
  const copyText=async text=>{try{await navigator.clipboard.writeText(text);notify(t('คัดลอกแล้ว ✓','Copied ✓'))}catch{window.prompt('Copy / คัดลอก',text)}};
