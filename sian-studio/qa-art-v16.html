@@ -1,0 +1,38 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sian Studio v1.6 · Art Direction QA</title>
+<style>body{font:14px/1.5 system-ui;background:#f7f6f1;color:#1a2b23;max-width:950px;margin:25px auto;padding:0 18px}h1{font-size:25px}#status{font-weight:750;padding:13px;background:white;border-radius:8px;margin:14px 0}.ok{color:#1f6543}.fail{color:#ad2828}table{width:100%;border-collapse:collapse;background:#fff}td,th{padding:10px 9px;border-bottom:1px solid #d7ded7;text-align:left;font-size:12px}th{background:#e4eae5}iframe{width:100%;height:380px;border:1px solid #bacabc;border-radius:9px;margin-top:13px}code{font-size:12px}p{font-size:12px;color:#506052}</style>
+</head><body><h1>Art direction contrast & layout integration</h1><p>All eight presets are applied to the actual storefront, one by one. Color roles must meet WCAG AA 4.5:1. This test saves and restores the original browser-local project.</p>
+<div id="status">Initializing tests…</div><table><thead><tr><th>Art direction</th><th>Contrast checks</th><th>Applied CSS</th><th>Layout signature</th></tr></thead><tbody id="rows"></tbody></table>
+<iframe title="Real Sian Studio under test" id="app" src="./index.html?qa=v16-visual-contrast-20261117"></iframe>
+<script>
+(async()=>{
+const APP=document.querySelector('#app'),results=document.querySelector('#rows'),status=document.querySelector('#status'),key='sian-studio-guided-builder-v1',snapshot=localStorage.getItem(key);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function until(fn,timeout=13500){let start=Date.now();while(Date.now()-start<timeout){try{const v=fn();if(v)return v}catch{}await sleep(130)}throw new Error('timed out: '+String(fn).slice(0,90))}
+let passed=0,failed=0;
+const ids=['archive','noir','auction','lanna','lab','porcelain','broadcast','kinetic'],layouts=[];
+try{
+const win=await until(()=>APP.contentWindow?.SianStyle?.applyPreset&&APP.contentWindow?.SianArt?.audit&&APP.contentWindow);
+const frame=APP.contentDocument.querySelector('#preview');
+for(const id of ids){
+ let log={id,pass:false,roles:0,layout:'',css:false,error:''};
+ try{
+  win.SianStyle.applyPreset(id);
+  const doc=await until(()=>{const d=frame.contentDocument;return d?.documentElement?.getAttribute('data-sian-art')===id&&d.querySelector('.hero')&&d},18000);
+  await until(()=>doc.querySelector('link[href="art-directions.css"]')?.sheet,9000);
+  log.css=true;
+  const checks=win.SianArt.audit(id,win.state?.design||{});log.roles=checks.length;
+  if(checks.length!==7||checks.some(x=>!x.passed||x.ratio<4.5))throw new Error('Contrast failure: '+checks.filter(x=>!x.passed).map(x=>x.label+'='+x.ratio).join(','));
+  const sty=doc.defaultView.getComputedStyle(doc.querySelector('.hero')),img=doc.defaultView.getComputedStyle(doc.querySelector('.hero-image'));
+  const cols=doc.defaultView.getComputedStyle(doc.querySelector('.product-grid')).gridTemplateColumns.split(' ').length;
+  log.layout=[sty.display,sty.gridTemplateColumns.slice(0,44),img.borderTopLeftRadius,cols].join(' | ');layouts.push(log.layout);
+  log.pass=true;passed++;
+ }catch(e){log.error=e.message;failed++}
+ const tr=document.createElement('tr');tr.innerHTML='<td><b>'+id+'</b></td><td class="'+(log.pass?'ok':'fail')+'">'+(log.pass?log.roles+' / '+log.roles+' PASS':log.error)+'</td><td>'+(log.css?'linked':'missing')+'</td><td>'+log.layout.slice(0,120)+'</td>';results.append(tr);
+}
+const unique=new Set(layouts).size;
+const uniqueRow=document.createElement('tr');uniqueRow.innerHTML='<td><b>Distinct layouts</b></td><td class="'+(unique>=6?'ok':'fail')+'">'+unique+' different signatures</td><td>Minimum 6</td><td>Tested CSS display, columns, and image geometry</td>';results.append(uniqueRow);
+if(unique<6)failed++;
+}catch(e){failed++;const tr=document.createElement('tr');tr.textContent='Test execution error: '+e.message;results.append(tr)}
+finally{if(snapshot===null)localStorage.removeItem(key);else localStorage.setItem(key,snapshot);status.textContent=passed+' of 8 themes passed token contrast and CSS checks · '+failed+' failures · original project restored';status.className=failed?'fail':'ok'}
+})();
+</script></body></html>
