@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Sian Studio 1.5 — WYSIWYG Integration Test</title><style>body{font:15px/1.5 system-ui;max-width:930px;padding:22px;margin:auto;color:#23382d;background:#f4f2ec}li{padding:6px 0;border-bottom:1px solid #d9dfd9}.ok{color:#20734b}.bad{color:#ab392e}iframe{width:100%;height:440px;border:1px solid #abbba7;border-radius:10px}#status{font-weight:bold;padding:12px;background:white;border-radius:7px}</style></head><body>
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Sian Studio 1.5 — WYSIWYG Integration Test v1.5b</title><style>body{font:15px/1.5 system-ui;max-width:930px;padding:22px;margin:auto;color:#23382d;background:#f4f2ec}li{padding:6px 0;border-bottom:1px solid #d9dfd9}.ok{color:#20734b}.bad{color:#ab392e}iframe{width:100%;height:440px;border:1px solid #abbba7;border-radius:10px}#status{font-weight:bold;padding:12px;background:white;border-radius:7px}</style></head><body>
 <h1>Sian Studio v1.5 · WYSIWYG smoke test</h1><p>Checks the live builder and restores its browser-local draft afterward. This diagnostic page is for developers, not customers.</p>
 <div id="status">Checking…</div><ol id="results"></ol><iframe title="Sian Studio visual builder under test" id="testFrame" src="./index.html?qa=wysiwyg-v15-unique-8af"></iframe>
 <script>
@@ -18,7 +18,9 @@ try{
  const grid=d.querySelectorAll('.sian-preset');
  check('Eight curated looks rendered',grid.length===8,String(grid.length));
  check('Visible advanced style controls',!!d.querySelector('#sianStyleAdvanced [data-style-key="heroSplit"]'));
- check('Per-section style palettes',!!d.querySelector('#sianSectionEditor .sian-mini-preset'));
+ w.SianStudio.selectSection('hero','',{skipFocus:true,skipScroll:true});
+ await wait(()=>d.querySelector('#sianSectionEditor .sian-mini-preset'),5000);
+ check('Per-section style palettes',d.querySelectorAll('#sianSectionEditor .sian-mini-preset').length===6);
  const preview=d.querySelector('#preview');
  await wait(()=>preview.contentDocument?.querySelector('.sian-wys-hero-line'));
  let target=preview.contentDocument.querySelector('.sian-wys-hero-line'),doc=preview.contentDocument;
@@ -27,6 +29,7 @@ try{
  const old=target.textContent;target.click();await new Promise(r=>setTimeout(r,200));
  check('Click activates actual inline contenteditable',target.isContentEditable);
  check('Plain-English editing shortcut is shown',!!doc.querySelector('.sian-wys-smallhelp'));
+ status.textContent='Editing actual storefront text and verifying save/Undo…';
  const replacement='WYSIWYG integration proof';
  target.textContent=replacement;target.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true}));
  await wait(()=>preview.contentDocument?.querySelector('.sian-wys-hero-line')?.textContent?.includes(replacement),7000);
@@ -35,6 +38,7 @@ try{
  d.querySelector('#sianUndo').click();
  await wait(()=>preview.contentDocument?.querySelector('.sian-wys-hero-line')?.textContent?.trim()===old.trim(),7000);
  check('Undo restores original heading',preview.contentDocument?.querySelector('.sian-wys-hero-line')?.textContent.trim()===old.trim());
+ status.textContent='Verifying Indigo Archive theme…';
  const palette=d.querySelector('.sian-preset[data-preset="indigo"]');palette.click();
  await wait(()=>d.querySelector('[data-design="accent"]')?.value==='#9cacce',6000);
  check('Indigo preset updates storefront palette inputs',d.querySelector('[data-design="accent"]').value==='#9cacce');
