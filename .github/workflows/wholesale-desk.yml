@@ -1,0 +1,65 @@
+name: Wholesale Desk — validate and deploy
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'cloudflare-wholesale-desk/**'
+      - '.github/workflows/wholesale-desk.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: wholesale-desk-main
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    name: Verify protected Worker and catalog isolation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript syntax and security checks
+        run: |
+          node --check cloudflare-wholesale-desk/src/worker.js
+          node --test cloudflare-wholesale-desk/tests/*.test.mjs
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('cloudflare-wholesale-desk/public/index.html')
+          s=p.read_text()
+          assert 'RAW_SUPPLIER_SKUS=[]' in s, 'Public app must exclude embedded supplier costs'
+          assert 'localStorage.' not in s, 'Cloudflare version must not persist records in browser'
+          assert 'connectCloud();' in s and '/api/workspace' in s, 'D1 client must be enabled'
+          assert 'id="syncLabel"' in s, 'User must see save status'
+          assert not list(Path('cloudflare-wholesale-desk').rglob('PRIVATE_*')), 'Do not commit private source data'
+          print('PASS: protected app shell, no bundled catalog, server-backed storage, visible sync status')
+          PY
+
+  deploy:
+    name: Cloudflare Worker deploy
+    needs: validate
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: wholesale-desk
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Explain unconfigured account
+        if: ${{ env.CLOUDFLARE_API_TOKEN == '' }}
+        run: |
+          echo '::notice::Cloudflare deployment skipped: add the repository Actions secret CLOUDFLARE_API_TOKEN and rerun this workflow.'
+          echo '### Cloudflare deployment not activated' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Create a restricted Cloudflare API token and save it as the repository Actions secret **CLOUDFLARE_API_TOKEN**. Then use **Run workflow** or push a change.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Deploy Worker to Cloudflare
+        if: ${{ env.CLOUDFLARE_API_TOKEN != '' }}
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: fe332688b1b25b543f8429d7f08292a3
+          workingDirectory: cloudflare-wholesale-desk
+          command: deploy
