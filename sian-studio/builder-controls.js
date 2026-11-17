@@ -289,7 +289,7 @@ function selectSection(ref,focusKey=''){
  if(field)setTimeout(()=>{field.focus({preventScroll:true});field.classList.add('sian-input-target');setTimeout(()=>field.classList.remove('sian-input-target'),1400)},180);
 }
 function refresh(){
- init();$('[data-design]').forEach(input=>{const key=input.dataset.design;input.value=state.design[key]??DEFAULT_STYLE[key];const small=input.parentElement.querySelector('small');if(small)small.textContent=input.value});
+ init();$$('[data-design]').forEach(input=>{const key=input.dataset.design;input.value=state.design[key]??DEFAULT_STYLE[key];const small=input.parentElement.querySelector('small');if(small)small.textContent=input.value});
  for(const [id,key] of [['#sianSetupFee','setupFee'],['#sianMonthlyFee','monthlyFee'],['#sianCheckoutUrl','checkoutUrl'],['#sianBillingEmail','email']]){const input=$(id);if(input)input.value=state.sales[key]??''}
  const domain=$('#sianSiteUrl');if(domain)domain.value=state.config.siteUrl||'';
  renderSectionList();renderSectionEditor();updateProductShare();
