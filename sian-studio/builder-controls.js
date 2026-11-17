@@ -4,7 +4,7 @@
 const $=s=>document.querySelector(s),$$=s=>Array.from(document.querySelectorAll(s));
 const TYPES={hero:'🏠 Hero',collection:'🪷 Catalogue',story:'📖 About',toy:'✺ Math toy',fidget:'◉ Spinner lab',oracle:'✦ Divination',newsletter:'✉ Newsletter',text:'¶ Text / Story',image:'▣ Image / Gallery',video:'▶ Video',quote:'❞ Testimonial',faq:'? FAQ',cta:'↗ Offer / CTA'};
 const DEFAULT_SECTIONS=['hero','collection','story','fidget','toy','oracle','newsletter'].map((type,i)=>({id:'default-'+type,type,enabled:true,title:TYPES[type],text:'',style:{}}));
-const DEFAULT_STYLE={accent:'#c6a16d',background:'#f4f0e9',ink:'#282921',surface:'#fffdf9',nav:'#14130f',bodyFont:'system',headingFont:'serif',contentWidth:1200,cardRadius:14,sectionSpacing:72,baseSize:16,cardShadow:20,heroAlign:'left',productColumns:3};
+const DEFAULT_STYLE={accent:'#c6a16d',background:'#f4f0e9',ink:'#282921',surface:'#fffdf9',nav:'#14130f',bodyFont:'system',headingFont:'serif',contentWidth:1200,cardRadius:14,sectionSpacing:72,baseSize:16,cardShadow:20,heroAlign:'left',productColumns:3,heroSpinner:true,heroSpinnerOpacity:24};
 const init=()=>{if(!Array.isArray(state.sections))state.sections=structuredClone(DEFAULT_SECTIONS);if(!state.design||typeof state.design!=='object')state.design={...DEFAULT_STYLE};if(!state.sales)state.sales={setupFee:6500,monthlyFee:390,checkoutUrl:'',email:'',status:'draft'}};
 const safe=s=>String(s??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 const sectionStyle=(v={})=>Object.assign({bg:'#f7f3e8',card:'#ffffff',text:'#292c27',align:'left',padding:68,width:1080,radius:12},v);
@@ -28,7 +28,7 @@ const originalReplace=replaceStorefront;
 replaceStorefront=function(){
  init();let page=originalReplace();
  page=page.replace('</style>',themeCss()+'</style>');
- const payload=JSON.stringify({sections:state.sections}).replace(/</g,'\\u003c');
+ const payload=JSON.stringify({sections:state.sections,visual:{heroSpinner:state.design.heroSpinner!==false,heroSpinnerOpacity:Number(state.design.heroSpinnerOpacity||24)/100}}).replace(/</g,'\\u003c');
  page=page.replace('</body>','<script type="application/json" id="sianBuilderSiteConfig">'+payload+'<\/script></body>');
  return page;
 };
@@ -50,7 +50,7 @@ function renderLookControls(){
  ['bodyFont','Body font','select',['system','sans','serif','mono']],['headingFont','Heading font','select',['serif','sans','system','mono']],
  ['baseSize','Base font size (px)','range',13,23,1],['contentWidth','Max content width (px)','range',760,1600,20],
  ['cardRadius','Card radius','range',0,35,1],['sectionSpacing','Section spacing','range',30,130,2],['cardShadow','Card shadow','range',0,45,1],
- ['productColumns','Desktop product columns','range',2,5,1],['heroAlign','Hero alignment','select',['left','center','right']]
+ ['productColumns','Desktop product columns','range',2,5,1],['heroAlign','Hero alignment','select',['left','center','right']],['heroSpinnerOpacity','Hero spinner backdrop opacity (%)','range',12,60,2]
  ];
  for(const [key,label,type,a,b,step] of controls){
   const f=document.createElement('label');f.className='field';const title=document.createElement('span');title.textContent=label;f.append(title);
@@ -62,6 +62,7 @@ function renderLookControls(){
   input.addEventListener('input',()=>{init();state.design[key]=type==='range'?Number(input.value):input.value;change()});
   $('#sianDesignControls').append(f);
  }
+ const f=document.createElement('label');f.className='switch-row';f.textContent='Interactive fidget spinner in hero background';const c=document.createElement('input');c.type='checkbox';c.checked=state.design.heroSpinner!==false;c.onchange=()=>{state.design.heroSpinner=c.checked;change()};f.append(c);wrap.append(f);
  const reset=document.createElement('button');reset.className='btn';reset.textContent='Reset fine styles / คืนค่า';reset.onclick=()=>{state.design={...DEFAULT_STYLE};$$('[data-design]').forEach(input=>{input.value=state.design[input.dataset.design];const small=input.parentElement.querySelector('small');if(small)small.textContent=input.value});change()};wrap.append(reset);
 }
 function getSection(id){return state.sections.find(x=>x.id===id)}
@@ -100,6 +101,7 @@ function renderSectionEditor(){
  const box=$('#sianSectionEditor');box.replaceChildren();const s=getSection(currentSection);if(!s)return;
  const title=document.createElement('h3');title.textContent='Edit · '+(TYPES[s.type]||s.type);box.append(title);
  addInput(box,'Section label / title','title',s.title,'text',v=>{s.title=v;renderSectionList()});
+ if(['hero','collection','story','toy','fidget','oracle','newsletter'].includes(s.type)){addInput(box,'Custom heading (optional)','headline',s.headline||'','text',v=>s.headline=v);addInput(box,'Custom introduction / subheading','subtext',s.subtext||'','textarea',v=>s.subtext=v)}
  if(['text','image','quote','faq','cta','video'].includes(s.type)){
   addInput(box,s.type==='faq'?'FAQ lines: Question | Answer':'Body text / Caption','text',s.text,'textarea',v=>s.text=v);
   if(s.type==='image'){addInput(box,'Image URL (https) or upload below','image',s.image||'','url',v=>s.image=v);addInput(box,'Image alt text','imageAlt',s.imageAlt,'text',v=>s.imageAlt=v);const uploader=document.createElement('input');uploader.type='file';uploader.accept='image/*';uploader.onchange=async e=>{const data=await handlePhoto(e.target.files[0]);if(data){s.image=data;renderSectionEditor();change()}};box.append(uploader)}
@@ -110,7 +112,7 @@ function renderSectionEditor(){
  s.style=sectionStyle(s.style);
  for(const [key,label,kind] of [['bg','Background','color'],['card','Card surface','color'],['text','Text','color'],['padding','Vertical space (px)','number'],['width','Card width (px)','number'],['radius','Corners (px)','number']])addInput(box,label,key,s.style[key],kind,v=>s.style[key]=v);
  const align=document.createElement('label');align.className='field';align.textContent='Text alignment';const select=document.createElement('select');for(const v of ['left','center','right']){const opt=document.createElement('option');opt.value=opt.textContent=v;select.append(opt)}select.value=s.style.align;select.onchange=()=>{s.style.align=select.value;change()};align.append(select);box.append(align);
- const n=document.createElement('p');n.className='hint';n.textContent='Built-in sections retain their native layout. Independent backgrounds and copy are most detailed for custom blocks.';box.append(n);
+ const n=document.createElement('p');n.className='hint';n.textContent='All sections support background, text color, spacing, alignment and custom headings. Built-in sections retain their native layout.';box.append(n);
 }
 function buildSectionUI(){
  const pane=tab('sections','4 · ส่วน','<h2>04 · ส่วนของเว็บไซต์ / Page sections</h2><p class="help">Drag or use ↑ ↓ to reorder. Hide or remove any section. Add text, galleries, video, testimonials, FAQ or offers.</p><div class="sian-add-row"><select id="sianAddType"></select><button class="btn btn-dark" id="sianAddSection">＋ เพิ่มส่วน / Add</button></div><div id="sianSectionList"></div><div id="sianSectionEditor" class="sian-control-wrap"></div>');
