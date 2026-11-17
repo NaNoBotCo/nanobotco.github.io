@@ -1,0 +1,32 @@
+
+.sian-style-lab{padding:14px 5px}.sian-style-lab>h3{margin:8px 0;font-size:16px}
+.sian-preset-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin:13px 0 19px}
+.sian-preset{border:2px solid #e0e4de;border-radius:13px;padding:9px;text-align:left;background:#fff;cursor:pointer;display:grid;gap:4px;color:#2b4135;min-width:0}
+.sian-preset:hover,.sian-preset:focus-visible{border-color:#7da28b}.sian-preset.active{border-color:#275f47;box-shadow:0 0 0 2px #d9e8d9}
+.sian-preset b{font-size:13px;line-height:1.1}.sian-preset small{color:#67786c;font-size:11px}
+.sian-preset-preview{height:68px;display:flex;align-items:center;justify-content:center;gap:17px;border-radius:8px;overflow:hidden}
+.sian-preset-preview>span{border-radius:50%;width:32px;height:32px;display:grid;place-items:center;font-size:24px}
+.sian-preset-preview i{font-weight:bold;font-size:31px;font-style:normal}
+.sian-swatch-row{display:flex;height:8px;overflow:hidden;border-radius:99px;gap:2px}.sian-swatch-row>span{flex:1}
+.sian-font-choices{display:flex;gap:7px;flex-wrap:wrap;margin:11px 0 14px}
+.sian-font-chip{display:flex;align-items:center;gap:9px;flex:1 1 95px;min-height:65px;padding:7px;border-radius:9px;border:1px solid #d3dbd2;background:white;text-align:left;cursor:pointer;color:#2c4636}
+.sian-font-chip:hover,.sian-density-chip:hover{background:#ecf5ea;border-color:#6a9271}
+.sian-font-chip strong{font-size:28px}.sian-font-chip span{font-size:11px;font-weight:bold}.sian-font-chip small{display:block;font-size:10px;color:#647468;font-weight:normal}
+.sian-layout-choices{display:flex;gap:6px;margin:10px 0 16px;flex-wrap:wrap}
+.sian-density-chip{border:1px solid #cddccc;border-radius:8px;background:#f8faf5;padding:8px;flex:1 1 94px;font-size:12px;cursor:pointer;color:#345341}
+.sian-style-detail{border:1px solid #d2dbd0;border-radius:10px;padding:11px 13px;margin:10px 0;background:#fafcf9}
+.sian-style-detail summary{font-weight:750;cursor:pointer;font-size:13px;color:#305143}
+.sian-style-detail[open] summary{margin-bottom:10px}
+.sian-style-field{display:grid;grid-template-columns:1fr auto;gap:6px 9px;margin:14px 0;font-size:12px;font-weight:700;color:#4c6653}
+.sian-style-field input,.sian-style-field select{grid-column:1/span 1;width:100%}.sian-style-field input[type="range"]{accent-color:#305b44}
+.sian-style-field small{align-self:center;min-width:45px;text-align:right;color:#66826d}
+.sian-quick-style{border:1px solid #d9cba9;background:#fdfbf5;padding:13px;margin:17px 0;border-radius:10px}
+.sian-quick-style h4{font-size:15px;margin:2px 0 7px;color:#4e513c}
+.sian-section-presets{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:12px 0}
+.sian-mini-preset{border:1px solid #d0d8cb;background:#fff;border-radius:8px;padding:5px;text-align:center;cursor:pointer}
+.sian-mini-preset:hover{outline:2px solid #648e74}
+.sian-mini-preset>span{display:block;border-radius:5px;padding:8px;font:700 23px Georgia,serif}
+.sian-mini-preset small{font-size:10px;display:block;color:#465a4b;margin-top:3px}
+.sian-section-quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 9px}
+.sian-section-quick-grid>.field{min-width:0}.sian-section-quick-grid input[type="range"]{accent-color:#51745c}
+@media(max-width:420px){.sian-section-quick-grid{grid-template-columns:1fr}}
