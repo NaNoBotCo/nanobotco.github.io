@@ -32,8 +32,8 @@ try{
  check('Toy Pause control exists',!!doc.getElementById('toyPause'));
  const pause=doc.getElementById('toyPause');if(pause){const before=pause.textContent;pause.click();await sleep(120);check('Toy pause toggles its state',pause.textContent!==before);pause.click()}
  const shuffle=doc.getElementById('toyShuffle');check('Math toy shuffle exists',!!shuffle);
- check('Fidget spinner has Spin/Brake controls',!!doc.getElementById('sianSpinStart')&&!!doc.getElementById('sianSpinStop'));
- check('Three divination methods available',doc.querySelectorAll('[data-oracle-tab]').length>=3);
+ check('Fidget spinner has Spin/Brake controls',!!doc.getElementById('spinnerStart')&&!!doc.getElementById('spinnerStop'));
+ check('Three divination methods available',doc.querySelectorAll('[data-oracle-panel]').length>=3);
  check('Newsletter contains email and consent controls',!!doc.getElementById('subscriberEmail')&&!!doc.getElementById('consent'));
 }catch(e){check('Test runtime',false,e.message)}
 finally{if(original===null)localStorage.removeItem(key);else localStorage.setItem(key,original);status.textContent=passed+' passed · '+failed+' failed';status.className=failed?'bad':'ok'}
