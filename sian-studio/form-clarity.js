@@ -32,6 +32,7 @@ function validate(){
  ['sianCheckoutUrl','Enter a verified HTTPS payment-provider address.']
  ]){const inp=$('#'+id);if(inp)status(inp,inp.value.trim()&&!urlOk(inp.value.trim())?message:'')}
  const mail=$('#sianBillingEmail');if(mail)status(mail,mail.value&&!mail.validity.valid?'Enter a valid contact email or leave empty.':'');
+ for(const [id,label] of [['sianSetupFee','Setup fee'],['sianMonthlyFee','Monthly hosting fee']]){const el=$('#'+id);if(el)status(el,el.value!==''&&(!Number.isFinite(Number(el.value))||Number(el.value)<0)?label+' must be zero or higher.':'')}
  const price=$('#pPrice');
  if(price&&price.closest('#itemEditor')&&!price.closest('#itemEditor').hidden){
   status(price,price.value!==''&&(!Number.isFinite(Number(price.value))||Number(price.value)<0)?'Price must be zero or a positive amount in THB.':'');
