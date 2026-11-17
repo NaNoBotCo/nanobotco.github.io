@@ -327,6 +327,25 @@ function decorateSectionEditor(box,section){
  reset.textContent='↺ Reset this section’s look';
  reset.onclick=()=>{const sec=window.SianStudio?.sectionOf?.(section.id);if(!sec)return;sec.style={};window.SianStudio.selectSection(sec.id,'',{skipFocus:true});change()};
  quick.append(reset);
+ const meter=document.createElement('div');meter.className='sian-section-contrast';quick.append(meter);
+ const updateMeter=()=>{
+  const engine=window.SianArt;if(!engine?.contrast)return;
+  const bg=section.style.bg||'#f7f3e8',body=section.style.text||'#292c27',heading=section.style.headingColor||body;
+  const r1=engine.contrast(bg,body),r2=engine.contrast(bg,heading),valid=r1>=4.5&&r2>=4.5;
+  meter.replaceChildren();
+  const result=document.createElement('strong');result.textContent=(valid?'✓':'⚠')+' Section readability: text '+r1.toFixed(2)+':1 · heading '+r2.toFixed(2)+':1';
+  result.style.color=valid?'#27623f':'#a03a30';meter.append(result);
+  if(!valid){const fix=document.createElement('button');fix.type='button';fix.className='btn';fix.textContent='Fix text contrast';
+   fix.onclick=()=>{
+    const dark='#13221e',light='#ffffff';
+    const preferred=engine.contrast(bg,dark)>engine.contrast(bg,light)?dark:light;
+    if(r1<4.5){section.style.text=preferred;section.style._colorText=true}
+    if(r2<4.5)section.style.headingColor=preferred;
+    window.SianStudio?.selectSection?.(section.id,'',{skipFocus:true});change();
+   };meter.append(fix)}
+ };
+ updateMeter();
+ box.addEventListener('input',()=>setTimeout(updateMeter,70),{once:false});
 }
 function inspect(ref,{quiet=false}={}){
  const api=window.SianStudio;if(!api?.sectionOf(ref))return;
