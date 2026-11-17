@@ -4,14 +4,190 @@
 const $=s=>document.querySelector(s),$$=s=>Array.from(document.querySelectorAll(s));
 const defaults={headingScale:100,buttonRadius:6,heroSplit:50,heroGap:26,cardGap:20,cardBorder:0,productImageMode:'contain',letterSpacing:0,bodyLineHeight:1.65,ornament:'none',buttonStyle:'solid'};
 const PRESETS=[
- {id:'museum',name:'Museum Ivory',th:'พิพิธภัณฑ์',description:'Quiet, collectible, editorial',colors:['#bb9064','#f7f3eb','#252925','#fffdfa','#202a25'],headingFont:'serif',bodyFont:'sans',cardRadius:8,headingScale:112,sectionSpacing:84,buttonRadius:3},
- {id:'teak',name:'Northern Teak',th:'ไม้สักล้านนา',description:'Rich timber and old gold',colors:['#bf8954','#ede4d5','#302b23','#f9f2e8','#302e25'],headingFont:'serif',bodyFont:'system',cardRadius:12,headingScale:109,sectionSpacing:78,buttonRadius:7},
- {id:'indigo',name:'Indigo Archive',th:'คราม',description:'Cool, scholarly, precise',colors:['#9cacce','#edf1f5','#203040','#ffffff','#192d48'],headingFont:'serif',bodyFont:'sans',cardRadius:10,headingScale:105,sectionSpacing:74,buttonRadius:5},
- {id:'jade',name:'Jade & Brass',th:'หยกและทอง',description:'Forest green with antique brass',colors:['#d1a66b','#edf0e8','#233f38','#ffffff','#163b34'],headingFont:'serif',bodyFont:'system',cardRadius:16,headingScale:106,sectionSpacing:80,buttonRadius:9},
- {id:'copper',name:'Copper Coin',th:'เหรียญทองแดง',description:'Warm copper, parchment, texture',colors:['#bc754b','#f1e7dd','#422d25','#fffaf4','#3c2c28'],headingFont:'serif',bodyFont:'sans',cardRadius:4,headingScale:111,sectionSpacing:74,buttonRadius:3},
- {id:'ink',name:'Black Lacquer',th:'รักดำ',description:'Modern premium, minimalist',colors:['#d3b68b','#e9e6e0','#1e2022','#ffffff','#171919'],headingFont:'sans',bodyFont:'sans',cardRadius:2,headingScale:112,sectionSpacing:95,buttonRadius:2},
- {id:'rose',name:'Rose Gold',th:'กุหลาบ',description:'Soft, warm, generous',colors:['#ba887d','#f9f2ee','#493b3d','#fffefd','#443434'],headingFont:'serif',bodyFont:'sans',cardRadius:24,headingScale:100,sectionSpacing:83,buttonRadius:24},
- {id:'blue',name:'Collector Blue',th:'น้ำเงินขาว',description:'Clear, compact, highly legible',colors:['#4b7ca3','#f6f9fb','#263746','#ffffff','#163149'],headingFont:'sans',bodyFont:'system',cardRadius:9,headingScale:99,sectionSpacing:54,buttonRadius:7}
+ {
+  "id": "archive",
+  "name": "Provenance",
+  "th": "ทะเบียนของสะสม",
+  "description": "Museum catalogue · index rules · restrained photographs",
+  "signature": "CATALOGUE",
+  "colors": [
+   "#6E342B",
+   "#F2EBDD",
+   "#22251F",
+   "#FFFCF4",
+   "#202820"
+  ],
+  "headingFont": "serif",
+  "bodyFont": "sans",
+  "cardRadius": 0,
+  "headingScale": 122,
+  "sectionSpacing": 94,
+  "buttonRadius": 0,
+  "heroSplit": 45,
+  "cardGap": 20,
+  "productColumns": 3
+ },
+ {
+  "id": "noir",
+  "name": "Naga Noir",
+  "th": "นาคนัวร์",
+  "description": "Cinema-dark · collector spotlights · dramatic images",
+  "signature": "CINEMATIC",
+  "colors": [
+   "#EDB96A",
+   "#15121B",
+   "#F4EDE1",
+   "#24202C",
+   "#090A12"
+  ],
+  "headingFont": "serif",
+  "bodyFont": "sans",
+  "cardRadius": 14,
+  "headingScale": 136,
+  "sectionSpacing": 112,
+  "buttonRadius": 18,
+  "heroSplit": 58,
+  "cardGap": 26,
+  "productColumns": 2
+ },
+ {
+  "id": "auction",
+  "name": "Auction Signal",
+  "th": "ตลาดประมูล",
+  "description": "Bold trading floor · tight labels · prices upfront",
+  "signature": "MARKET",
+  "colors": [
+   "#B62825",
+   "#FFFFFF",
+   "#15171A",
+   "#F5F6F4",
+   "#14213C"
+  ],
+  "headingFont": "sans",
+  "bodyFont": "sans",
+  "cardRadius": 0,
+  "headingScale": 132,
+  "sectionSpacing": 48,
+  "buttonRadius": 0,
+  "heroSplit": 60,
+  "cardGap": 0,
+  "productColumns": 4
+ },
+ {
+  "id": "lanna",
+  "name": "Lanna Letterpress",
+  "th": "พิมพ์ไม้ล้านนา",
+  "description": "Ink-and-paper · stamps · carved borders",
+  "signature": "WOODBLOCK",
+  "colors": [
+   "#9A3421",
+   "#F1DFAF",
+   "#2B291F",
+   "#FFF5D9",
+   "#3A3426"
+  ],
+  "headingFont": "serif",
+  "bodyFont": "serif",
+  "cardRadius": 2,
+  "headingScale": 112,
+  "sectionSpacing": 92,
+  "buttonRadius": 3,
+  "heroSplit": 46,
+  "cardGap": 24,
+  "productColumns": 3
+ },
+ {
+  "id": "lab",
+  "name": "Artifact Lab",
+  "th": "ห้องแล็บพระเครื่อง",
+  "description": "High-tech archive · specimen labels · electric focus",
+  "signature": "LABORATORY",
+  "colors": [
+   "#B9FC65",
+   "#0A1821",
+   "#E1FAF1",
+   "#142B35",
+   "#061019"
+  ],
+  "headingFont": "mono",
+  "bodyFont": "sans",
+  "cardRadius": 5,
+  "headingScale": 111,
+  "sectionSpacing": 82,
+  "buttonRadius": 3,
+  "heroSplit": 52,
+  "cardGap": 15,
+  "productColumns": 3
+ },
+ {
+  "id": "porcelain",
+  "name": "Porcelain Gallery",
+  "th": "ครามขาว",
+  "description": "Blue-and-white gallery · gallery arches · calm whitespace",
+  "signature": "GALLERY",
+  "colors": [
+   "#174E91",
+   "#F7FAFF",
+   "#132E52",
+   "#FFFFFF",
+   "#FFFFFF"
+  ],
+  "headingFont": "serif",
+  "bodyFont": "sans",
+  "cardRadius": 30,
+  "headingScale": 120,
+  "sectionSpacing": 125,
+  "buttonRadius": 30,
+  "heroSplit": 50,
+  "cardGap": 32,
+  "productColumns": 3
+ },
+ {
+  "id": "broadcast",
+  "name": "Live Counter",
+  "th": "ไลฟ์ขายพระ",
+  "description": "Social video first · LIVE indicators · clean product offers",
+  "signature": "ON AIR",
+  "colors": [
+   "#C51038",
+   "#F7F9FB",
+   "#161D2B",
+   "#FFFFFF",
+   "#101C34"
+  ],
+  "headingFont": "sans",
+  "bodyFont": "sans",
+  "cardRadius": 10,
+  "headingScale": 122,
+  "sectionSpacing": 56,
+  "buttonRadius": 9,
+  "heroSplit": 43,
+  "cardGap": 16,
+  "productColumns": 3
+ },
+ {
+  "id": "kinetic",
+  "name": "Kinetic Pop",
+  "th": "ของเล่นหมุนได้",
+  "description": "Expressive geometry · playful motion · fidget-spinner personality",
+  "signature": "PLAYFUL",
+  "colors": [
+   "#6737C2",
+   "#F8FCEB",
+   "#192A20",
+   "#FFFFFF",
+   "#281B4B"
+  ],
+  "headingFont": "sans",
+  "bodyFont": "system",
+  "cardRadius": 24,
+  "headingScale": 137,
+  "sectionSpacing": 92,
+  "buttonRadius": 28,
+  "heroSplit": 52,
+  "cardGap": 24,
+  "productColumns": 3
+ }
 ];
 const SECTION_PRESETS=[
  {id:'paper',name:'Paper',bg:'#f6f1e8',card:'#ffffff',text:'#2a2f29',headingColor:'#3f4339'},
@@ -54,7 +230,7 @@ function refreshControls(){
 function applyPreset(id){
  const p=PRESETS.find(x=>x.id===id);if(!p)return;
  const [accent,background,ink,surface,nav]=p.colors;
- state.design={...state.design,accent,background,ink,surface,nav,headingFont:p.headingFont,bodyFont:p.bodyFont,cardRadius:p.cardRadius,headingScale:p.headingScale,sectionSpacing:p.sectionSpacing,buttonRadius:p.buttonRadius,preset:id};
+ state.design={...state.design,accent,background,ink,surface,nav,headingFont:p.headingFont,bodyFont:p.bodyFont,cardRadius:p.cardRadius,headingScale:p.headingScale,sectionSpacing:p.sectionSpacing,buttonRadius:p.buttonRadius,heroSplit:p.heroSplit,cardGap:p.cardGap,productColumns:p.productColumns,preset:id,direction:id,buttonStyle:'solid',ornament:'none',cardBorder:0};
  refreshControls();change();
 }
 function addControl(label,type,key,choices,range){
@@ -72,12 +248,12 @@ function addControl(label,type,key,choices,range){
 function styleLook(){
  const pane=$('#pane-look');if(!pane)return;
  const lab=document.createElement('section');lab.className='sian-style-lab';
- lab.innerHTML='<h3>Choose a look · เลือกสไตล์</h3><p class="hint">Tap a ready-made design, then fine-tune. All changes appear on the live website.</p><div class="sian-preset-grid" id="sianPresetGrid"></div><h3>Typography & spacing · ตัวอักษรและระยะห่าง</h3><div class="sian-font-choices" id="sianFontChoices"></div><div class="sian-layout-choices" id="sianDensityChoices"></div><details class="sian-style-detail"><summary>🎛 More style choices · ปรับละเอียด</summary><div id="sianStyleAdvanced"></div></details>';
+ lab.innerHTML='<h3>Choose an art direction · เลือกบุคลิกของร้าน</h3><p class="hint">Eight genuinely different storefronts, not eight recolors. Every preset uses tested high-contrast text, buttons and menus.</p><div class="sian-preset-grid" id="sianPresetGrid"></div><h3>Typography & spacing · ตัวอักษรและระยะห่าง</h3><div class="sian-font-choices" id="sianFontChoices"></div><div class="sian-layout-choices" id="sianDensityChoices"></div><details class="sian-style-detail"><summary>🎛 More style choices · ปรับละเอียด</summary><div id="sianStyleAdvanced"></div></details>';
  const oldGrid=pane.querySelector('.theme-grid');
  if(oldGrid){oldGrid.hidden=true;oldGrid.before(lab)}else pane.insertBefore(lab,pane.querySelector('.row-buttons'));
  for(const p of PRESETS){
   const b=document.createElement('button');b.type='button';b.className='sian-preset';b.dataset.preset=p.id;b.setAttribute('aria-pressed','false');b.title=p.description;
-  b.innerHTML='<span class="sian-preset-preview" style="background:'+p.colors[1]+'"><span style="background:'+p.colors[4]+';color:'+p.colors[0]+'">✺</span><i style="color:'+p.colors[2]+';font-family:'+(p.headingFont==='serif'?'Georgia,serif':'system-ui')+'">Aa</i></span><span class="sian-swatch-row">'+p.colors.map(c=>'<span style="background:'+c+'"></span>').join('')+'</span><b>'+p.name+'</b><small>'+p.th+'</small>';
+  b.innerHTML='<span class="sian-preset-preview sian-mock-'+p.id+'" style="background:'+p.colors[1]+';color:'+p.colors[2]+'"><span class="sian-mock-top">'+p.signature+'</span><span class="sian-mock-main"><i class="sian-mock-type">Aa</i><i class="sian-mock-art">✺</i></span><span class="sian-mock-lines"><i></i><i></i><i></i></span></span><span class="sian-swatch-row">'+p.colors.map(c=>'<span style="background:'+c+'"></span>').join('')+'</span><b>'+p.name+'</b><small>'+p.th+' · '+p.description+'</small>';
   b.onclick=()=>applyPreset(p.id);lab.querySelector('#sianPresetGrid').append(b);
  }
  const fontBar=lab.querySelector('#sianFontChoices');
