@@ -115,6 +115,13 @@
 /* Clarity over theatrics for the source photographs */
 .reference-credit{line-height:1.65}
 
+
+/* Front/back specimen photography; merchant photos are never used as demo reference. */
+.detail-photo-stack{display:flex;flex-direction:column;gap:12px;min-width:0}
+.detail-photo-stack .detail-art{min-height:340px}
+.back-photo{margin:0;padding:12px;background:#e7e2d8;border:1px solid #d9cebb;border-radius:12px;text-align:center}
+.back-photo img{display:block;object-fit:contain;max-height:340px;width:100%;margin:auto;border-radius:7px}
+.back-photo figcaption{font-size:12px;color:#6f6655;margin-top:7px}
 </style>
 </head>
 <body>
@@ -893,7 +900,7 @@ function openProduct(p){const dlg=$('#productDialog');if(!dlg)return;
    const source=make('a','',` ${p.referenceAuthor||'Source'} · ${p.referenceLicense||'license'}`);source.href=p.referenceSource||'https://wichaa.net/amulets/';source.target='_blank';source.rel='noopener';cr.append(source);body.append(cr);
  }
  if(p.demo)body.append(make('p','note',t('สินค้าและราคาเพื่อสาธิต ไม่ใช่สินค้าจริง','This item and price are for demonstration only.')));
- box.append(image,body);$('#productDetail').replaceChildren(box);dlg.showModal();history.replaceState(null,'','#item='+encodeURIComponent(p.id));
+ if(p.backImagePath){const photoWrap=make('div','detail-photo-stack');photoWrap.append(image);const rear=make('figure','back-photo');const img=make('img');img.src=p.backImagePath;img.loading='lazy';img.alt=t('ด้านหลังพระเครื่อง','Back of amulet');const caption=make('figcaption','',t('ภาพด้านหลัง','Back view'));rear.append(img,caption);photoWrap.append(rear);box.append(photoWrap,body)}else box.append(image,body);$('#productDetail').replaceChildren(box);dlg.showModal();history.replaceState(null,'','#item='+encodeURIComponent(p.id));
 }
 function render(){let products=filterProducts(all,{category,sort,query});$('#productCount').textContent=String(all.length).padStart(2,'0');const grid=$('#productGrid');grid.replaceChildren();$('#emptyProducts').hidden=products.length>0;
  products.forEach(p=>{const i=all.indexOf(p),card=make('article','product-card'),image=art(p,i);image.style.cursor='pointer';image.setAttribute('role','button');image.setAttribute('tabindex','0');image.setAttribute('aria-label',t('ดูรายละเอียด ','View details for ')+productTitle(p));image.onclick=()=>openProduct(p);image.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openProduct(p)}};
