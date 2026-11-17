@@ -1,0 +1,54 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Sian Studio 1.6 · Final rendered contrast audit</title>
+<style>body{font:14px/1.5 system-ui;background:#f8f7f3;color:#1f302a;max-width:1040px;margin:25px auto;padding:0 16px}h1{font-size:26px}#status{padding:12px;background:#fff;border-radius:7px;font-weight:bold}table{width:100%;border-collapse:collapse;background:#fff}td,th{font-size:12px;border-bottom:1px solid #d2d9d2;padding:9px 6px;text-align:left;vertical-align:top}.good{color:#216645}.bad{color:#9d2832}iframe{width:100%;height:240px;border:1px solid #ddd}</style></head><body>
+<h1>Live storefront rendered contrast</h1><p>Color contrast is measured on computed CSS styles in the real preview, not just palette data. Each preset is applied and then restored to the original draft.</p>
+<div id="status">Initializing…</div><table><thead><tr><th>Direction</th><th>Rendered text checks</th><th>Worst contrast</th><th>Failed elements</th></tr></thead><tbody id="rows"></tbody></table><iframe id="app" title="Site builder under audit" src="./index.html?qa=v16-final-newpath-b0da1"></iframe>
+<script>
+(async()=>{
+ const app=document.getElementById('app'),status=document.getElementById('status'),rows=document.getElementById('rows');
+ const key='sian-studio-guided-builder-v1',prior=localStorage.getItem(key);
+ const names=['archive','noir','auction','lanna','lab','porcelain','broadcast','kinetic'];
+ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+ const wait=async(fn,timeout=14000)=>{let started=Date.now();while(Date.now()-started<timeout){try{const v=fn();if(v)return v}catch{}await sleep(130)}throw Error('Timeout '+String(fn).slice(0,65))};
+ function hex(s){if(!s)return null;const m=s.match(/rgba?\(([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)/);if(!m)return null;return '#'+[1,2,3].map(i=>Math.round(Number(m[i])).toString(16).padStart(2,'0')).join('')}
+ let allPass=0,allFail=0;
+ try{
+ const win=await wait(()=>app.contentWindow?.SianArt&&app.contentWindow?.SianStyle?.applyPreset&&app.contentWindow);
+ const preview=app.contentDocument.querySelector('#preview');
+ for(const name of names){
+  const tr=document.createElement('tr'),errors=[];let checked=0,min=100;
+  try{
+   win.SianStyle.applyPreset(name);
+   const doc=await wait(()=>{const d=preview.contentDocument;return d?.documentElement?.dataset?.sianArt===name&&d.querySelector('link[href^="art-directions.css"]')?.sheet&&d},15000);
+   await wait(()=>doc.readyState==='complete'&&doc.querySelector('footer .footer-bottom'),7000);
+   const css=el=>doc.defaultView.getComputedStyle(doc.querySelector(el));
+   const checks=[
+    ['Page text','body','body'],
+    ['Navigation label','.header nav a','.header'],
+    ['Hero headline','.hero-copy h1','.hero'],
+    ['Hero description','.hero-lead','.hero'],
+    ['Hero eyebrow','.hero .eyebrow','.hero'],
+    ['Amulet heading','.product-meta h3','.product-card'],
+    ['Amulet description','.product-meta p','.product-card'],
+    ['Primary action','.hero-actions .btn-gold','.hero-actions .btn-gold'],
+    ['Category chip','.chips button','.chips button'],
+    ['Story body','.story-copy p','.story-section'],
+    ['Newsletter body','.newsletter-section p','.newsletter-section'],
+    ['Form consent','.newsletter-form .consent','.newsletter-form'],
+    ['Footer copy','.footer-bottom','.footer']
+   ];
+   for(const [label,foreground,background] of checks){
+    if(!doc.querySelector(foreground)||!doc.querySelector(background)){continue}
+    const c=hex(css(foreground).color),bg=hex(css(background).backgroundColor);
+    if(!c||!bg){errors.push(label+': missing solid color');continue}
+    const ratio=win.SianArt.contrast(c,bg);checked++;min=Math.min(min,ratio);
+    if(ratio<4.5)errors.push(label+': '+ratio+':1');
+   }
+   if(checked<8)errors.push('Only '+checked+' elements could be measured');
+   tr.innerHTML='<td><strong>'+name+'</strong></td><td>'+checked+' (other elements N/A)</td><td>'+min.toFixed(2)+':1</td><td class="'+(errors.length?'bad':'good')+'">'+(errors.length?errors.join('; '):'PASS')+'</td>';
+  }catch(e){errors.push(e.message);tr.innerHTML='<td><b>'+name+'</b></td><td colspan="3" class="bad">'+e.message+'</td>'}
+  rows.append(tr);if(errors.length)allFail++;else allPass++;
+ }
+ }catch(e){allFail++;const row=document.createElement('tr');row.textContent='Test failure: '+e.message;rows.append(row)}
+ finally{if(prior===null)localStorage.removeItem(key);else localStorage.setItem(key,prior);status.className=allFail?'bad':'good';status.textContent=allPass+' directions passed rendered contrast · '+allFail+' failed · project restored'}
+})();
+</script></body></html>
