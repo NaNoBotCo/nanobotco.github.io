@@ -36,7 +36,7 @@ Repeatable test, Math Toy / Gold / Dots: **heading 7.70:1**; **description 9.00:
 - Direct text editing works through the WYSIWYG layer. Undo and Redo cover inline text ONLY, not product deletion, styling, or all edits. A universal history is still missing.
 - Public showroom category filtering, search, and low/high price sorting changed visible results in browser tests.
 - Math toy Pause/Resume and equation Shuffle changed visible state. Spinner arm/friction/spin/brake and three divination methods were exercised in browser sessions.
-- Product detail modal code contains provenance, pricing, video links, share links and product images. Clicking a generic article/card wrapper is not the same as clicking the More button; a dedicated explicit More test is still pending. No demo item carries an actual rear-photo file, so two-sided presentation cannot be accepted from the demo alone.
+- **OPEN DEFECT (verified):** Public showroom product More / ดูเพิ่ม sometimes fails to open its native product detail dialog, particularly following category filtering/sorting. An objective storefront regression returned **12 pass / 1 fail**, the failure being the modal. A direct baseline probe confirmed the button handler runs and can open the dialog, suggesting a state-dependent bug. The detail modal code includes provenance, pricing, video links, share and images; further targeted testing and fix are needed. No demo item includes an actual rear-photo file, so two-sided presentation cannot be accepted from the demo alone.
 - Google Translate opens a SEPARATE external tab and only works on public hosted URLs; the label now says so. Built-in EN is the same-page language control.
 - Newsletter is local demonstration functionality, not a real subscription/list provider. Consent and delivery must be connected before sale.
 - Product image metadata supports Google discovery but indexing/Google Lens ranking is external and cannot be guaranteed.
@@ -58,7 +58,8 @@ This gate checks behavior in isolated drafts, not business payments or actual cu
 4. Contrast audit over image/gradient backgrounds and canvas artwork, plus keyboard accessibility for modal, overlays and spinner.
 
 **P1**
-1. One universal undo history for style changes, deletes, product edits, and section reordering.
+1. Fix and verify the product More dialog after category filtering and price sorting, with an explicit open/close state regression.
+2. One universal undo history for style changes, deletes, product edits, and section reordering.
 2. True front/back product gallery or flip with zoom, price and status; test a REAL two-sided item.
 3. Replace long expert control lists with contextual controls in the preview and task-specific mini editors.
 4. Make newsletter demo versus real subscriber delivery unmistakable.
