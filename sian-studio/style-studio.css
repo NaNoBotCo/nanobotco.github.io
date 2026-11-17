@@ -30,3 +30,49 @@
 .sian-section-quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 9px}
 .sian-section-quick-grid>.field{min-width:0}.sian-section-quick-grid input[type="range"]{accent-color:#51745c}
 @media(max-width:420px){.sian-section-quick-grid{grid-template-columns:1fr}}
+
+/* Distinct miniature layout previews — not merely accent swatches */
+.sian-preset-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.sian-preset{min-height:158px;border:2px solid #a8b5a9;background:#fff;text-align:left;gap:7px;transition:border-color .15s,transform .15s}
+.sian-preset:hover{transform:translateY(-2px);border-color:#1d593c}
+.sian-preset.active{border-color:#124b37;box-shadow:0 0 0 3px #cfe8d4}
+.sian-preset>b{font-size:14px;color:#203629}
+.sian-preset>small{font-size:10px;color:#405344;line-height:1.4;min-height:32px}
+.sian-preset-preview{height:104px;border:1px solid #9995;display:grid;grid-template-rows:16px 1fr 13px;gap:2px;padding:8px;overflow:hidden;border-radius:5px;position:relative}
+.sian-mock-top{border-bottom:1px solid currentColor;opacity:.9;font:800 7px/1.4 ui-monospace,monospace;letter-spacing:.065em;white-space:nowrap;overflow:hidden}
+.sian-mock-main{display:flex;align-items:center;justify-content:space-around;gap:7px;height:100%;min-height:0}
+.sian-mock-type{font:700 27px/1 Georgia,serif;font-style:normal;letter-spacing:-.07em}
+.sian-mock-art{font:normal 30px/1 Georgia,serif;display:grid;place-items:center;width:43%;height:100%;background:rgba(0,0,0,.09);border:1px solid currentColor;font-style:normal}
+.sian-mock-lines{display:flex;gap:5px;align-items:center}
+.sian-mock-lines i{background:currentColor;height:2px;flex:1;opacity:.65}
+.sian-mock-archive{border-radius:1px;outline:2px solid #754e3e;outline-offset:-5px}
+.sian-mock-archive .sian-mock-art{outline:2px solid #56483e;outline-offset:-5px}
+.sian-mock-noir{background:linear-gradient(90deg,#100f18,#38283b)!important;color:#fbe0ad!important}
+.sian-mock-noir .sian-mock-main{justify-content:flex-start}
+.sian-mock-noir .sian-mock-type{font-size:38px;z-index:1}
+.sian-mock-noir .sian-mock-art{position:absolute;right:2px;top:6px;width:62%;height:90%;font-size:63px;color:#ad8151;opacity:.65;border:0}
+.sian-mock-auction{border-radius:0!important;outline:4px solid #b62825;outline-offset:-5px}
+.sian-mock-auction .sian-mock-top{font-weight:950}
+.sian-mock-auction .sian-mock-type{font:900 42px/1 Impact,system-ui,sans-serif}
+.sian-mock-auction .sian-mock-art{border:3px solid #14213c}
+.sian-mock-lanna{background:repeating-linear-gradient(0deg,#f1dfaf,#f1dfaf 4px,#ead7a7 5px)!important}
+.sian-mock-lanna .sian-mock-art{border:4px double #9a3421;border-radius:50% 50% 2px 2px}
+.sian-mock-lab{background-color:#0a1821!important;color:#b9fc65!important;background-image:linear-gradient(#b9fc6518 1px,transparent 1px),linear-gradient(90deg,#b9fc6518 1px,transparent 1px)!important;background-size:14px 14px!important}
+.sian-mock-lab .sian-mock-type{font:700 31px/1 ui-monospace,monospace}
+.sian-mock-lab .sian-mock-art{clip-path:polygon(12% 0,100% 0,100% 88%,88% 100%,0 100%,0 12%);border:2px solid #b9fc65}
+.sian-mock-porcelain{border-radius:48% 48% 3px 3px/30% 30% 3px 3px!important;text-align:center;border:2px solid #174e91}
+.sian-mock-porcelain .sian-mock-type{font-family:Georgia,serif;font-size:24px}
+.sian-mock-porcelain .sian-mock-art{border:2px solid #174e91;border-radius:45% 45% 2px 2px}
+.sian-mock-broadcast{border:4px solid #101c34!important;background:#f7f9fb!important}
+.sian-mock-broadcast .sian-mock-top{background:#c51038;color:#fff;padding-left:4px}
+.sian-mock-broadcast .sian-mock-type{font:900 33px/1 Impact,system-ui,sans-serif}
+.sian-mock-broadcast .sian-mock-art{border:5px solid #101c34;border-radius:8px}
+.sian-mock-kinetic{background-image:radial-gradient(circle at 15% 90%,#aff2cd 0 17%,transparent 17.5%)!important}
+.sian-mock-kinetic .sian-mock-type{font:950 38px/1 system-ui;transform:rotate(-6deg)}
+.sian-mock-kinetic .sian-mock-art{border:4px solid #281b4b;border-radius:45% 55% 54% 46%;transform:rotate(9deg);box-shadow:6px 6px 0 #f3c93b}
+.sian-contrast-panel{border:1px solid #9ebca5;background:#f1f8f1;padding:12px 14px;margin:16px 0;border-radius:10px;color:#284433;font-size:12px}
+.sian-contrast-panel>strong{display:block;font-size:13px;margin-bottom:6px}
+.sian-contrast-row{display:flex;justify-content:space-between;gap:20px;padding:4px 0;border-bottom:1px solid #c8dac9}
+.sian-contrast-row b{white-space:nowrap;font-variant-numeric:tabular-nums}
+.sian-contrast-pass{color:#235b3b}.sian-contrast-fail{color:#a62424}
+.sian-contrast-panel p{font-size:10px;line-height:1.5;color:#41604b;margin:9px 0 0}
