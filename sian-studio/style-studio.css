@@ -76,3 +76,6 @@
 .sian-contrast-row b{white-space:nowrap;font-variant-numeric:tabular-nums}
 .sian-contrast-pass{color:#235b3b}.sian-contrast-fail{color:#a62424}
 .sian-contrast-panel p{font-size:10px;line-height:1.5;color:#41604b;margin:9px 0 0}
+
+.sian-section-contrast{display:flex;flex-direction:column;align-items:start;gap:6px;padding:9px 11px;margin-top:12px;border-radius:7px;border:1px solid #ccd8cd;background:#f8fbf7;font-size:11px;color:#234c38}
+.sian-section-contrast .btn{font-size:12px;min-height:32px;padding:6px 10px;background:#173f30;color:#fff}
