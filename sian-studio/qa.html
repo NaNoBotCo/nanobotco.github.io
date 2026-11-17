@@ -1,0 +1,36 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sian Studio v1.3 — Public QA</title><style>body{margin:0 auto;padding:32px;max-width:780px;background:#f6f3eb;font:16px/1.7 system-ui;color:#28372f}h1{font-size:27px}li{padding:8px;border-bottom:1px solid #ddd}li.ok{color:#285f47}li.fail{color:#ad3929}code{font-size:13px;background:#eae7db;padding:2px 5px}</style>
+<h1>Sian Studio — public publisher self-test</h1><p>No product or customer data is accessed. This checks the independent site-package generator loaded from the same public website.</p>
+<ol id="results"></ol><p id="summary">Tests starting…</p>
+<script>
+const state={config:{brand:'QA Test',lineId:'@sample',siteUrl:'https://example.com/shop'},design:{accent:'#c6a16d',background:'#f5f0e7',ink:'#252a23',nav:'#14211b'}};
+const selected=-1,notice=()=>{},showStep=()=>{},replaceStorefront=()=>'<html></html>';
+</script>
+<script src="./builder-publisher.js"></script>
+<script>
+(async()=>{
+let passed=0,failed=0;
+const result=(test,ok,detail='')=>{
+ const li=document.createElement('li');li.className=ok?'ok':'fail';li.textContent=(ok?'✓ ':'✕ ')+test+(detail?' — '+detail:'');document.getElementById('results').append(li);
+ ok?passed++:failed++;
+};
+try{
+ const api=window.SianPublisher;
+ result('Publisher loads',Boolean(api));
+ if(!api)throw new Error('Publisher unavailable');
+ const p={id:'sample-01',title:'พระสมเด็จวัดทดสอบ',temple:'วัดทดสอบ เชียงใหม่',price:2500,status:'available',imagePath:'media/sample-01-front.jpg',backImagePath:'media/sample-01-back.jpg',material:'เนื้อผง',description:'Original photography and clear history',videoUrl:'https://youtu.be/example',sku:'AM-01'};
+ const page=api.oneItemPage(p,'https://example.com/shop');
+ result('Static product landing HTML',page.includes('<!doctype html>')&&page.includes('พระสมเด็จวัดทดสอบ'));
+ result('Canonical & Open Graph',page.includes('rel="canonical"')&&page.includes('og:image'));
+ result('Product JSON-LD with Thai price',page.includes('application/ld+json')&&page.includes('"price":2500'));
+ result('Independent front/back photos',page.includes('../media/sample-01-front.jpg')&&page.includes('../media/sample-01-back.jpg'));
+ result('Google image sitemap',api.sitemapXml([p],'https://example.com/shop').includes('<image:image>'));
+ const blob=api.zipFiles([{name:'hello.txt',content:'Sian Studio'},{name:'media/sample.jpg',bytes:new Uint8Array([1,2,3,4])}]);
+ const array=await blob.arrayBuffer(),view=new DataView(array);
+ result('ZIP binary and signatures',view.getUint32(0,true)===0x04034b50&&view.getUint32(array.byteLength-22,true)===0x06054b50);
+ result('ZIP includes UTF-8 filenames',view.getUint16(26,true)===9);
+ result('ZIP nonempty package',blob.size>150,blob.size+' bytes');
+}catch(e){result('Unexpected exception',false,e.message)}
+document.getElementById('summary').textContent=passed+' passed · '+failed+' failed';
+document.getElementById('summary').style.color=failed?'#ae4437':'#2e654a';
+})();
+</script></html>
