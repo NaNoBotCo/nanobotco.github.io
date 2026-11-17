@@ -1,0 +1,45 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sian Studio v1.4 Visual Editor QA build 20261117b</title>
+<style>body{margin:25px auto;max-width:880px;padding:20px;font:15px/1.5 system-ui;background:#f4f1e9;color:#22372b}iframe{width:100%;height:360px;border:2px solid #c9d6c9;border-radius:10px}li{padding:7px;border-bottom:1px solid #dbe1d7}li.good{color:#166c45}li.bad{color:#b33730}#result{font-weight:800;margin:14px 0}</style>
+<h1>Visual editing integration check</h1><p>Checks a freshly loaded Sian Studio builder, including its embedded storefront. No merchant data is uploaded, edited, or published.</p>
+<div id="result">Checking the public website…</div><ol id="checks"></ol>
+<iframe id="application" title="Sian Studio application verification" src="./index.html?qa=visual-edit-v14d-fresh"></iframe>
+<script>
+const output=document.getElementById('checks');const status=document.getElementById('result');let pass=0,fail=0;
+function check(label,ok,detail=''){const li=document.createElement('li');li.className=ok?'good':'bad';li.textContent=(ok?'✓ ':'✕ ')+label+(detail?' · '+detail:'');output.append(li);ok?pass++:fail++}
+(async()=>{
+const app=document.getElementById('application');
+for(let i=0;i<65;i++){
+ await new Promise(r=>setTimeout(r,300));
+ try{
+ const d=app.contentDocument,preview=d&&d.querySelector('#preview'),doc=preview&&preview.contentDocument;
+ if(d&&d.querySelector('.sian-canvas-guide')&&doc&&doc.querySelector('.hero'))break;
+ }catch{}
+}
+try{
+const d=app.contentDocument,p=d.querySelector('#preview'),doc=p.contentDocument;
+check('Builder is publicly accessible',!!d.querySelector('.layout'));
+check('Guided editing banner visible',!!d.querySelector('.sian-canvas-guide'));
+check('Editing ON toggle visible',!!d.querySelector('.sian-edit-toggle'));
+check('Section selection API available',typeof app.contentWindow.SianStudio?.selectSection==='function');
+check('No builder runtime errors',!(app.contentWindow.__sianErrors||[]).length,JSON.stringify(app.contentWindow.__sianErrors||[]).slice(0,400));
+check('Editor API diagnostics',true,'SianStudio='+String(typeof app.contentWindow.SianStudio)+'; errors='+JSON.stringify(app.contentWindow.__sianErrors||[]).slice(0,300));
+check('Site controls script loaded',!![...d.querySelectorAll('script[src]')].find(x=>x.src.includes('builder-controls.js')));
+check('Granular Hero panel exists',!!d.querySelector('#sianSectionEditor'));
+check('Preview frame loaded',!!doc.querySelector('.hero-copy h1'));
+const badges=[...doc.querySelectorAll('.sian-edit-spot')];
+check('EDIT labels injected into storefront preview',badges.length>0,String(badges.length)+' edit labels');
+const hero=badges.find(x=>x.textContent.includes('Hero headline'));
+const art=badges.find(x=>x.textContent.includes('Change artwork'));
+check('Hero heading direct-edit control',!!hero);
+check('Hero illustration direct-edit control',!!art);
+if(hero){hero.click();await new Promise(r=>setTimeout(r,400));
+check('Clicking preview selects Sections editor',d.querySelector('#pane-sections')?.classList.contains('active'));
+check('Editable Thai first heading',!!d.querySelector('[data-section-key="firstTh"]'));
+check('Editable English first heading',!!d.querySelector('[data-section-key="firstEn"]'));
+check('Separate main and secondary CTA text',!!d.querySelector('[data-section-key="primaryEn"]')&&!!d.querySelector('[data-section-key="secondaryEn"]'));
+check('Hero image upload field',!!d.querySelector('[data-section-key="imageUpload"]'));
+}
+}catch(e){check('Unexpected runtime exception',false,e.message)}
+status.textContent=pass+' passed · '+fail+' failed';status.style.color=fail?'#a13c31':'#206d49';
+})();
+</script></html>
