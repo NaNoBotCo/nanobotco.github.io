@@ -24,7 +24,7 @@ outerCss.textContent=[
 document.head.append(outerCss);
 function editSection(id,target){
  if(id==='identity'){window.showStep('shop');sidebar.scrollTo({top:0,behavior:'smooth'});setTimeout(()=>document.getElementById('brand')?.focus({preventScroll:true}),200);return}
- if(id==='products'){window.showStep('products');sidebar.scrollTo({top:100,behavior:'smooth'});setTimeout(()=>document.getElementById('addProduct')?.focus({preventScroll:true}),180);return}
+ if(id==='products'||id.startsWith('product:')){window.showStep('products');const productId=id.startsWith('product:')?id.slice(8):'';const index=productId&&typeof state!=='undefined'?state.products.findIndex(p=>String(p.id)===productId):-1;const item=index>=0?document.querySelectorAll('#productList .product-item')[index]:null;if(item)item.click();sidebar.scrollTo({top:150,behavior:'smooth'});setTimeout(()=>(item?document.getElementById('pTitle'):document.getElementById('addProduct'))?.focus({preventScroll:true}),180);return}
  if(window.SianStudio?.selectSection){window.SianStudio.selectSection(id,target);guide.innerHTML='<strong>✎ Editing '+id+'</strong><span>Change the matching field on the left; the preview refreshes automatically.</span>'}
 }
 function sync(){
@@ -72,7 +72,7 @@ function install(){
  make(doc.querySelector('#oracle .oracle-hub-top'),'Divination','oracle','headline'+lang);
  make(doc.querySelector('#newsletter .newsletter-layout'),'Newsletter','newsletter','headline'+lang);
  doc.querySelectorAll('section.sian-extra[id^="section-"]').forEach(el=>make(el,'Edit section',el.id.slice('section-'.length),'title'));
- const firstProduct=doc.querySelector('.product-card');if(firstProduct)make(firstProduct,'Edit products','products','');
+ doc.querySelectorAll('.product-card').forEach(card=>make(card,'Edit this amulet',card.dataset.productId?'product:'+card.dataset.productId:'products',''));
  sync();
 }
 frame.addEventListener('load',()=>setTimeout(install,90));
