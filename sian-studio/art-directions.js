@@ -56,7 +56,7 @@ replaceStorefront=function(){
  let html=old();
  const id=state.design?.direction||state.design?.preset;
  if(!PALETTES[id])return html;
- const meta='<link rel="stylesheet" href="art-directions.css">';
+ const meta='<link rel="stylesheet" href="art-directions.css?v=20261117-18f65">';
  html=html.replace('</head>',meta+'</head>');
  html=html.replace('</style>',cssVars(id,state.design||{})+'</style>');
  html=html.replace(/<html(\s[^>]*)?>/i,match=>match.replace(/>$/,' data-sian-art="'+id+'">'));
