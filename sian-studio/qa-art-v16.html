@@ -18,7 +18,7 @@ for(const id of ids){
  try{
   win.SianStyle.applyPreset(id);
   const doc=await until(()=>{const d=frame.contentDocument;return d?.documentElement?.getAttribute('data-sian-art')===id&&d.querySelector('.hero')&&d},18000);
-  await until(()=>doc.querySelector('link[href="art-directions.css"]')?.sheet,9000);
+  await until(()=>doc.querySelector('link[href^="art-directions.css"]')?.sheet,9000);
   log.css=true;
   const checks=win.SianArt.audit(id,win.state?.design||{});log.roles=checks.length;
   if(checks.length!==9||checks.some(x=>!x.passed||x.ratio<x.minimum))throw new Error('Contrast failure: '+checks.filter(x=>!x.passed).map(x=>x.label+'='+x.ratio).join(','));
