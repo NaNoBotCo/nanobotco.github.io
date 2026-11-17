@@ -16,8 +16,10 @@ html[data-sian-art] :is(.hero-copy h1,.section-head h2,.hero h1,.section h2){col
 html[data-sian-art] :is(.hero h1 em,.section-head h2 em){color:var(--ad-accent)!important}
 html[data-sian-art] :is(.hero .eyebrow,.overline,.hero-lead,.hero-under,.hero-under strong,.collection-count small,.section-head .muted,.catalogue-tail,.catalogue-tail a){color:var(--ad-muted)!important}
 html[data-sian-art] .hero-image{background:radial-gradient(ellipse at 45% 35%,var(--ad-panel),var(--ad-image) 53%,var(--ad-nav) 110%)!important}
+html[data-sian-art] .hero-image-foot{background:var(--ad-nav)!important;color:var(--ad-navfg)!important;padding:7px 10px;border-radius:2px}
+html[data-sian-art] .hero-stamp{background:var(--ad-nav)!important;color:var(--ad-navfg)!important;border:2px solid var(--ad-line)!important}
 html[data-sian-art] .announcer{background:var(--ad-panel)!important;color:var(--ad-panelfg)!important}
-html[data-sian-art] :is(.btn-gold,.hero-actions .btn-gold,.product-actions button:first-child,.input-action button){background:var(--ad-accent)!important;color:var(--ad-accentfg)!important;border:2px solid var(--ad-accent)!important}
+html[data-sian-art] :is(.btn-gold,.hero-actions .btn-gold,.product-actions button:first-child,.input-action button){background:var(--ad-action-bg)!important;color:var(--ad-action-fg)!important;border:2px solid var(--ad-action-border)!important}
 html[data-sian-art] :is(.hero-actions .btn-link,.text-link,.catalogue-tail a){color:var(--ad-fg)!important;border-bottom:2px solid var(--ad-line)!important}
 html[data-sian-art] .section{background:var(--ad-bg)!important;color:var(--ad-fg)!important}
 html[data-sian-art] .collection-count b{color:var(--ad-fg)!important}
@@ -31,13 +33,13 @@ html[data-sian-art] :is(.product-meta h3,.product-price){color:var(--ad-surface-
 html[data-sian-art] .product-meta p{color:var(--ad-surface-fg)!important;opacity:.9}
 html[data-sian-art] .product-art,html[data-sian-art] .product-art[class*="art-"]{background:var(--ad-image)!important}
 html[data-sian-art] .product-actions button{color:var(--ad-surface-fg)!important;background:var(--ad-surface)!important;border:1px solid var(--ad-line)!important}
-html[data-sian-art] .product-actions button:first-child{color:var(--ad-accentfg)!important;background:var(--ad-accent)!important;border-color:var(--ad-accent)!important}
+html[data-sian-art] .product-actions button:first-child{color:var(--ad-action-fg)!important;background:var(--ad-action-bg)!important;border-color:var(--ad-action-border)!important}
 html[data-sian-art] .art-badge{background:var(--ad-nav)!important;color:var(--ad-navfg)!important}
 html[data-sian-art] .art-badge.sold{background:var(--ad-accent)!important;color:var(--ad-accentfg)!important}
 html[data-sian-art] .story-section{background:var(--ad-story)!important;color:var(--ad-storyfg)!important}
 html[data-sian-art] .story-copy,html[data-sian-art] :is(.story-copy h2,.story-copy h2 em,.story-copy p,.story-art>span,.story-art-foot){color:var(--ad-storyfg)!important}
 html[data-sian-art] .story-copy .text-link{color:var(--ad-storyfg)!important;border-color:var(--ad-storyfg)!important}
-html[data-sian-art] .story-art{background:radial-gradient(circle at center,var(--ad-panel),var(--ad-story) 85%)!important}
+html[data-sian-art] .story-art{background:radial-gradient(circle at center,#ffffff12,var(--ad-story) 85%)!important}
 html[data-sian-art] .newsletter-section{background:var(--ad-panel)!important;color:var(--ad-panelfg)!important}
 html[data-sian-art] .newsletter-section :is(h2,h2 em,.overline,p){color:var(--ad-panelfg)!important}
 html[data-sian-art] .newsletter-form{background:var(--ad-surface)!important;color:var(--ad-surface-fg)!important}
@@ -52,8 +54,7 @@ html[data-sian-art] .preview-ribbon button{color:var(--ad-navfg)!important}
 html[data-sian-art] :is(.product-dialog,.studio-dialog){background:var(--ad-surface)!important;color:var(--ad-surface-fg)!important}
 html[data-sian-art] .product-dialog :is(h2,h3,.detail-body .detail-facts b,.detail-body .note,.detail-facts small){color:var(--ad-surface-fg)!important}
 html[data-sian-art] .close-modal{background:var(--ad-panel)!important;color:var(--ad-panelfg)!important}
-html[data-sian-art] .sian-extra{background:var(--ad-bg);color:var(--ad-fg)}
-html[data-sian-art] .sian-extra .sian-extra-inner{background:var(--ad-surface);color:var(--ad-surface-fg)}
+/* Custom user-authored section backgrounds/text remain controlled by their own editor tokens. */
 html[data-sian-art] .sian-spinner{background:var(--ad-story)!important;color:var(--ad-storyfg)!important}
 html[data-sian-art] .sian-spinner :is(h2,h2 em,p,.sian-spin-controls label,.sian-spin-readout){color:var(--ad-storyfg)!important}
 html[data-sian-art] .kinetic-section{border-top:3px solid var(--ad-accent)!important}
