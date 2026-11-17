@@ -1,0 +1,49 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Sian Studio 1.5 — WYSIWYG Integration Test</title><style>body{font:15px/1.5 system-ui;max-width:930px;padding:22px;margin:auto;color:#23382d;background:#f4f2ec}li{padding:6px 0;border-bottom:1px solid #d9dfd9}.ok{color:#20734b}.bad{color:#ab392e}iframe{width:100%;height:440px;border:1px solid #abbba7;border-radius:10px}#status{font-weight:bold;padding:12px;background:white;border-radius:7px}</style></head><body>
+<h1>Sian Studio v1.5 · WYSIWYG smoke test</h1><p>Checks the live builder and restores its browser-local draft afterward. This diagnostic page is for developers, not customers.</p>
+<div id="status">Checking…</div><ol id="results"></ol><iframe title="Sian Studio visual builder under test" id="testFrame" src="./index.html?qa=wysiwyg-v15-unique-8af"></iframe>
+<script>
+(async()=>{
+const status=document.getElementById('status'),list=document.getElementById('results'),frame=document.getElementById('testFrame');
+const storageKey='sian-studio-guided-builder-v1',before=localStorage.getItem(storageKey);
+let pass=0,fail=0;
+const check=(name,good,extra='')=>{const li=document.createElement('li');li.className=good?'ok':'bad';li.textContent=(good?'✓ ':'✗ ')+name+(extra?' · '+extra:'');list.append(li);good?pass++:fail++};
+const wait=async(fn,max=12000)=>{const now=Date.now();while(Date.now()-now<max){try{const value=fn();if(value)return value}catch{}await new Promise(r=>setTimeout(r,140))}throw new Error('Timed out waiting for '+String(fn).slice(0,50))};
+try{
+ const d=await wait(()=>frame.contentDocument?.querySelector('#pane-look'));
+ const w=frame.contentWindow;
+ await wait(()=>w.SianStudio?.updateText&&w.SianWYSIWYG?.install&&w.SianStyle?.applyPreset);
+ check('SianStudio content-edit API loads',typeof w.SianStudio.updateText==='function');
+ check('Style Lab loads',typeof w.SianStyle.applyPreset==='function');
+ check('Direct-edit engine loads',typeof w.SianWYSIWYG.install==='function');
+ const grid=d.querySelectorAll('.sian-preset');
+ check('Eight curated looks rendered',grid.length===8,String(grid.length));
+ check('Visible advanced style controls',!!d.querySelector('#sianStyleAdvanced [data-style-key="heroSplit"]'));
+ check('Per-section style palettes',!!d.querySelector('#sianSectionEditor .sian-mini-preset'));
+ const preview=d.querySelector('#preview');
+ await wait(()=>preview.contentDocument?.querySelector('.sian-wys-hero-line'));
+ let target=preview.contentDocument.querySelector('.sian-wys-hero-line'),doc=preview.contentDocument;
+ check('Large headline is directly editable',target.classList.contains('sian-wys-text'));
+ check('Detailed green edit labels remain available',doc.querySelectorAll('.sian-edit-spot').length>=5);
+ const old=target.textContent;target.click();await new Promise(r=>setTimeout(r,200));
+ check('Click activates actual inline contenteditable',target.isContentEditable);
+ check('Plain-English editing shortcut is shown',!!doc.querySelector('.sian-wys-smallhelp'));
+ const replacement='WYSIWYG integration proof';
+ target.textContent=replacement;target.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true}));
+ await wait(()=>preview.contentDocument?.querySelector('.sian-wys-hero-line')?.textContent?.includes(replacement),7000);
+ check('Enter saves edited text into live preview',!!preview.contentDocument.querySelector('.sian-wys-hero-line')?.textContent.includes(replacement));
+ check('Undo becomes available after edit',!d.querySelector('#sianUndo').disabled);
+ d.querySelector('#sianUndo').click();
+ await wait(()=>preview.contentDocument?.querySelector('.sian-wys-hero-line')?.textContent?.trim()===old.trim(),7000);
+ check('Undo restores original heading',preview.contentDocument?.querySelector('.sian-wys-hero-line')?.textContent.trim()===old.trim());
+ const palette=d.querySelector('.sian-preset[data-preset="indigo"]');palette.click();
+ await wait(()=>d.querySelector('[data-design="accent"]')?.value==='#9cacce',6000);
+ check('Indigo preset updates storefront palette inputs',d.querySelector('[data-design="accent"]').value==='#9cacce');
+ check('Style preset reflects selected state',palette.getAttribute('aria-pressed')==='true');
+}catch(err){check('Unexpected test error',false,err.message)}
+finally{
+ try{if(before===null)localStorage.removeItem(storageKey);else localStorage.setItem(storageKey,before)}catch{}
+ status.textContent=pass+' passed · '+fail+' failed · original browser draft restored';
+ status.style.color=fail?'#a14330':'#23704a';
+}
+})();
+</script></body></html>
