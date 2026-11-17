@@ -52,8 +52,11 @@ if(sections){
    if(builtins[x.type]&&!used.has(x.type)){
     const node=builtins[x.type],st=x.style||{};
     main.append(node);used.add(x.type);
-    if(/^#[a-f0-9]{6}$/i.test(st.bg||''))node.style.backgroundColor=st.bg;
-    if(/^#[a-f0-9]{6}$/i.test(st.text||''))node.style.color=st.text;
+    if(st._colorBg&&/^#[a-f0-9]{6}$/i.test(st.bg||''))node.style.setProperty('background-color',st.bg,'important');
+    if(st._colorText&&/^#[a-f0-9]{6}$/i.test(st.text||'')){
+      node.style.setProperty('color',st.text,'important');
+      node.querySelectorAll('h1,h2,h3,p,small,.eyebrow,.muted').forEach(el=>el.style.setProperty('color',st.text,'important'));
+    }
     if(st.padding!==undefined){const px=Math.max(24,Math.min(140,+st.padding||68));node.style.paddingTop=px+'px';node.style.paddingBottom=px+'px'}
     if(['left','center','right'].includes(st.align))node.style.textAlign=st.align;
     const head=node.querySelector(x.type==='hero'?'.hero-copy h1':x.type==='collection'?'.section-head h2':x.type==='story'?'.story-copy h2':x.type==='toy'?'.kinetic-copy h2':x.type==='fidget'?'h2':x.type==='oracle'?'.oracle-hub-top h2':'h2');
