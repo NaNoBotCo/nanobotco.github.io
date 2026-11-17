@@ -45,11 +45,34 @@ if(sections){
   }
   for(const x of sections){
    if(!x||x.enabled===false)continue;
-   if(builtins[x.type]&&!used.has(x.type)){main.append(builtins[x.type]);used.add(x.type)}
+   if(builtins[x.type]&&!used.has(x.type)){
+    const node=builtins[x.type],st=x.style||{};
+    main.append(node);used.add(x.type);
+    if(/^#[a-f0-9]{6}$/i.test(st.bg||''))node.style.backgroundColor=st.bg;
+    if(/^#[a-f0-9]{6}$/i.test(st.text||''))node.style.color=st.text;
+    if(st.padding!==undefined){const px=Math.max(24,Math.min(140,+st.padding||68));node.style.paddingTop=px+'px';node.style.paddingBottom=px+'px'}
+    if(['left','center','right'].includes(st.align))node.style.textAlign=st.align;
+    const head=node.querySelector(x.type==='hero'?'.hero-copy h1':x.type==='collection'?'.section-head h2':x.type==='story'?'.story-copy h2':x.type==='toy'?'.kinetic-copy h2':x.type==='fidget'?'h2':x.type==='oracle'?'.oracle-hub-top h2':'h2');
+    const sub=node.querySelector(x.type==='hero'?'.hero-lead':x.type==='collection'?'.section-head .muted':x.type==='story'?'#shopStory':x.type==='toy'?'.kinetic-copy .muted':x.type==='fidget'?'p':x.type==='oracle'?'.oracle-hub-top .muted':'p');
+    const applyCopy=()=>{if(x.headline&&head)head.textContent=text(x.headline,180);if(x.subtext&&sub)sub.textContent=text(x.subtext,1200)};
+    applyCopy();
+    for(const btn of document.querySelectorAll('#langTh,#langEn'))btn.addEventListener('click',()=>setTimeout(applyCopy,30));
+   }
    else if(['text','quote','faq','image','video','cta'].includes(x.type))main.append(custom(x));
   }
   for(const [key,node] of Object.entries(builtins))if(node&&!used.has(key))node.remove();
  }
+}
+
+const hs=document.createElement('style');hs.textContent='.sian-hero-spinner{position:absolute;right:1%;top:30%;width:clamp(160px,24vw,340px);height:clamp(160px,24vw,340px);border:0;background:none;border-radius:50%;padding:4px;cursor:grab;z-index:1;transition:transform 4s cubic-bezier(.1,.4,.13,1);pointer-events:auto}.sian-hero-spinner svg{width:100%;height:100%;filter:drop-shadow(0 2px 15px #9b743d)}.sian-hero-spinner:focus-visible{outline:3px solid #c6a16d}@media(max-width:760px){.sian-hero-spinner{right:0;top:12%;width:135px;height:135px;opacity:.14!important}}@media(prefers-reduced-motion:reduce){.sian-hero-spinner{transition:none!important}}';document.head.append(hs);
+const hero=document.querySelector('main .hero');
+if(hero&&cfg.visual?.heroSpinner!==false){
+ const dot=document.createElement('button');dot.type='button';dot.className='sian-hero-spinner';dot.title='Tap to spin · หมุนเล่น';
+ dot.setAttribute('aria-label','Spin background fidget spinner');
+ dot.innerHTML='<svg viewBox="0 0 120 120" aria-hidden="true"><g stroke="#c29c64" stroke-width="5" fill="none"><circle cx="60" cy="60" r="13"/><path d="M60 47V24M71 66L93 79M49 66L27 79"/><circle cx="60" cy="19" r="17"/><circle cx="98" cy="85" r="17"/><circle cx="22" cy="85" r="17"/></g></svg>';
+ const copy=hero.querySelector('.hero-copy');hero.style.position='relative';hero.append(dot);
+ let rotation=0;dot.addEventListener('click',()=>{rotation+=720+Math.round(Math.random()*720);dot.style.transform='rotate('+rotation+'deg)'});
+ dot.style.opacity=String(Math.max(.12,Math.min(.6,Number(cfg.visual?.heroSpinnerOpacity)||.24)));
 }
 const c=document.getElementById('sianSpinner'),start=document.getElementById('spinnerStart'),brake=document.getElementById('spinnerStop'),arms=document.getElementById('spinnerArms'),drag=document.getElementById('spinnerDrag'),read=document.getElementById('spinnerReadout');
 if(!c||!start||!brake||!arms||!drag)return;
