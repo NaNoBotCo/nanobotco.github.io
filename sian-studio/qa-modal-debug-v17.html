@@ -7,7 +7,14 @@ const d=f.contentDocument,w=f.contentWindow,errors=[],dlg=d.getElementById('prod
 w.addEventListener('error',e=>errors.push({type:'error',message:e.message,filename:e.filename,line:e.lineno}));
 w.addEventListener('unhandledrejection',e=>errors.push({type:'rejection',message:String(e.reason)}));
 const state={button:btn?.textContent,onclick:typeof btn?.onclick,detailExists:!!dlg,dialogIsNative:dlg instanceof w.HTMLDialogElement,openBefore:dlg?.open};
-try{btn?.click();await sleep(400);state.openAfterClick=dlg?.open;state.detailContentAfterClick=d.getElementById('productDetail')?.childElementCount}catch(e){state.clickError=e.stack||e.message}
+const events=[];
+ const show=dlg.showModal.bind(dlg),close=dlg.close.bind(dlg);
+ dlg.showModal=function(){events.push('showModal called');return show()};
+ dlg.close=function(){events.push('close called');return close()};
+ dlg.addEventListener('click',e=>events.push('dialog click target='+e.target.tagName+' x='+e.clientX+' y='+e.clientY),true);
+ dlg.addEventListener('close',e=>events.push('close event'));
+ try{btn?.click();state.openImmediately=dlg?.open;await sleep(400);state.openAfterClick=dlg?.open;state.detailContentAfterClick=d.getElementById('productDetail')?.childElementCount}catch(e){state.clickError=e.stack||e.message}
+ state.eventLog=events;
 state.errors=errors;
 if(!dlg.open)try{dlg.showModal();await sleep(100);state.openWithDirectShowModal=dlg.open}catch(e){state.directError=e.stack||e.message}
 try{dlg.close()}catch{}
