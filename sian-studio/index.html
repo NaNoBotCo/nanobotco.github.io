@@ -156,7 +156,9 @@ function replaceStorefront(){
  const pattern=/const CONFIG=(\{[^\n]*\});\s*const DEMO=(\[[^\n]*\]);/;
  const cfg=Object.assign({},defaultConfig,state.config);
  const real=state.products.filter(p=>!p.demo);
- const items=real.length?real:state.products;
+ // Public allowlist: never include internal finance, buyer, supplier or consignment fields.
+ const allowed=['id','title','english','price','status','category','temple','edition','material','teacher','year','province','condition','itemCondition','dimensions','sku','frontAlt','backAlt','keywords','hashtags','captionTh','captionEn','videoUrl','liveUrl','description','imagePath','backImagePath','referenceImage','referenceAuthor','referenceSource','referenceLicense','referenceLicenseUrl','referenceAlt','featured','added','deleted','demo'];
+ const items=(real.length?real:state.products).map(p=>Object.fromEntries(allowed.filter(k=>Object.prototype.hasOwnProperty.call(p,k)).map(k=>[k,p[k]])));
  let page=template.replace(pattern,()=> 'const CONFIG='+safeJSON(cfg)+';\nconst DEMO='+safeJSON(items)+';');
  const t=themes[state.theme]||themes.heritage;
  let css=':root{--black:'+t.black+';--char:'+t.char+';--cream:'+t.cream+';--paper:'+t.paper+';--gold:'+t.gold+';--goldlight:'+t.gold+';--ink:'+t.ink+'}';
