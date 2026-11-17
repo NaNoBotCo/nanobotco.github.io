@@ -219,9 +219,9 @@ async function handlePhoto(file){
  if(file.size>16000000){notice('Image too large. Use a photo under 16 MB');return;}
  const data=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file)});
  const img=await new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=reject;i.src=data});
- let w=img.naturalWidth,h=img.naturalHeight,s=Math.min(1,980/Math.max(w,h));w=Math.max(1,Math.round(w*s));h=Math.max(1,Math.round(h*s));
+ let w=img.naturalWidth,h=img.naturalHeight,s=Math.min(1,1440/Math.max(w,h));w=Math.max(1,Math.round(w*s));h=Math.max(1,Math.round(h*s));
  const cv=document.createElement('canvas');cv.width=w;cv.height=h;cv.getContext('2d').drawImage(img,0,0,w,h);
- return cv.toDataURL('image/jpeg',.65);
+ return cv.toDataURL('image/jpeg',.76);
 }
 function wire(){
  $$('.step').forEach(b=>b.onclick=()=>showStep(b.dataset.step));
