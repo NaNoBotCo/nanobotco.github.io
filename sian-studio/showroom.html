@@ -122,6 +122,31 @@
 .back-photo{margin:0;padding:12px;background:#e7e2d8;border:1px solid #d9cebb;border-radius:12px;text-align:center}
 .back-photo img{display:block;object-fit:contain;max-height:340px;width:100%;margin:auto;border-radius:7px}
 .back-photo figcaption{font-size:12px;color:#6f6655;margin-top:7px}
+
+/* Sian Studio 1.3: original spinner, video selling and modular sections */
+.sian-spinner{color:#e7ddc3;background:radial-gradient(circle at 70% 44%,#334d46,#18292a 58%,#111b1c);padding:65px 0}
+.sian-spin-layout{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
+.sian-spinner h2{font-size:clamp(31px,4vw,56px);color:#fff0d2}.sian-spinner h2 em{color:#dcab6b}
+.sian-spinner p{color:#c5d4c9;line-height:1.8}.sian-spin-controls{display:grid;gap:12px;margin:22px 0}
+.sian-spin-controls label{display:grid;gap:6px;font-size:13px;color:#e3d9be}
+.sian-spin-controls select,.sian-spin-controls input{width:100%;padding:9px;border-radius:8px;accent-color:#cda56c}
+.sian-spin-buttons{display:flex;gap:8px;flex-wrap:wrap}.sian-spin-buttons button{min-height:40px}
+.sian-spin-canvas{display:grid;place-items:center;gap:5px}.sian-spin-canvas canvas{width:min(100%,420px);height:auto;touch-action:none;cursor:grab;user-select:none;outline-offset:6px}
+.sian-spin-canvas canvas:active{cursor:grabbing}.sian-spin-readout{font:12px ui-monospace,monospace;color:#e5c7a0;min-height:30px}
+.sian-social-row{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}.sian-social-row .btn{font-size:12px;padding:9px 11px}
+.sian-social-label{width:100%;font-size:12px;color:#836f52}
+.sian-extra{padding:var(--sian-block-padding,68px) 0;text-align:var(--sian-block-align,left);background:var(--sian-block-bg,#f3eee2);color:var(--sian-block-text,#252821)}
+.sian-extra .sian-extra-inner{margin:0 auto;max-width:var(--sian-block-width,1080px);padding:25px 29px;background:var(--sian-block-card,#fff);border-radius:var(--sian-block-radius,12px)}
+.sian-extra h2{font-size:clamp(24px,3vw,43px);margin:0 0 13px}.sian-extra p{white-space:pre-line;line-height:1.8;max-width:850px}
+.sian-extra blockquote{border-left:3px solid var(--gold,#b99b62);padding-left:20px;font-size:clamp(22px,3vw,32px);margin:12px 0}
+.sian-extra img{display:block;max-height:460px;max-width:100%;width:100%;object-fit:contain;border-radius:10px}
+.sian-extra details{padding:12px;border:1px solid #7775;border-radius:8px;margin:9px 0;text-align:left}
+.sian-extra .sian-video{max-width:760px;aspect-ratio:16/9;border:0;width:100%;border-radius:10px}
+.sian-rws-card{display:block;width:100%;height:100%;object-fit:cover;border-radius:8px;background:#d8ceb6}
+.sian-attribution{font:11px system-ui,sans-serif;color:#d0bc9d;text-align:center;margin:6px auto 20px}
+.sian-product-video{margin:15px 0;max-width:100%;width:100%;aspect-ratio:16/9;border:0;border-radius:9px;background:#171c18}
+.sian-video-link{display:block;font-size:12px;margin:10px 0;color:#746d52}
+@media(max-width:820px){.sian-spin-layout{grid-template-columns:1fr}.sian-spinner{padding:42px 0}.sian-spin-canvas{order:-1}}
 </style>
 </head>
 <body>
@@ -197,7 +222,7 @@
     <button type="button" class="oracle-choice" data-oracle-panel="iching" aria-pressed="false"><span class="oracle-choice-icon">☯</span><b>อี้จิง</b><small>Structured · Classical · Thoughtful</small><p>โยนเหรียญหกครั้ง ดูภาพหลัก ภาพแปร และเส้นเปลี่ยน</p></button>
     <button type="button" class="oracle-choice" data-oracle-panel="kaucim" aria-pressed="false"><span class="oracle-choice-icon">⟡</span><b>เซียมซี</b><small>Quick · Playful · Friendly</small><p>เสี่ยงใบคำหนึ่งใบ อ่านแนวโน้มสั้น ๆ พร้อมข้อควรระวัง</p></button>
   </div>
-  <div class="outer oracle-content-stack">
+  <div class="outer oracle-content-stack"><p class="sian-attribution">1909 Smith–Waite tarot artwork by Pamela Colman Smith · Public domain · <a href="https://github.com/mixvlad/TarotCards" target="_blank" rel="noopener">Scans and attribution</a></p>
     <section class="oracle-panel" data-oracle-content="tarot">
       <div class="tarot-intro">
         <div><div class="overline">AN INVITATION TO REFLECT · ไพ่ทาโรต์</div><h3>ถามไพ่ <em>ฟังใจ</em></h3><p>ไพ่ทาโรต์ 78 ใบ · เลือกไพ่หนึ่งใบ สามใบ หรือไพ่ประจำวัน เปิดทีละใบและสำรวจความหมายด้วยตนเอง</p></div>
@@ -247,6 +272,19 @@
   <div class="outer tarot-footer"><span>ทั้งสามเครื่องมือออกแบบให้ใช้ง่ายสำหรับผู้มาใหม่ และยังชวนให้กลับมาใช้อีก</span><div class="oracle-footer-links"><a href="https://wichaa.net/divination/" target="_blank" rel="noopener">เครื่องมือเสี่ยงทายอื่นจาก Wichaa ↗</a><button type="button" class="text-link-btn" id="googleTranslateInline">Google auto-translate to English ↗</button></div></div>
 </section>
 <section id="newsletter" class="newsletter-section"><div class="outer newsletter-layout"><div><div class="overline">STAY IN THE CIRCLE · ข่าวจากร้าน</div><h2>ข่าวคราวดี ๆ<br><em>ส่งตรงถึงคุณ</em></h2><p>รายการใหม่ เรื่องเล่าจากวงการ และเครื่องมือความรู้สำหรับคนรักพระเครื่อง</p></div><form id="newsletterForm" class="newsletter-form"><label for="subscriberEmail">อีเมลของคุณ</label><div class="input-action"><input type="email" id="subscriberEmail" placeholder="your@email.com" autocomplete="email" required/><button type="submit">รับข่าวสาร ↗</button></div><label class="consent"><input type="checkbox" id="consent" required/> ยินยอมให้ร้านส่งข่าวสารทางอีเมล ยกเลิกได้ทุกเมื่อ</label><p id="newsletterStatus" role="status" class="newsletter-status">ระบบตัวอย่าง: ยังไม่รับข้อมูลจริง จนกว่าจะตั้งค่าเครื่องมือส่งข่าว</p></form></div></section>
+
+<section id="fidget" class="sian-spinner">
+  <div class="outer sian-spin-layout">
+    <div><div class="overline">SIAN SPINNER LAB · ของเล่นนิ้ว</div>
+    <h2>หมุนเล่น <em>แบบเซียน</em></h2>
+    <p>Original interactive fidget spinner: drag, flick, change the bearings and tune the friction. Not a looping video. · ปั่นวงล้อจริงด้วยนิ้ว เปลี่ยนรูปแบบและแรงเสียดทานได้</p>
+    <div class="sian-spin-controls"><label>จำนวนแขน · Arms<select id="spinnerArms"><option value="3">3 · ไตรภาค</option><option value="4">4 · สี่ทิศ</option><option value="5">5 · เบญจธาตุ</option></select></label>
+    <label>แรงเสียดทาน · Friction<input type="range" id="spinnerDrag" min="1" max="96" value="24"></label></div>
+    <div class="sian-spin-buttons"><button type="button" id="spinnerStart" class="btn btn-gold">↻ หมุน · Spin</button><button type="button" id="spinnerStop" class="btn btn-link">■ หยุด · Brake</button></div>
+    <p id="spinnerReadout" class="sian-spin-readout" aria-live="polite">Flick to spin · แตะแล้วปั่น</p></div>
+    <div class="sian-spin-canvas"><canvas id="sianSpinner" width="480" height="480" tabindex="0" aria-label="Interactive fidget spinner: drag or press Enter to spin"></canvas><small>CONSERVATION · MOMENTUM · FRICTION</small></div>
+  </div>
+</section>
 </main>
 <footer><div class="outer footer-grid"><div><span class="brand footer-brand"><span class="brand-mark">✺</span><span><b data-brand>ศรัทธานคร</b><small data-english>SATTHA NAKHON</small></span></span><p>เครื่องราง · พระเครื่อง · ศรัทธา<br>เว็บไซต์พระเครื่องและเครื่องราง</p></div><div><b>สำรวจ</b><a href="#collection">พระเครื่อง</a><a href="#oracle">ไพ่ทาโรต์</a><a href="#newsletter">ข่าวสาร</a></div><div><b>ติดต่อ</b><button type="button" id="footerLine">สอบถามผ่าน LINE ↗</button><a href="https://wichaa.net" target="_blank" rel="noopener">Wichaa knowledge archive ↗</a></div></div><div class="footer-bottom outer"><span>© <span id="thisYear"></span> ศรัทธานคร · ร้านพระเครื่อง</span><span>Powered by <a href="https://wichaa.net" target="_blank" rel="noopener">Wichaa</a> · Built for Thai sian</span></div></footer>
 <dialog id="productDialog" class="product-dialog"><button class="close-modal" id="closeProduct" aria-label="ปิด">✕</button><div id="productDetail"></div></dialog>
@@ -479,6 +517,14 @@ __modules["tarot_ui"]=(()=>{
 const {drawTarot,tarotCardSvg,readingText,SPREAD_POSITIONS}=__modules["tarot"];
 
 /** Mount the same public instrument in demo and public-only storefront. */
+/** Original 1909 Smith–Waite deck; 78 restored scans from mixvlad/TarotCards. */
+function smithWaiteImage(card){
+ const major=['Fool','Magician','High_Priestess','Empress','Emperor','Hierophant','Lovers','Chariot','Strength','Hermit','Wheel_of_Fortune','Justice','Hanged_Man','Death','Temperance','Devil','Tower','Star','Moon','Sun','Judgement','World'];
+ const suits={wands:'Wands',cups:'Cups',swords:'Swords',pentacles:'Pents'};
+ const file=card.arcana==='major'?String(card.number).padStart(2,'0')+'_'+major[card.number]+'.jpg':(suits[card.suit]||'Cups')+String(card.number).padStart(2,'0')+'.jpg';
+ return 'https://raw.githubusercontent.com/mixvlad/TarotCards/main/tarot/rider-waite/720px/'+file;
+}
+
 function mountTarot(){
  const root=document.getElementById('tarotApp'); if(!root)return;
  const $=s=>root.querySelector(s);
@@ -497,7 +543,9 @@ function mountTarot(){
    const b=document.createElement('button');b.type='button';b.className='tarot-card'+(open?' is-open':' is-back')+(entry.reversed?' is-reversed':'');
    b.setAttribute('aria-label',(open?'ไพ่ '+entry.card.nameTh:'เปิดไพ่ '+(i+1))+' '+entry.position);
    b.setAttribute('aria-pressed',String(open));b.disabled=open;
-   const art=document.createElement('div');art.className='tarot-card-art';art.innerHTML=tarotCardSvg(entry.card,{back:!open});
+   const art=document.createElement('div');art.className='tarot-card-art';
+   if(open){const img=document.createElement('img');img.className='sian-rws-card';img.loading='lazy';img.decoding='async';img.src=smithWaiteImage(entry.card);img.alt=entry.card.name+' · Pamela Colman Smith, 1909';img.onerror=()=>{art.innerHTML=tarotCardSvg(entry.card,{back:false})};art.append(img)}
+   else art.innerHTML=tarotCardSvg(entry.card,{back:true});
    const label=document.createElement('span');label.className='tarot-card-position';label.textContent=entry.position;
    b.append(art,label);b.onclick=()=>{revealed.add(i);render()};buttons.append(b);
   });
@@ -892,9 +940,28 @@ function openProduct(p){const dlg=$('#productDialog');if(!dlg)return;
  body.append(make('div','overline',(currentLang==='en'?'OBJECT · ':'OBJECT · ')+p.id),make('h2','',productTitle(p)),make('p','muted',currentLang==='en'?p.title:(p.english||'')),make('div','detail-price',money(p.price)));
  const facts=make('div','detail-facts');for(const [label,value] of [[t('สถานะ','Status'),statusLabel(p.status)],[t('วัด / สำนัก','Temple / source'),p.temple],[t('พระเกจิ','Teacher'),p.teacher],[t('รุ่น','Edition'),p.edition],[t('เนื้อ','Material'),p.material],[t('รหัสสินค้า','Item ID'),p.id]]){if(!value)continue;const row=make('div');row.append(make('small','',label),make('b','',value));facts.append(row)}body.append(facts);
  if(p.description)body.append(make('p','muted',p.description));
+ const videoUrl=String(p.videoUrl||'').trim(),liveUrl=String(p.liveUrl||'').trim();
+ const safeVideo=s=>{try{const u=new URL(s);return u.protocol==='https:'?u:null}catch{return null}};
+ const video=safeVideo(videoUrl),live=safeVideo(liveUrl);
+ if(video){
+  const youtube=(video.hostname==='youtube.com'||video.hostname==='www.youtube.com')?video.searchParams.get('v'):(video.hostname==='youtu.be'?video.pathname.slice(1):null);
+  if(youtube&&/^[A-Za-z0-9_-]{11}$/.test(youtube)){const emb=make('iframe','sian-product-video');emb.src='https://www.youtube-nocookie.com/embed/'+youtube;emb.loading='lazy';emb.title='Amulet walkthrough';emb.allow='encrypted-media; picture-in-picture';body.append(emb)}
+  else{const link=make('a','sian-video-link',t('▶ วิดีโออธิบายพระ','▶ Watch amulet walkthrough'));link.href=video.href;link.target='_blank';link.rel='noopener';body.append(link)}
+ }
+ if(live){const link=make('a','sian-video-link',t('● ถ่ายทอดสด / ไลฟ์ย้อนหลัง','● Live stream / replay'));link.href=live.href;link.target='_blank';link.rel='noopener';body.append(link)}
+
  const ask=make('button','btn btn-gold',t('สอบถามผ่าน LINE ↗','Ask through LINE ↗'));ask.type='button';ask.disabled=p.status==='sold';ask.onclick=()=>enquire(p);body.append(ask);
  const share=make('button','btn btn-link',t('แชร์ลิงก์สินค้า ↗','Copy product link ↗'));share.type='button';share.onclick=async()=>{const url=new URL(location.href);url.hash='item='+encodeURIComponent(p.id);try{await navigator.clipboard.writeText(url.href);notify(t('คัดลอกลิงก์สินค้าแล้ว','Product link copied.'))}catch{window.prompt(t('ลิงก์สินค้า','Product link'),url.href)}};body.append(share);
  const card=make('button','btn btn-link',t('⬇ ภาพแชร์สินค้า','⬇ Product image'));card.type='button';card.onclick=async()=>{try{await downloadProductCard(p,CONFIG.brand,p.imagePath||null);notify(t('บันทึกภาพแชร์สินค้าแล้ว','Product card saved.'))}catch(err){notify(err.message)}};body.append(card);
+ const shareTools=make('div','sian-social-row');
+ const page=new URL(location.href);page.hash='item='+encodeURIComponent(p.id);
+ const captionTh=()=>[p.title,p.edition,p.temple,p.material,p.description,'ราคา '+money(p.price),'สอบถาม '+(CONFIG.lineId||'LINE'),page.href].filter(Boolean).join('\n');
+ const socialButton=(label,fn)=>{const btn=make('button','btn btn-link',label);btn.type='button';btn.onclick=fn;shareTools.append(btn)};
+ const copyText=async text=>{try{await navigator.clipboard.writeText(text);notify(t('คัดลอกแล้ว ✓','Copied ✓'))}catch{window.prompt('Copy / คัดลอก',text)}};
+ socialButton(t('คัดลอกแคปชัน','Copy post caption'),()=>copyText(captionTh()));
+ socialButton(t('แชร์ผ่านแอป','Share via apps'),async()=>{const data={title:p.title,text:captionTh(),url:page.href};try{if(navigator.share)await navigator.share(data);else await copyText(data.text)}catch{}});
+ socialButton(t('แชร์ LINE','Share to LINE'),()=>window.open('https://social-plugins.line.me/lineit/share?url='+encodeURIComponent(page.href),'_blank','noopener'));
+ const hint=make('div','sian-social-label',t('ลิงก์ถาวรใช้ได้หลังเผยแพร่เว็บไซต์ร้าน','Product links become publicly shareable after deploying the merchant site'));shareTools.append(hint);body.append(shareTools);
  if(p.referenceImage&&!p.imagePath){
    const cr=make('div','reference-credit');cr.append(make('span','',t('ภาพจากคลัง Wichaa เพื่อแสดงชนิดเท่านั้น · ไม่ใช่พระของร้านนี้','Wichaa reference photograph illustrating the object type; NOT the listed seller item.')));
    const source=make('a','',` ${p.referenceAuthor||'Source'} · ${p.referenceLicense||'license'}`);source.href=p.referenceSource||'https://wichaa.net/amulets/';source.target='_blank';source.rel='noopener';cr.append(source);body.append(cr);
@@ -941,4 +1008,5 @@ start();
 return {};
 })();
 </script>
+<script src="./site-enhancements.js" defer></script>
 </body></html>
