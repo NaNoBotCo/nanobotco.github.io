@@ -1,0 +1,41 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Sian Studio 1.7 · Public Storefront Interactions QA</title><style>body{font:14px/1.5 system-ui;max-width:900px;margin:20px auto;padding:0 14px;background:#f4f5ee;color:#24352a}h1{font-size:25px}#status{font-weight:700;background:#fff;padding:12px;border-radius:8px}li{padding:7px 4px;border-bottom:1px solid #d1ddd2}.ok{color:#267043}.bad{color:#a93229}iframe{width:100%;height:350px;border:1px solid #d2dfd2}</style><h1>Storefront control regression</h1><p>Tests the published demo showroom in a same-origin iframe. Does not pay, send mail, or share data.</p><div id="status">Checking…</div><ol id="list"></ol><iframe src="./showroom.html?qa=showroom-v17" title="Storefront under test" id="site"></iframe>
+<script>
+(async()=>{
+const f=document.getElementById('site'),out=document.getElementById('list'),status=document.getElementById('status'),key='sian-lang',original=localStorage.getItem(key);
+let passed=0,failed=0;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const until=async(fn,timeout=13000)=>{let start=Date.now();while(Date.now()-start<timeout){try{const got=fn();if(got)return got}catch{}await sleep(120)}throw Error('Timeout '+String(fn).slice(0,60))};
+const check=(name,ok,extra='')=>{const li=document.createElement('li');li.className=ok?'ok':'bad';li.textContent=(ok?'✓ ':'✕ ')+name+(extra?' · '+extra:'');out.append(li);ok?passed++:failed++};
+try{
+ const doc=await until(()=>f.contentDocument?.querySelectorAll('.product-card').length>=4&&f.contentDocument);
+ const win=f.contentWindow,grid=()=>doc.querySelectorAll('.product-card');
+ check('Demo catalogue renders',grid().length>=4,String(grid().length)+' items');
+ const cat=doc.querySelector('.chips button[data-category="medal"]');cat.click();await sleep(170);
+ check('Category filtering changes product count',grid().length===2,String(grid().length)+' medal items');
+ const sort=doc.getElementById('sortSelect');sort.value='low';sort.dispatchEvent(new Event('change',{bubbles:true}));await sleep(150);
+ const lowPrice=grid()[0]?.querySelector('.product-price')?.textContent;
+ sort.value='high';sort.dispatchEvent(new Event('change',{bubbles:true}));await sleep(150);
+ const highPrice=grid()[0]?.querySelector('.product-price')?.textContent;
+ check('Low/High sorting changes product order',lowPrice!==highPrice,lowPrice+' then '+highPrice);
+ const more=grid()[0]?.querySelector('.product-actions button:last-child');
+ check('Each product has a More action',!!more);
+ more?.click();await sleep(150);
+ const dialog=doc.getElementById('productDialog');
+ check('More opens a real detail dialog',dialog?.open===true,'open='+String(dialog?.open));
+ if(dialog?.open){check('Detail contains product and social actions',!!doc.getElementById('productDetail')?.querySelector('.sian-social-row'));
+  doc.getElementById('closeProduct')?.click();await sleep(100);check('Close dismisses detail dialog',!dialog.open)}
+ const language=doc.getElementById('langEn');language?.click();await sleep(300);
+ check('English toggle changes actual headings',doc.documentElement.lang==='en'&&doc.querySelector('.hero-copy h1')?.textContent.includes('Meaningful'));
+ const search=doc.getElementById('searchInput');search.value='no-match-never';search.dispatchEvent(new Event('input',{bubbles:true}));await sleep(150);
+ check('Empty search displays explanatory message',grid().length===0&&!doc.getElementById('emptyProducts').hidden);
+ search.value='';search.dispatchEvent(new Event('input',{bubbles:true}));
+ check('Toy Pause control exists',!!doc.getElementById('toyPause'));
+ const pause=doc.getElementById('toyPause');if(pause){const before=pause.textContent;pause.click();await sleep(120);check('Toy pause toggles its state',pause.textContent!==before);pause.click()}
+ const shuffle=doc.getElementById('toyShuffle');check('Math toy shuffle exists',!!shuffle);
+ check('Fidget spinner has Spin/Brake controls',!!doc.getElementById('sianSpinStart')&&!!doc.getElementById('sianSpinStop'));
+ check('Three divination methods available',doc.querySelectorAll('[data-oracle-tab]').length>=3);
+ check('Newsletter contains email and consent controls',!!doc.getElementById('subscriberEmail')&&!!doc.getElementById('consent'));
+}catch(e){check('Test runtime',false,e.message)}
+finally{if(original===null)localStorage.removeItem(key);else localStorage.setItem(key,original);status.textContent=passed+' passed · '+failed+' failed';status.className=failed?'bad':'ok'}
+})();
+</script></html>
