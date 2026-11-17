@@ -1,6 +1,13 @@
 /* Sian Studio shared storefront enhancements v1.3. Vanilla JS, no dependencies. */
 (function(){
 "use strict";
+const style=document.createElement('style');
+style.textContent=[
+ '#collection.sian-card-overridden .product-card{background:var(--sian-card-custom)!important}',
+ '#newsletter.sian-card-overridden .newsletter-form{background:var(--sian-card-custom)!important}',
+ '#oracle.sian-card-overridden .oracle-welcome-card{background:var(--sian-card-custom)!important}'
+].join('');
+document.head.append(style);
 const data=document.getElementById('sianBuilderSiteConfig');
 let cfg={};
 try{cfg=data?JSON.parse(data.textContent):{}}catch(e){console.warn('Section configuration is invalid',e)}
@@ -57,11 +64,19 @@ if(sections){
       node.style.setProperty('color',st.text,'important');
       node.querySelectorAll('h1,h2,h3,p,small,.eyebrow,.muted').forEach(el=>el.style.setProperty('color',st.text,'important'));
     }
-    if(st.padding!==undefined){const px=Math.max(24,Math.min(140,+st.padding||68));node.style.paddingTop=px+'px';node.style.paddingBottom=px+'px'}
-    if(['left','center','right'].includes(st.align))node.style.textAlign=st.align;
+    if(st._customPadding&&st.padding!==undefined){const px=Math.max(24,Math.min(140,+st.padding||68));node.style.paddingTop=px+'px';node.style.paddingBottom=px+'px'}
+    if(st._customAlign&&['left','center','right'].includes(st.align))node.style.textAlign=st.align;
     const head=node.querySelector(x.type==='hero'?'.hero-copy h1':x.type==='collection'?'.section-head h2':x.type==='story'?'.story-copy h2':x.type==='toy'?'.kinetic-copy h2':x.type==='fidget'?'h2':x.type==='oracle'?'.oracle-hub-top h2':'h2');
     const sub=node.querySelector(x.type==='hero'?'.hero-lead':x.type==='collection'?'.section-head .muted':x.type==='story'?'#shopStory':x.type==='toy'?'.kinetic-copy .muted':x.type==='fidget'?'p':x.type==='oracle'?'.oracle-hub-top .muted':'p');
     
+    if(st._customWidth&&Number.isFinite(+st.width)&&+st.width>=540&&+st.width<=1600){
+     const content=node.classList.contains('outer')?node:node.querySelector('.outer');
+     if(content)content.style.setProperty('max-width',st.width+'px','important');
+    }
+    if(st._customCard&&/^#[a-f0-9]{6}$/i.test(st.card||'')){
+     node.style.setProperty('--sian-card-custom',st.card);
+     node.classList.add('sian-card-overridden');
+    }
     // Component-level styling: optional and isolated to the chosen section.
     if(/^#[a-f0-9]{6}$/i.test(st.headingColor||'')&&head){
      head.style.setProperty('color',st.headingColor,'important');
@@ -69,10 +84,10 @@ if(sections){
     }
     if(st._colorText&&/^#[a-f0-9]{6}$/i.test(st.text||'')&&sub)sub.style.setProperty('color',st.text,'important');
     if(Number.isFinite(+st.headingSize)&&+st.headingSize>=22&&+st.headingSize<=84&&head)head.style.setProperty('font-size',st.headingSize+'px','important');
-    if(Number.isFinite(+st.buttonRadius)&&+st.buttonRadius>=0&&+st.buttonRadius<=40){
+    if(st._customButtonRadius&&Number.isFinite(+st.buttonRadius)&&+st.buttonRadius>=0&&+st.buttonRadius<=40){
      node.querySelectorAll('.btn,button:not(.sian-edit-spot)').forEach(b=>b.style.setProperty('border-radius',st.buttonRadius+'px','important'));
     }
-    if(Number.isFinite(+st.radius)&&+st.radius>=0&&+st.radius<=50)node.querySelectorAll('.hero-image,.product-card').forEach(el=>el.style.borderRadius=st.radius+'px');
+    if(st._customRadius&&Number.isFinite(+st.radius)&&+st.radius>=0&&+st.radius<=50)node.querySelectorAll('.hero-image,.product-card').forEach(el=>el.style.setProperty('border-radius',st.radius+'px','important'));
     if(st.decoration==='lines')node.style.backgroundImage='repeating-linear-gradient(135deg,transparent 0 27px,rgba(123,98,58,.055) 28px 29px)';
     if(st.decoration==='dots'){node.style.backgroundImage='radial-gradient(circle,rgba(111,91,61,.10) 1px,transparent 1.5px)';node.style.backgroundSize='23px 23px'}
 const applyCopy=()=>{
