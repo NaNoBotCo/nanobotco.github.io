@@ -34,7 +34,7 @@ function oneItemPage(p,base){
  const primary=p.imagePath?(p.imagePath.startsWith('https:')?p.imagePath:base+'/'+p.imagePath):'',secondary=p.backImagePath?(p.backImagePath.startsWith('https:')?p.backImagePath:base+'/'+p.backImagePath):'';
  const asset=path=>path?(path.startsWith('https:')?path:'../'+path):'';
  const images=[primary,secondary].filter(Boolean),hasBase=base!=='';
- const offer=Number(p.price)>0?{offers:{'@type':'Offer',priceCurrency:'THB',price:Number(p.price),availability:p.status==='sold'?'https://schema.org/SoldOut':p.status==='reserved'?'https://schema.org/PreOrder':'https://schema.org/InStock',url:canonical,seller:{'@type':'Organization',name:shop}}}:{};
+ const offer=Number(p.price)>0?{offers:{'@type':'Offer',priceCurrency:'THB',price:Number(p.price),availability:p.status==='sold'?'https://schema.org/SoldOut':p.status==='reserved'?'https://schema.org/OutOfStock':'https://schema.org/InStock',url:canonical,seller:{'@type':'Organization',name:shop}}}:{};
  const product={'@context':'https://schema.org','@type':'Product',name:title,sku:clean(p.sku||p.id),image:images,description,material:clean(p.material),category:clean(p.category),url:canonical,...offer};
  const ld=hasBase?'<script type="application/ld+json">'+safeJSON(product)+'</'+'script>':'';
  const head=hasBase?'<link rel="canonical" href="'+escaped(canonical)+'"><meta property="og:url" content="'+escaped(canonical)+'"><meta property="og:type" content="product"><meta property="og:title" content="'+escaped(title)+'"><meta property="og:description" content="'+escaped(description)+'"><meta name="twitter:card" content="summary_large_image">':'<meta name="robots" content="noindex,nofollow">';
