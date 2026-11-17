@@ -113,7 +113,13 @@ async function exportBundle(){
    if(!artCss.includes('data-sian-art'))throw Error('Not a recognized art direction stylesheet');
   }catch(error){notice('The selected design cannot be packaged: '+error.message);return}
  }
- const files=[{name:'index.html',content:index},{name:'site-enhancements.js',content:enhancements},...(artCss?[{name:'art-directions.css',content:artCss}]:[]),...prep.files,
+ let readability='';
+ try{
+  const resp=await fetch('./section-readability.js',{cache:'no-cache'});
+  if(!resp.ok)throw Error('HTTP '+resp.status);
+  readability=await resp.text();
+ }catch(error){notice('Cannot include contrast protection in website ZIP: '+error.message);return}
+ const files=[{name:'index.html',content:index},{name:'site-enhancements.js',content:enhancements},{name:'section-readability.js',content:readability},...(artCss?[{name:'art-directions.css',content:artCss}]:[]),...prep.files,
  ...prep.products.map(p=>({name:'items/'+fileSlug(p)+'.html',content:oneItemPage(p,base)})),
  {name:'product-feed.json',content:JSON.stringify(siteManifest(prep.products,base),null,2)},
  {name:'merchant-center-feed.csv',content:merchantCsv(prep.products,base)},
