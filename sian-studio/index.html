@@ -2,7 +2,7 @@
 <html lang="th"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#142523">
-<title>Sian Studio — สร้างเว็บร้านพระเครื่อง · Live Site Builder v1.4</title>
+<title>Sian Studio — สร้างเว็บร้านพระเครื่อง · Live Site Builder v1.5</title>
 <style>
 :root{--ink:#182b29;--leaf:#2b5149;--gold:#bc8851;--paper:#f8f5ee;--mute:#6b7872;--edge:#dce2da;--light:#edf1e8}
 *{box-sizing:border-box}
@@ -81,7 +81,7 @@ code{word-break:break-all;background:#eff1ea;padding:2px 4px;border-radius:3px;f
 [hidden]{display:none!important}
 @media(max-width:980px){.layout{grid-template-columns:1fr}.editor{max-height:none;overflow:visible;border-right:0}.preview-area{padding:0 10px 15px}.frame{min-height:600px}.frame iframe{min-height:600px}.pane{padding-bottom:30px}}
 @media(max-width:500px){.top{padding:11px}.intro{padding:18px}.intro h1{font-size:22px}.pane{padding:17px 16px 24px}.steps{gap:1px}.step{font-size:11px;padding:8px 4px}.top-actions .btn{padding:7px 8px;font-size:11px}}
-</style></head>
+</style><link rel="stylesheet" href="./style-studio.css?v=20261117-v15"></head>
 <body>
 <header class="top"><div class="logo"><span class="logo-mark">✺</span><div>SIAN STUDIO<small>สร้างเว็บร้านพระเครื่อง · Site builder</small></div></div><div class="top-actions"><button class="btn btn-small" id="saveProjectTop">↓ บันทึกโปรเจกต์</button><button class="btn btn-gold" id="downloadSiteTop">↓ ส่งออกเว็บไซต์</button></div></header>
 <main class="layout">
@@ -135,7 +135,7 @@ code{word-break:break-all;background:#eff1ea;padding:2px 4px;border-radius:3px;f
 <div class="note">An exported ZIP is not automatically public. The builder does not upload customer photos or merchant inventory to any server. Never share its editable JSON backup publicly. Use a hosting account to publish the exported ZIP contents.</div>
 <div class="row-buttons"><button class="btn" id="resetAll">Start another shop / เริ่มร้านใหม่</button></div>
 </section>
-<div class="foot-note">Sian Studio v1.4 · Drafts are browser-local. Export an editable backup before changing device or clearing data.<br><a href="https://github.com/NaNoBotCo/nanobotco.github.io/tree/main/sian-studio" target="_blank" rel="noopener">View source on GitHub ↗</a></div>
+<div class="foot-note">Sian Studio v1.5 · Drafts are browser-local. Export an editable backup before changing device or clearing data.<br><a href="https://github.com/NaNoBotCo/nanobotco.github.io/tree/main/sian-studio" target="_blank" rel="noopener">View source on GitHub ↗</a></div>
 </aside>
 <section class="preview-area" aria-label="Live storefront preview"><div class="preview-head"><div><strong>● Live site · click ✎ to edit / คลิกแก้ไขได้เลย</strong><br><small id="previewLabel">Editing a draft · not published</small><div class="preview-guide">Tap a product to inspect both sides · เปิดดูสินค้าทั้งสองด้าน</div></div><div class="widths" role="group" aria-label="Preview device"><button class="active" data-width="desktop">Desktop</button><button data-width="tablet">Tablet</button><button data-width="phone">Phone</button></div></div><div class="frame-shell"><div class="frame" id="frame"><iframe id="preview" title="Amulet storefront preview"></iframe></div></div><div class="status" id="status" role="status">Loading storefront…</div></section>
 </main>
@@ -246,7 +246,7 @@ function wire(){
  $('#saveProjectTop').onclick=$('#saveProject').onclick=saveProject;
  $('#downloadSiteTop').onclick=$('#downloadSite').onclick=downloadSite;
  $('#importBtn').onclick=()=>$('#importProject').click();
- $('#importProject').onchange=async e=>{try{const j=JSON.parse(await e.target.files[0].text());if(j.format!=='sian-builder-project-v1'||!j.state||!Array.isArray(j.state.products))throw Error('bad format');state=j.state;selected=-1;syncInputs();window.SianStudio?.refresh?.();redrawProducts();change();notice('✓ Project restored')}catch{notice('Import failed. Please choose a Sian Studio project JSON file.')};e.target.value=''};
+ $('#importProject').onchange=async e=>{try{const j=JSON.parse(await e.target.files[0].text());if(j.format!=='sian-builder-project-v1'||!j.state||!Array.isArray(j.state.products))throw Error('bad format');state=j.state;selected=-1;syncInputs();window.SianStudio?.refresh?.();window.SianStyle?.refresh?.();redrawProducts();change();notice('✓ Project restored')}catch{notice('Import failed. Please choose a Sian Studio project JSON file.')};e.target.value=''};
  $('#resetAll').onclick=()=>{if(confirm('Start another shop? This clears the locally saved draft. Export it first if needed.')){localStorage.removeItem(STORAGE);state={config:structuredClone(defaultConfig),products:structuredClone(defaultProducts),theme:'heritage',features:{tarot:true,iching:true,kaucim:true,math:true,newsletter:true}};selected=-1;syncInputs();redrawProducts();change();showStep('shop')}};
 }
 function syncInputs(){
@@ -275,8 +275,10 @@ if(new URLSearchParams(location.search).has('qa')){
  window.addEventListener('unhandledrejection',event=>window.__sianErrors.push(String(event.reason||'rejection')));
 }
 </script>
-<script src="./builder-controls.js?v=20261117-14acd-textarea"></script>
+<script src="./builder-controls.js?v=20261117-v15-inline"></script>
+<script src="./style-studio.js?v=20261117-v15"></script>
 <script src="./builder-publisher.js?v=20261117-uxfix-c233"></script>
 <script src="./social-assets.js?v=20261117-uxfix-c233"></script>
 <script src="./visual-editor.js?v=20261117-14acd-textarea"></script>
+<script src="./wysiwyg-studio.js?v=20261117-v15"></script>
 </body></html>
