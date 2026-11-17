@@ -46,7 +46,10 @@ function audit(id,design={}){
 function cssVars(id,design){
  const p=derive(id,design);if(!p)return '';
  const roleMap={bg:'bg',fg:'fg',surface:'surface',surfaceText:'surface-fg',nav:'nav',navText:'navfg',accent:'accent',accentText:'accentfg',muted:'muted',panel:'panel',panelText:'panelfg',line:'line',image:'image',story:'story',storyText:'storyfg',accentAlt:'accent2'};
- return ':root{'+Object.entries(roleMap).map(([key,name])=>'--ad-'+name+':'+p[key]).join(';')+'}';
+ const buttonStyle=design.buttonStyle||'solid';
+ const action=buttonStyle==='outline'?{bg:'transparent',fg:p.fg,border:p.accent}:
+  buttonStyle==='soft'?{bg:p.surface,fg:p.surfaceText,border:p.line}:{bg:p.accent,fg:p.accentText,border:p.accent};
+ return ':root{'+Object.entries(roleMap).map(([key,name])=>'--ad-'+name+':'+p[key]).join(';')+';--ad-action-bg:'+action.bg+';--ad-action-fg:'+action.fg+';--ad-action-border:'+action.border+'}';
 }
 const old=replaceStorefront;
 replaceStorefront=function(){
