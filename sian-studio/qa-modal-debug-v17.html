@@ -1,0 +1,16 @@
+<!doctype html><html><meta charset="utf-8"><title>Sian Studio product modal diagnostic</title><style>body{font:14px system-ui;padding:24px}pre{white-space:pre-wrap;background:#f0f2ed;padding:16px}iframe{width:100%;height:400px}</style><h1>Product detail dialog diagnostic</h1><pre id="result">Loading…</pre><iframe id="site" src="./showroom.html?diag=product-modal-v17"></iframe>
+<script>
+(async()=>{
+const f=document.getElementById('site'),out=document.getElementById('result'),sleep=ms=>new Promise(r=>setTimeout(r,ms));
+for(let i=0;i<75;i++){if(f.contentDocument?.querySelector('.product-actions button:last-child'))break;await sleep(120)}
+const d=f.contentDocument,w=f.contentWindow,errors=[],dlg=d.getElementById('productDialog'),btn=d.querySelector('.product-actions button:last-child');
+w.addEventListener('error',e=>errors.push({type:'error',message:e.message,filename:e.filename,line:e.lineno}));
+w.addEventListener('unhandledrejection',e=>errors.push({type:'rejection',message:String(e.reason)}));
+const state={button:btn?.textContent,onclick:typeof btn?.onclick,detailExists:!!dlg,dialogIsNative:dlg instanceof w.HTMLDialogElement,openBefore:dlg?.open};
+try{btn?.click();await sleep(400);state.openAfterClick=dlg?.open;state.detailContentAfterClick=d.getElementById('productDetail')?.childElementCount}catch(e){state.clickError=e.stack||e.message}
+state.errors=errors;
+if(!dlg.open)try{dlg.showModal();await sleep(100);state.openWithDirectShowModal=dlg.open}catch(e){state.directError=e.stack||e.message}
+try{dlg.close()}catch{}
+out.textContent=JSON.stringify(state,null,2);
+})();
+</script></html>
