@@ -286,7 +286,7 @@ function styleLook(){
 function sectionPreset(section,presetId){
  const p=SECTION_PRESETS.find(x=>x.id===presetId);if(!p)return;
  const sec=window.SianStudio?.sectionOf?.(section.id);if(!sec)return;
- sec.style={...sec.style,bg:p.bg,card:p.card,text:p.text,headingColor:p.headingColor};
+ sec.style={...sec.style,bg:p.bg,card:p.card,text:p.text,headingColor:p.headingColor,_colorBg:true,_colorText:true};
  window.SianStudio?.selectSection?.(sec.id,'',{skipFocus:true});change();
 }
 function decorateSectionEditor(box,section){
