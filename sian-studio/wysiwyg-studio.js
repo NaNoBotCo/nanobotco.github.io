@@ -57,8 +57,9 @@ function chooseSection(ref,key,{skip=false}={}){
 function install(){
  let doc;
  try{doc=frame.contentDocument;if(!doc?.body)return}catch{return}
- if(doc.querySelector('#sian-wys-css'))return;
- const style=doc.createElement('style');style.id='sian-wys-css';
+ if(!doc.querySelector('.hero-copy h1')){setTimeout(install,350);return}
+ if(doc.querySelector('#sian-wys-css')&&doc.querySelector('.sian-wys-hero-line'))return;
+ const style=doc.querySelector('#sian-wys-css')||doc.createElement('style');style.id='sian-wys-css';
  style.textContent=[
 '.sian-wys-text{cursor:text!important;border-radius:4px;outline:2px solid transparent;outline-offset:4px;transition:outline .1s}',
 '.sian-wys-text:hover{outline:2px dashed #48a176!important;background:rgba(220,244,219,.14)!important}',
@@ -71,8 +72,8 @@ function install(){
  doc.head.append(style);
  const lang=(doc.documentElement.dataset.lang||doc.documentElement.lang||'th').toLowerCase()==='en'?'En':'Th';
  function edit(el,ref,key,{max=600,focusField=true}={}){
-  if(!el)return;
-  el.classList.add('sian-wys-text');el.dataset.sianText=key;el.tabIndex=0;
+  if(!el||el.dataset.sianWysBound==='1')return;
+  el.dataset.sianWysBound='1';el.classList.add('sian-wys-text');el.dataset.sianText=key;el.tabIndex=0;
   el.setAttribute('aria-label','Click to edit · '+key);
   el.addEventListener('click',e=>{
    if(!inEditMode()||e.target.closest('.sian-edit-spot'))return;
@@ -164,9 +165,9 @@ function install(){
  },true);
  doc.documentElement.classList.toggle('sian-builder-edit-off',!inEditMode());
 }
-frame.addEventListener('load',()=>setTimeout(install,160));
+frame.addEventListener('load',()=>{setTimeout(install,160);setTimeout(install,600);setTimeout(install,1800)});
 const toggle=document.querySelector('.sian-edit-toggle input');
 toggle?.addEventListener('change',()=>{try{frame.contentDocument.documentElement.classList.toggle('sian-builder-edit-off',!toggle.checked)}catch{}});
-if(frame.contentDocument?.readyState==='complete')setTimeout(install,160);
+if(frame.contentDocument?.readyState==='complete'){setTimeout(install,160);setTimeout(install,1000)}
 window.SianWYSIWYG={undo,redo,install,getSelected:()=>selectedSection};
 })();
