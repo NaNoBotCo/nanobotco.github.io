@@ -51,7 +51,7 @@ function chooseSection(ref,key,{skip=false}={}){
  selectedSection=ref;
  if(ref==='identity'){window.showStep?.('shop');return}
  if(String(ref).startsWith('product:')){window.showStep?.('products');return}
- if(!skip)api()?.selectSection?.(ref,key,{skipFocus:true});
+ if(!skip)api()?.selectSection?.(ref,key,{skipFocus:true,skipScroll:true});
  window.SianStyle?.inspect?.(ref,{quiet:true});
 }
 function install(){
