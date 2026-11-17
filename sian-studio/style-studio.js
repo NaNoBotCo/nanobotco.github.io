@@ -138,7 +138,19 @@ function decorateSectionEditor(box,section){
   input.oninput=()=>{section.style[key]=type==='range'?Number(input.value):input.value;if(type==='range')val.textContent=input.value;change()};advanced.append(f);
  }
  const divider=[...box.querySelectorAll('h3')].find(x=>x.textContent.includes('Section-specific style'));
- if(divider)divider.before(quick);else box.append(quick);
+ if(divider){
+  divider.before(quick);
+  const details=document.createElement('details');details.className='sian-style-detail';
+  const sum=document.createElement('summary');sum.textContent='⚙ Exact spacing, widths & section colors · สำหรับขั้นสูง';
+  details.append(sum);
+  while(divider.nextSibling)details.append(divider.nextSibling);
+  details.insertBefore(divider,sum.nextSibling);
+  quick.after(details);
+ }else box.append(quick);
+ const reset=document.createElement('button');reset.type='button';reset.className='btn';
+ reset.textContent='↺ Reset this section’s look';
+ reset.onclick=()=>{const sec=window.SianStudio?.sectionOf?.(section.id);if(!sec)return;sec.style={};window.SianStudio.selectSection(sec.id,'',{skipFocus:true});change()};
+ quick.append(reset);
 }
 function inspect(ref,{quiet=false}={}){
  const api=window.SianStudio;if(!api?.sectionOf(ref))return;
