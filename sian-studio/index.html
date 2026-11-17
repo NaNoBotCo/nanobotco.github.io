@@ -2,7 +2,7 @@
 <html lang="th"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#142523">
-<title>Sian Studio — สร้างเว็บร้านพระเครื่อง · Live Site Builder v1.3</title>
+<title>Sian Studio — สร้างเว็บร้านพระเครื่อง · Live Site Builder v1.4</title>
 <style>
 :root{--ink:#182b29;--leaf:#2b5149;--gold:#bc8851;--paper:#f8f5ee;--mute:#6b7872;--edge:#dce2da;--light:#edf1e8}
 *{box-sizing:border-box}
@@ -135,9 +135,9 @@ code{word-break:break-all;background:#eff1ea;padding:2px 4px;border-radius:3px;f
 <div class="note">An exported ZIP is not automatically public. The builder does not upload customer photos or merchant inventory to any server. Never share its editable JSON backup publicly. Use a hosting account to publish the exported ZIP contents.</div>
 <div class="row-buttons"><button class="btn" id="resetAll">Start another shop / เริ่มร้านใหม่</button></div>
 </section>
-<div class="foot-note">Sian Studio v1.3 · Drafts are browser-local. Export an editable backup before changing device or clearing data.<br><a href="https://github.com/NaNoBotCo/nanobotco.github.io/tree/main/sian-studio" target="_blank" rel="noopener">View source on GitHub ↗</a></div>
+<div class="foot-note">Sian Studio v1.4 · Drafts are browser-local. Export an editable backup before changing device or clearing data.<br><a href="https://github.com/NaNoBotCo/nanobotco.github.io/tree/main/sian-studio" target="_blank" rel="noopener">View source on GitHub ↗</a></div>
 </aside>
-<section class="preview-area" aria-label="Live storefront preview"><div class="preview-head"><div><strong>● ตัวอย่างเว็บไซต์จริง / Live preview</strong><br><small id="previewLabel">Editing a draft · not published</small><div class="preview-guide">Tap a product to inspect both sides · เปิดดูสินค้าทั้งสองด้าน</div></div><div class="widths" role="group" aria-label="Preview device"><button class="active" data-width="desktop">Desktop</button><button data-width="tablet">Tablet</button><button data-width="phone">Phone</button></div></div><div class="frame-shell"><div class="frame" id="frame"><iframe id="preview" title="Amulet storefront preview"></iframe></div></div><div class="status" id="status" role="status">Loading storefront…</div></section>
+<section class="preview-area" aria-label="Live storefront preview"><div class="preview-head"><div><strong>● Live site · click ✎ to edit / คลิกแก้ไขได้เลย</strong><br><small id="previewLabel">Editing a draft · not published</small><div class="preview-guide">Tap a product to inspect both sides · เปิดดูสินค้าทั้งสองด้าน</div></div><div class="widths" role="group" aria-label="Preview device"><button class="active" data-width="desktop">Desktop</button><button data-width="tablet">Tablet</button><button data-width="phone">Phone</button></div></div><div class="frame-shell"><div class="frame" id="frame"><iframe id="preview" title="Amulet storefront preview"></iframe></div></div><div class="status" id="status" role="status">Loading storefront…</div></section>
 </main>
 <script>
 'use strict';
@@ -271,4 +271,5 @@ boot();
 <script src="./builder-controls.js"></script>
 <script src="./builder-publisher.js"></script>
 <script src="./social-assets.js"></script>
+<script src="./visual-editor.js"></script>
 </body></html>
