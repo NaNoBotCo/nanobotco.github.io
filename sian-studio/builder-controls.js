@@ -110,7 +110,7 @@ function moveSection(i,d){const j=i+d;if(j<0||j>=state.sections.length)return;st
 function addInput(parent,label,key,value,kind,onChange){
  const f=document.createElement('label');f.className='field';const title=document.createElement('span');title.textContent=label;f.append(title);
  const input=document.createElement(kind==='textarea'?'textarea':'input');
- if(kind==='color')input.type='color';else if(kind==='number')input.type='number';else if(kind==='url')input.type='url';else if(kind==='checkbox')input.type='checkbox';else input.type='text';
+ if(kind==='textarea'){input.rows=3;}else if(kind==='color')input.type='color';else if(kind==='number')input.type='number';else if(kind==='url')input.type='url';else if(kind==='checkbox')input.type='checkbox';else input.type='text';
  if(kind==='checkbox')input.checked=Boolean(value);else input.value=value??'';
  input.dataset.sectionKey=key;
  input.addEventListener(kind==='checkbox'?'change':'input',()=>{onChange(kind==='checkbox'?input.checked:kind==='number'?Number(input.value):input.value);change()});
