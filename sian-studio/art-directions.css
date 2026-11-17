@@ -1,7 +1,7 @@
 /* SIAN STUDIO 1.6 — EIGHT INDEPENDENT ART DIRECTIONS.
    Scope: ONLY merchant site with data-sian-art; no builder styles.
    All semantic text colors inherit contrast-tested art-direction tokens. */
-html[data-sian-art]{--ad-bg:#fff;--ad-fg:#111;--ad-surface:#fff;--ad-surface-fg:#111;--ad-nav:#111;--ad-navfg:#fff;--ad-accent:#333;--ad-accentfg:#fff;--ad-muted:#444;--ad-panel:#eee;--ad-panelfg:#222;--ad-line:#555;--ad-image:#ddd;--ad-story:#222;--ad-storyfg:#fff;--ad-accent2:#aaa;color-scheme:light}
+/* Contrast-verified tokens are injected into :root by art-directions.js per shop. */
 html[data-sian-art] body{background:var(--ad-bg)!important;color:var(--ad-fg)!important;scrollbar-color:var(--ad-line) var(--ad-bg)}
 html[data-sian-art] .header{background:var(--ad-nav)!important;color:var(--ad-navfg)!important;border-bottom:2px solid var(--ad-line)!important;backdrop-filter:none!important}
 html[data-sian-art] .header :is(.brand,.brand b,.brand small,nav a,.knowledge-link,.nav-studio,.brand-mark){color:var(--ad-navfg)!important}
