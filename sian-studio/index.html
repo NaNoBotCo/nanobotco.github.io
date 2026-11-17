@@ -2,7 +2,7 @@
 <html lang="th"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#142523">
-<title>Sian Studio — สร้างเว็บร้านพระเครื่อง · Live Site Builder</title>
+<title>Sian Studio — สร้างเว็บร้านพระเครื่อง · Live Site Builder v1.2</title>
 <style>
 :root{--ink:#182b29;--leaf:#2b5149;--gold:#bc8851;--paper:#f8f5ee;--mute:#6b7872;--edge:#dce2da;--light:#edf1e8}
 *{box-sizing:border-box}
@@ -72,12 +72,18 @@ a{color:var(--leaf)}
 .publish-card p{font-size:13px;margin:0 0 10px}
 code{word-break:break-all;background:#eff1ea;padding:2px 4px;border-radius:3px;font-size:12px}
 .foot-note{font-size:12px;color:#78857a;padding:12px 23px}
+.readiness{border:1px solid #d9dfd3;border-radius:10px;padding:13px;background:#f9faf7;margin:13px 0}.readiness strong{display:block;margin-bottom:6px}.readiness ul{list-style:none;margin:6px 0 0;padding:0}.readiness li{font-size:12px;display:flex;gap:8px;padding:4px 0}.readiness .ok{color:#28644d}.readiness .todo{color:#9b6228}
+.mini-link{display:inline-block;margin-top:7px;font-size:12px;font-weight:700}.hint{font-size:12px;color:#677a6b;margin:-8px 0 12px}
+.pill{display:inline-flex;align-items:center;gap:5px;background:#e2eee1;color:#31563e;border-radius:99px;padding:3px 9px;font-size:11px;font-weight:750;margin-top:8px}
+.preview-guide{font-size:12px;color:#596c60;margin-bottom:2px}
+.print-hide{display:none}
+
 [hidden]{display:none!important}
 @media(max-width:980px){.layout{grid-template-columns:1fr}.editor{max-height:none;overflow:visible;border-right:0}.preview-area{padding:0 10px 15px}.frame{min-height:600px}.frame iframe{min-height:600px}.pane{padding-bottom:30px}}
 @media(max-width:500px){.top{padding:11px}.intro{padding:18px}.intro h1{font-size:22px}.pane{padding:17px 16px 24px}.steps{gap:1px}.step{font-size:11px;padding:8px 4px}.top-actions .btn{padding:7px 8px;font-size:11px}}
 </style></head>
 <body>
-<header class="top"><div class="logo"><span class="logo-mark">✺</span><div>SIAN STUDIO<small>สร้างเว็บร้านพระเครื่อง · Site builder</small></div></div><div class="top-actions"><button class="btn btn-small" id="saveProjectTop">↓ บันทึกโปรเจกต์</button><button class="btn btn-gold" id="downloadSiteTop">↓ ดาวน์โหลดเว็บไซต์</button></div></header>
+<header class="top"><div class="logo"><span class="logo-mark">✺</span><div>SIAN STUDIO<small>สร้างเว็บร้านพระเครื่อง · Site builder</small></div></div><div class="top-actions"><button class="btn btn-small" id="saveProjectTop">↓ บันทึกโปรเจกต์</button><button class="btn btn-gold" id="downloadSiteTop">↓ ส่งออกเว็บไซต์</button></div></header>
 <main class="layout">
 <aside class="editor" aria-label="Website builder">
 <div class="intro"><div class="over">LIVE BUILD · สร้างไป ดูไป</div><h1>สร้างเว็บร้านพระเครื่อง<br>ต่อหน้าลูกค้า</h1><p>ใส่ชื่อร้านและรูปพระ ดูผลด้านขวาทันที บันทึกงานไว้ในเครื่องนี้อัตโนมัติ · Edit shop details and see the website change.</p></div>
@@ -94,7 +100,9 @@ code{word-break:break-all;background:#eff1ea;padding:2px 4px;border-radius:3px;f
 <section class="pane" id="pane-products"><h2>02 · พระเครื่อง / Collection</h2><p class="help">เพิ่มรายการจริงพร้อมภาพจากกล้องโทรศัพท์ · Add an item and photograph it on your phone.</p>
 <div id="productList"></div><div class="product-tools"><button class="btn btn-dark" id="addProduct">＋ เพิ่มพระ / Add</button><button class="btn" id="clearDemo">ลบตัวอย่าง / Clear samples</button></div>
 <div id="itemEditor" class="item-editor" hidden><h3 id="itemHeading">Edit product</h3>
-<div class="picbox"><img id="pPreview" alt="Product photo preview"><label style="flex:1;font-size:12px">📷 ถ่ายภาพ / Photo<input id="pPhotoFile" type="file" accept="image/*" capture="environment"></label></div>
+<div class="picbox"><img id="pPreview" alt="Front of amulet"><label style="flex:1;font-size:12px">📷 ถ่ายภาพด้านหน้า / Front photo<input id="pPhotoFile" type="file" accept="image/*" capture="environment"></label></div>
+<div class="picbox"><img id="pBackPreview" alt="Back of amulet"><label style="flex:1;font-size:12px">📷 ถ่ายภาพด้านหลัง / Back photo<input id="pBackPhotoFile" type="file" accept="image/*" capture="environment"></label></div>
+<div class="hint">Photos are resized on your device before saving. Use the real amulet, not a reference image.</div>
 <label class="field"><span>ชื่อพระ · Item name</span><input id="pTitle" maxlength="100"></label>
 <label class="field"><span>English title</span><input id="pEnglish" maxlength="100"></label>
 <div class="inline"><label class="field"><span>ราคา (฿) · Price</span><input id="pPrice" type="number" min="0" step="1"></label><label class="field"><span>สถานะ · Status</span><select id="pStatus"><option value="available">พร้อมขาย · Available</option><option value="reserved">จองแล้ว · Reserved</option><option value="sold">ขายแล้ว · Sold</option></select></label></div>
@@ -102,6 +110,8 @@ code{word-break:break-all;background:#eff1ea;padding:2px 4px;border-radius:3px;f
 <label class="field"><span>วัด / สำนัก · Temple or source</span><input id="pTemple" maxlength="120"></label>
 <label class="field"><span>รุ่น · Edition</span><input id="pEdition" maxlength="120"></label>
 <label class="field"><span>เนื้อ · Material</span><input id="pMaterial" maxlength="120"></label>
+<label class="field"><span>ข้อมูลเพิ่มเติม · Provenance / Details</span><textarea id="pDescription" maxlength="900" placeholder="History, condition, provenance, measurements…"></textarea></label>
+<div class="row-buttons"><button class="btn" id="removePhotos">Clear photos</button></div>
 <div class="row-buttons"><button class="btn" id="productUp">↑ ก่อน</button><button class="btn" id="productDown">↓ หลัง</button><button class="btn" id="deleteProduct">ลบรายการ</button></div>
 </div><div class="row-buttons"><button class="btn btn-dark" data-next="look">ถัดไป · เลือกหน้าตา →</button></div></section>
 <section class="pane" id="pane-look"><h2>03 · หน้าตา / Appearance</h2><p class="help">Three curated looks. Avoid dozens of layout decisions during a live sale.</p>
@@ -114,18 +124,20 @@ code{word-break:break-all;background:#eff1ea;padding:2px 4px;border-radius:3px;f
 <label class="switch-row">⟡ เซียมซี · Fortune stick <input type="checkbox" data-feature="kaucim" checked></label>
 <label class="switch-row">✺ ของเล่นคณิต · Kinetic mathematics <input type="checkbox" data-feature="math" checked></label>
 <label class="switch-row">✉ ข่าวสาร · Newsletter demo <input type="checkbox" data-feature="newsletter" checked></label>
-<div class="note">The Tarot contains 78 cards. The I Ching instrument demonstrates six-line casting; it is not a full canonical translation. Newsletter subscription remains demo-only without a configured backend.</div>
+<div class="hint">All optional widgets are in the public showroom; disable them to keep the dealer site focused on inventory.</div><div class="note">The Tarot contains 78 cards. The I Ching instrument demonstrates six-line casting; it is not a full canonical translation. Newsletter subscription remains demo-only without a configured backend.</div>
 <div class="row-buttons"><button class="btn btn-dark" data-next="publish">ถัดไป · ดูการเผยแพร่ →</button></div></section>
 <section class="pane" id="pane-publish"><h2>05 · บันทึกและเผยแพร่ / Publish</h2><p class="help">The builder is online. Your changes are saved on this device, not yet shared to other visitors.</p>
+<div id="readiness" class="readiness" aria-live="polite"></div>
 <div class="publish-card"><strong>🌐 ตัวอย่างออนไลน์ / Public example</strong><p><a href="./showroom.html" target="_blank" rel="noopener">nanobotco.github.io/sian-studio/showroom.html</a></p><p>This is the fictional showroom, not your personalized draft.</p></div>
-<button class="btn btn-dark" id="downloadSite" style="width:100%">↓ Download personalized website HTML</button>
+<button class="btn btn-dark" id="downloadSite" style="width:100%">↓ Export personalized website HTML</button>
+<p class="hint" style="margin:8px 0 14px">Exports a portable one-file website. You still need hosting for a permanent shareable shop URL.</p>
 <div class="row-buttons"><button class="btn" id="saveProject">↓ Save editable project JSON</button><button class="btn" id="importBtn">↑ Restore project</button><input type="file" id="importProject" accept=".json,application/json" hidden></div>
-<div class="note">The downloaded website is self-contained for normal browsers (reference images may still load from Wichaa). Upload it to a hosting service to give this specific shop its own shareable URL. Automatic cloud publishing is not yet connected.</div>
+<div class="note">A downloaded HTML is not automatically public. The builder does not upload customer photos or merchant inventory to any server. Never share its editable JSON backup publicly. Use a hosting account to publish the exported HTML.</div>
 <div class="row-buttons"><button class="btn" id="resetAll">Start another shop / เริ่มร้านใหม่</button></div>
 </section>
-<div class="foot-note">Sian Studio · Builder MVP · Private drafts stay on this browser. Export JSON before changing devices.</div>
+<div class="foot-note">Sian Studio v1.2 · Drafts are browser-local. Export an editable backup before changing device or clearing data.<br><a href="https://github.com/NaNoBotCo/nanobotco.github.io/tree/main/sian-studio" target="_blank" rel="noopener">View source on GitHub ↗</a></div>
 </aside>
-<section class="preview-area" aria-label="Live storefront preview"><div class="preview-head"><div><strong>● ตัวอย่างเว็บไซต์จริง / Live preview</strong><br><small id="previewLabel">Editing a draft · not published</small></div><div class="widths" role="group" aria-label="Preview device"><button class="active" data-width="desktop">Desktop</button><button data-width="tablet">Tablet</button><button data-width="phone">Phone</button></div></div><div class="frame-shell"><div class="frame" id="frame"><iframe id="preview" title="Amulet storefront preview"></iframe></div></div><div class="status" id="status" role="status">Loading storefront…</div></section>
+<section class="preview-area" aria-label="Live storefront preview"><div class="preview-head"><div><strong>● ตัวอย่างเว็บไซต์จริง / Live preview</strong><br><small id="previewLabel">Editing a draft · not published</small><div class="preview-guide">Tap a product to inspect both sides · เปิดดูสินค้าทั้งสองด้าน</div></div><div class="widths" role="group" aria-label="Preview device"><button class="active" data-width="desktop">Desktop</button><button data-width="tablet">Tablet</button><button data-width="phone">Phone</button></div></div><div class="frame-shell"><div class="frame" id="frame"><iframe id="preview" title="Amulet storefront preview"></iframe></div></div><div class="status" id="status" role="status">Loading storefront…</div></section>
 </main>
 <script>
 'use strict';
@@ -133,16 +145,18 @@ const STORAGE='sian-studio-guided-builder-v1';
 const $=s=>document.querySelector(s);
 const $$=s=>Array.from(document.querySelectorAll(s));
 const themes={heritage:{black:'#14130f',char:'#25251e',cream:'#f4f0e9',paper:'#ede7db',gold:'#c6a16d',ink:'#292923'},teak:{black:'#22271f',char:'#354031',cream:'#f5f0e7',paper:'#ede5d8',gold:'#b98559',ink:'#283627'},indigo:{black:'#17283b',char:'#273c57',cream:'#f1f3f6',paper:'#e4ebf2',gold:'#879ac5',ink:'#21364e'}};
-let template='',defaultConfig={},defaultProducts=[],selected=-1,renderTimer=null;
+let template='',defaultConfig={},defaultProducts=[],selected=-1,renderTimer=null,previewVersion=0;
 let state={config:{},products:[],theme:'heritage',features:{tarot:true,iching:true,kaucim:true,math:true,newsletter:true}};
 function notice(s){$('#status').textContent=s}
 function persist(){try{localStorage.setItem(STORAGE,JSON.stringify(state));notice('✓ Saved in this browser · บันทึกในเครื่องแล้ว')}catch(e){notice('⚠ Browser storage full. Export JSON now / พื้นที่เต็ม')}}
+function review(){const real=state.products.filter(p=>!p.demo),ready={brand:!!String(state.config.brand||'').trim()&&state.config.brand!==defaultConfig.brand,items:real.length>0,names:real.length>0&&real.every(p=>String(p.title||'').trim()),photos:real.length>0&&real.every(p=>p.imagePath&&!p.imagePath.startsWith('http:')),line:/^@?[a-zA-Z0-9_.-]{3,60}$/.test(String(state.config.lineId||'').trim())};const checks=[['brand','ชื่อร้านจริง · Real shop name'],['items','สินค้าแท้จริง · Real product added'],['names','ชื่อทุกรายการ · Product names completed'],['photos','รูปพระทุกองค์ · Front photos for each item'],['line','LINE OA สำหรับติดต่อ · Valid LINE ID']];const container=$('#readiness');if(container){container.replaceChildren();const header=document.createElement('strong');header.textContent=Object.values(ready).every(Boolean)?'✓ Shop content checklist complete':'✓ ตรวจความพร้อมก่อนเปิดร้าน · Launch checklist';const ul=document.createElement('ul');checks.forEach(([key,label])=>{const li=document.createElement('li');li.className=ready[key]?'ok':'todo';li.textContent=(ready[key]?'✓ ':'○ ')+label;ul.append(li)});container.append(header,ul)}return ready}
 function safeJSON(value){return JSON.stringify(value).replace(/</g,'\\u003c').replace(/\u2028/g,'\\u2028').replace(/\u2029/g,'\\u2029')}
 function replaceStorefront(){
  if(!template) return '';
  const pattern=/const CONFIG=(\{[^\n]*\});\s*const DEMO=(\[[^\n]*\]);/;
  const cfg=Object.assign({},defaultConfig,state.config);
- const items=state.products;
+ const real=state.products.filter(p=>!p.demo);
+ const items=real.length?real:state.products;
  let page=template.replace(pattern,()=> 'const CONFIG='+safeJSON(cfg)+';\nconst DEMO='+safeJSON(items)+';');
  const t=themes[state.theme]||themes.heritage;
  let css=':root{--black:'+t.black+';--char:'+t.char+';--cream:'+t.cream+';--paper:'+t.paper+';--gold:'+t.gold+';--goldlight:'+t.gold+';--ink:'+t.ink+'}';
@@ -151,15 +165,15 @@ function replaceStorefront(){
  if(!f.tarot&&!f.iching&&!f.kaucim) css+='#oracle,.header nav a[href="#oracle"]{display:none!important}';
  if(!f.math) css+='#toy{display:none!important}';
  if(!f.newsletter) css+='#newsletter,.header nav a[href="#newsletter"]{display:none!important}';
- css+='.preview-ribbon{background:#34473f!important;color:#fff!important}';
+ css+='h1 em,h2 em{color:var(--gold)!important}.brand-mark,.brand small{color:var(--gold)!important}.preview-ribbon{background:#34473f!important;color:#fff!important}';
  page=page.replace('</style>','\n'+css+'\n</style>');
  const hasReal=items.some(p=>!p.demo);
  if(hasReal) page=page.replace('PUBLIC DEMONSTRATION · Fictional inventory and prices · Reference images credited · Not a real shop','PERSONALIZED DRAFT · Verify merchant details and inventory before publishing');
  page=page.replace('</body>','<script>window.addEventListener("load",function(){var f='+safeJSON(f)+';var buttons=Array.from(document.querySelectorAll("[data-oracle-panel]"));var first=buttons.find(function(b){return f[b.getAttribute("data-oracle-panel")];});if(first){first.click();}});<\/script></body>');
  return page;
 }
-function previewNow(){if(!template)return;const doc=replaceStorefront();const iframe=$('#preview');iframe.srcdoc=doc;$('#previewLabel').textContent=(state.config.brand||'Example shop')+' · live draft';notice('✓ Live preview refreshed · อัปเดตตัวอย่างแล้ว')}
-function change(){persist();clearTimeout(renderTimer);renderTimer=setTimeout(previewNow,380)}
+function previewNow(){if(!template)return;const doc=replaceStorefront();const iframe=$('#preview');let savedY=0;try{savedY=iframe.contentWindow.scrollY||0}catch{}const version=++previewVersion;iframe.onload=()=>{if(version!==previewVersion)return;try{iframe.contentWindow.scrollTo({top:savedY,behavior:'instant'})}catch{}};iframe.srcdoc=doc;$('#previewLabel').textContent=(state.config.brand||'Example shop')+' · live draft';review();notice('✓ Live preview refreshed · อัปเดตตัวอย่างแล้ว')}
+function change(){persist();review();clearTimeout(renderTimer);renderTimer=setTimeout(previewNow,420)}
 function showStep(step){$$('.step').forEach(b=>b.classList.toggle('active',b.dataset.step===step));$$('.pane').forEach(p=>p.classList.toggle('active',p.id==='pane-'+step));}
 function redrawProducts(){
  const wrap=$('#productList');wrap.replaceChildren();
@@ -174,14 +188,14 @@ function redrawProducts(){
 function loadSelected(){
  const p=state.products[selected];$('#itemEditor').hidden=!p;if(!p)return;
  $('#itemHeading').textContent=(p.demo?'Sample: ':'Item: ')+(p.title||'New amulet');
- for(const [id,key] of [['pTitle','title'],['pEnglish','english'],['pPrice','price'],['pStatus','status'],['pCategory','category'],['pTemple','temple'],['pEdition','edition'],['pMaterial','material']]) $('#'+id).value=p[key]??'';
- $('#pPreview').src=p.imagePath||p.referenceImage||'';
- $('#pPhotoFile').value='';
+ for(const [id,key] of [['pTitle','title'],['pEnglish','english'],['pPrice','price'],['pStatus','status'],['pCategory','category'],['pTemple','temple'],['pEdition','edition'],['pMaterial','material'],['pDescription','description']]) $('#'+id).value=p[key]??'';
+ $('#pPreview').src=p.imagePath||p.referenceImage||'';$('#pBackPreview').src=p.backImagePath||'';
+ $('#pPhotoFile').value='';$('#pBackPhotoFile').value='';
 }
 function addProduct(){
  if(state.products.length && state.products.every(p=>p.demo)){state.products=[];}
- state.products.unshift({id:'s'+Date.now(),title:'พระเครื่ององค์ใหม่',english:'New amulet',price:2500,status:'available',category:'medal',temple:'',edition:'',material:'',imagePath:'',referenceImage:'',featured:true,description:'',added:new Date().toISOString(),demo:false});
- selected=0;redrawProducts();loadSelected();change();
+ state.products.unshift({id:'s'+Date.now(),title:'',english:'',price:0,status:'available',category:'medal',temple:'',edition:'',material:'',imagePath:'',backImagePath:'',referenceImage:'',featured:true,description:'',added:new Date().toISOString(),demo:false});
+ selected=0;redrawProducts();loadSelected();change();$('#pTitle').focus();
 }
 function moveProduct(by){
  if(selected<0)return;let i=selected+by;if(i<0||i>=state.products.length)return;
@@ -193,26 +207,33 @@ function download(name,textContent,type){
 function saveProject(){download('sian-studio-project.json',JSON.stringify({format:'sian-builder-project-v1',state},null,2),'application/json;charset=utf-8');notice('✓ Editable project exported · บันทึกไฟล์แล้ว')}
 function downloadSite(){
  if(!template){notice('Storefront template is still loading');return;}
- download('index.html',replaceStorefront(),'text/html;charset=utf-8');
- notice('✓ Personalized website HTML downloaded. Hosting is a separate step.');showStep('publish');
+ const check=review();const complete=Object.values(check).every(Boolean);
+ const notes=complete?'This HTML contains your public shop. You must upload it to your hosting account to give it a URL.':'This project is not yet complete: the downloaded HTML will be clearly marked as a DRAFT. Continue building or share a showroom demo instead.';
+ if(!complete&&!confirm(notes+'\n\nDownload this draft anyway?')){showStep('publish');return;}
+ let doc=replaceStorefront();if(!complete)doc=doc.replace('PERSONALIZED DRAFT · Verify merchant details and inventory before publishing','UNFINISHED DRAFT · NOT A VERIFIED MERCHANT SITE');
+ download('index.html',doc,'text/html;charset=utf-8');
+ notice('✓ '+(complete?'Shop HTML exported':'Unfinished draft exported')+'. Hosting is a separate step.');showStep('publish');
 }
 async function handlePhoto(file){
  if(!file)return;if(!file.type.startsWith('image/')){notice('Choose an image file');return;}
  if(file.size>16000000){notice('Image too large. Use a photo under 16 MB');return;}
  const data=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file)});
  const img=await new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=reject;i.src=data});
- let w=img.naturalWidth,h=img.naturalHeight,s=Math.min(1,1100/Math.max(w,h));w=Math.max(1,Math.round(w*s));h=Math.max(1,Math.round(h*s));
+ let w=img.naturalWidth,h=img.naturalHeight,s=Math.min(1,980/Math.max(w,h));w=Math.max(1,Math.round(w*s));h=Math.max(1,Math.round(h*s));
  const cv=document.createElement('canvas');cv.width=w;cv.height=h;cv.getContext('2d').drawImage(img,0,0,w,h);
- return cv.toDataURL('image/jpeg',.7);
+ return cv.toDataURL('image/jpeg',.65);
 }
 function wire(){
  $$('.step').forEach(b=>b.onclick=()=>showStep(b.dataset.step));
  $$('[data-next]').forEach(b=>b.onclick=()=>showStep(b.dataset.next));
  for(const key of ['brand','english','story','lineId']) $('#'+key).addEventListener('input',e=>{state.config[key]=e.target.value;change()});
- for(const [id,key] of [['pTitle','title'],['pEnglish','english'],['pPrice','price'],['pStatus','status'],['pCategory','category'],['pTemple','temple'],['pEdition','edition'],['pMaterial','material']]) $('#'+id).addEventListener('input',e=>{
+ for(const [id,key] of [['pTitle','title'],['pEnglish','english'],['pPrice','price'],['pStatus','status'],['pCategory','category'],['pTemple','temple'],['pEdition','edition'],['pMaterial','material'],['pDescription','description']]) $('#'+id).addEventListener('input',e=>{
  const p=state.products[selected];if(!p)return;p[key]=key==='price'?Math.max(0,Number(e.target.value)||0):e.target.value;redrawProducts();change();
  });
- $('#pPhotoFile').onchange=async e=>{const p=state.products[selected];if(!p)return;try{const photo=await handlePhoto(e.target.files[0]);if(photo){p.imagePath=photo;p.referenceImage='';p.demo=false;$('#pPreview').src=photo;redrawProducts();change()}}catch{notice('Unable to process image / ไม่สามารถใช้ภาพนี้ได้')}};
+ async function photoChange(e,key,target){const p=state.products[selected];if(!p)return;try{const photo=await handlePhoto(e.target.files[0]);if(photo){p[key]=photo;p.referenceImage='';p.demo=false;$('#'+target).src=photo;redrawProducts();change()}}catch{notice('Unable to process image / ไม่สามารถใช้ภาพนี้ได้')}}
+ $('#pPhotoFile').onchange=e=>photoChange(e,'imagePath','pPreview');
+ $('#pBackPhotoFile').onchange=e=>photoChange(e,'backImagePath','pBackPreview');
+ $('#removePhotos').onclick=()=>{const p=state.products[selected];if(!p)return;p.imagePath='';p.backImagePath='';loadSelected();change()};
  $('#addProduct').onclick=addProduct;
  $('#clearDemo').onclick=()=>{state.products=state.products.filter(p=>!p.demo);selected=-1;redrawProducts();change()};
  $('#deleteProduct').onclick=()=>{if(selected<0)return;state.products.splice(selected,1);selected=-1;redrawProducts();change()};
@@ -240,7 +261,7 @@ async function boot(){
  let saved=null;try{saved=JSON.parse(localStorage.getItem(STORAGE)||'null')}catch{}
  if(saved&&saved.config&&Array.isArray(saved.products)){state={...state,...saved,features:{...state.features,...saved.features}}}
  else{state.config=structuredClone(defaultConfig);state.products=structuredClone(defaultProducts)}
- syncInputs();redrawProducts();previewNow();
+ syncInputs();redrawProducts();review();previewNow();
  }catch(e){notice('⚠ Could not load the showroom. '+e.message);$('#preview').src='./showroom.html'}
 }
 boot();
