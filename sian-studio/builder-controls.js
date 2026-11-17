@@ -3,6 +3,25 @@
 'use strict';
 const $=s=>document.querySelector(s),$$=s=>Array.from(document.querySelectorAll(s));
 const TYPES={hero:'🏠 Hero',collection:'🪷 Catalogue',story:'📖 About',toy:'✺ Math toy',fidget:'◉ Spinner lab',oracle:'✦ Divination',newsletter:'✉ Newsletter',text:'¶ Text / Story',image:'▣ Image / Gallery',video:'▶ Video',quote:'❞ Testimonial',faq:'? FAQ',cta:'↗ Offer / CTA'};
+const HERO_DEFAULTS={
+ eyebrowTh:'ของแท้จากศรัทธา ไม่ใช่จากคำโฆษณา',
+ eyebrowEn:'Objects chosen for trust, not hype',
+ firstTh:'ของมีค่า',secondTh:'มีเรื่องเล่า',
+ firstEn:'Meaningful objects',secondEn:'with stories',
+ leadTh:'พระเครื่องและเครื่องรางที่เลือกด้วยความเข้าใจ ดูภาพชัด สอบถามได้โดยตรง และเก็บเรื่องราวของทุกชิ้นไว้ครบถ้วน',
+ leadEn:'A curated amulet and talisman shop with clear images, direct contact, and story-rich listings.',
+ primaryTh:'ชมพระเครื่อง',primaryEn:'Browse the collection',
+ primaryHref:'#collection',secondaryTh:'ลองเสี่ยงทาย',secondaryEn:'Try a reading',secondaryHref:'#oracle',
+ image:'',imageAlt:'Amulet illustration / shop hero photograph',imageFit:'cover',imagePosition:'center center'
+};
+const SECTION_COPY_DEFAULTS={
+ collection:{headlineTh:'คัดมาให้ชม อย่างตั้งใจ',headlineEn:'Browse a selection with care',subtextTh:'แต่ละชิ้นมีรายละเอียดให้ดู และติดต่อผู้ขายโดยตรงได้ทันที',subtextEn:'Each piece includes details and a direct path to the seller.'},
+ story:{headlineTh:'ซื้อพระ ซื้อด้วยความรู้',headlineEn:'Choose amulets with understanding',subtextTh:'คัดสรรด้วยสายตาของคนรักพระเครื่อง จากความรู้ที่สืบทอดและความไว้วางใจของชุมชน',subtextEn:'Every amulet has a story. We document what we know.'},
+ fidget:{headlineTh:'หมุนเล่น แบบเซียน',headlineEn:'Fidget like a sian',subtextTh:'ปั่นวงล้อจริงด้วยนิ้ว เปลี่ยนรูปแบบและแรงเสียดทานได้',subtextEn:'Drag, flick and adjust the friction of an original spinner.'},
+ toy:{headlineTh:'ของเล่นคณิต หมุนได้จริง',headlineEn:'A mathematical toy that really moves',subtextTh:'ของเล่นคณิตศาสตร์สำหรับคนรักวงโคจร',subtextEn:'Play with moving geometry and mathematical orbits.'},
+ oracle:{headlineTh:'เลือกวิธีอ่าน ที่เข้ากับคุณ',headlineEn:'Choose a reading that fits you',subtextTh:'ลองไพ่ทาโรต์ อี้จิง และเซียมซี',subtextEn:'Try Tarot, I Ching, or fortune sticks.'},
+ newsletter:{headlineTh:'ข่าวคราวดี ๆ ส่งตรงถึงคุณ',headlineEn:'Fresh stories, delivered',subtextTh:'รายการใหม่ เรื่องเล่าจากวงการ และเครื่องมือความรู้',subtextEn:'New arrivals, stories, and useful knowledge.'}
+};
 const DEFAULT_SECTIONS=['hero','collection','story','fidget','toy','oracle','newsletter'].map((type,i)=>({id:'default-'+type,type,enabled:true,title:TYPES[type],text:'',style:{}}));
 const DEFAULT_STYLE={accent:'#c6a16d',background:'#f4f0e9',ink:'#282921',surface:'#fffdf9',nav:'#14130f',bodyFont:'system',headingFont:'serif',contentWidth:1200,cardRadius:14,sectionSpacing:72,baseSize:16,cardShadow:20,heroAlign:'left',productColumns:3,heroSpinner:true,heroSpinnerOpacity:24};
 const init=()=>{if(!Array.isArray(state.sections))state.sections=structuredClone(DEFAULT_SECTIONS);if(!state.design||typeof state.design!=='object')state.design={...DEFAULT_STYLE};if(!state.sales)state.sales={setupFee:6500,monthlyFee:0,checkoutUrl:'',email:'',status:'draft'}};
@@ -97,11 +116,67 @@ function addInput(parent,label,key,value,kind,onChange){
  input.addEventListener(kind==='checkbox'?'change':'input',()=>{onChange(kind==='checkbox'?input.checked:kind==='number'?Number(input.value):input.value);change()});
  f.append(input);parent.append(f);return input;
 }
+function heroInput(container,s,label,key,{kind='text',hint='',max=200}={}){
+ const v=s.hero[key]??'';
+ const input=addInput(container,label,key,v,kind,value=>{s.hero[key]=String(value).slice(0,max)});
+ input.maxLength=max;
+ if(hint){const p=document.createElement('p');p.className='hint';p.textContent=hint;container.append(p)}
+ return input;
+}
+function heroEditor(box,s){
+ if(!s.hero)s.hero={...HERO_DEFAULTS,...(s.headline?{firstEn:s.headline,firstTh:s.headline}:{}),...(s.subtext?{leadEn:s.subtext,leadTh:s.subtext}:{})};
+ const intro=document.createElement('div');intro.className='sian-edit-context';
+ intro.innerHTML='<strong>✎ Editing the large storefront hero</strong><p>These fields correspond to the big heading, description, two buttons and artwork visible in the preview. You can edit them separately in Thai and English.</p>';
+ box.append(intro);
+ const group=(name)=>{const h=document.createElement('h4');h.className='sian-edit-group';h.textContent=name;box.append(h)};
+ group('01 · Main headline / พาดหัว');
+ heroInput(box,s,'Small text above headline · ไทย','eyebrowTh');
+ heroInput(box,s,'Eyebrow · English','eyebrowEn');
+ heroInput(box,s,'Large heading · line 1 (ไทย)','firstTh');
+ heroInput(box,s,'Highlighted heading · line 2 (ไทย)','secondTh');
+ heroInput(box,s,'Large heading · line 1 (English)','firstEn');
+ heroInput(box,s,'Highlighted heading · line 2 (English)','secondEn');
+ group('02 · Description / คำอธิบาย');
+ heroInput(box,s,'Under-heading paragraph · ไทย','leadTh',{kind:'textarea',max:1600});
+ heroInput(box,s,'Under-heading paragraph · English','leadEn',{kind:'textarea',max:1600});
+ group('03 · Buttons / ปุ่ม');
+ heroInput(box,s,'Primary button · ไทย','primaryTh');
+ heroInput(box,s,'Primary button · English','primaryEn');
+ heroInput(box,s,'Primary button destination','primaryHref',{hint:'Use #collection, #oracle, #fidget, or an HTTPS link.'});
+ heroInput(box,s,'Secondary button · ไทย','secondaryTh');
+ heroInput(box,s,'Secondary button · English','secondaryEn');
+ heroInput(box,s,'Secondary button destination','secondaryHref',{hint:'Use a section anchor or an HTTPS URL.'});
+ group('04 · Illustration / Hero artwork');
+ const imageField=heroInput(box,s,'Custom artwork URL (https://), or upload an image','image',{max:2500000,hint:'Leave empty to use the original illustrated amulet. The uploaded image is stored in this browser draft and included in site export.'});
+ imageField.type='text';
+ const uploadLabel=document.createElement('label');uploadLabel.className='field';uploadLabel.innerHTML='<span>Upload your own image / เปลี่ยนภาพ</span>';
+ const input=document.createElement('input');input.type='file';input.accept='image/*';input.dataset.sectionKey='imageUpload';
+ input.onchange=async event=>{try{const file=event.target.files[0];if(!file)return;const photo=await handlePhoto(file);if(!photo)return;s.hero.image=photo;renderSectionEditor();change();notice('✓ Hero artwork updated')}catch(e){notice('Unable to use that image: '+e.message)}};
+ uploadLabel.append(input);box.append(uploadLabel);
+ const current=document.createElement('p');current.className='hint';current.textContent=s.hero.image?'✓ Custom artwork selected':'Currently using the illustrated amulet image';box.append(current);
+ const remove=document.createElement('button');remove.type='button';remove.className='btn';remove.textContent='Restore original illustrated amulet';remove.onclick=()=>{s.hero.image='';renderSectionEditor();change()};box.append(remove);
+ const fit=document.createElement('label');fit.className='field';fit.innerHTML='<span>Photo fit / ภาพเต็มหรือภาพพอดี</span>';const select=document.createElement('select');select.dataset.sectionKey='imageFit';
+ for(const option of ['cover','contain']){const o=document.createElement('option');o.value=o.textContent=option;select.append(o)}select.value=s.hero.imageFit||'cover';select.onchange=()=>{s.hero.imageFit=select.value;change()};fit.append(select);box.append(fit);
+ heroInput(box,s,'Image description for accessibility / SEO','imageAlt',{max:300});
+}
+function sectionCopyInputs(box,s){
+ const defaults=SECTION_COPY_DEFAULTS[s.type]||{};
+ if(!s.copy)s.copy={...defaults,...(s.headline?{headlineTh:s.headline,headlineEn:s.headline}:{}),...(s.subtext?{subtextTh:s.subtext,subtextEn:s.subtext}:{})};
+ const div=document.createElement('div');div.className='sian-edit-context';div.innerHTML='<strong>✎ Edit this section’s visible text</strong><p>These are the heading and descriptive copy shown on the live website. Switch the website preview between Thai and English to check both.</p>';box.append(div);
+ for(const [key,label,kind] of [
+ ['headlineTh','Headline · ไทย','text'],['headlineEn','Headline · English','text'],
+ ['subtextTh','Description · ไทย','textarea'],['subtextEn','Description · English','textarea']]){
+ const input=addInput(box,label,key,s.copy[key]||'',kind,v=>s.copy[key]=v);input.maxLength=kind==='textarea'?1600:220;
+ }
+}
 function renderSectionEditor(){
- const box=$('#sianSectionEditor');box.replaceChildren();const s=getSection(currentSection);if(!s)return;
- const title=document.createElement('h3');title.textContent='Edit · '+(TYPES[s.type]||s.type);box.append(title);
- addInput(box,'Section label / title','title',s.title,'text',v=>{s.title=v;renderSectionList()});
- if(['hero','collection','story','toy','fidget','oracle','newsletter'].includes(s.type)){addInput(box,'Custom heading (optional)','headline',s.headline||'','text',v=>s.headline=v);addInput(box,'Custom introduction / subheading','subtext',s.subtext||'','textarea',v=>s.subtext=v)}
+ const box=$('#sianSectionEditor');box.replaceChildren();const s=getSection(currentSection);if(!s){box.textContent='Select a section above or click an Edit control in the live preview.';return}
+ const title=document.createElement('h3');title.textContent='✎ '+(TYPES[s.type]||s.type)+' · content & style';box.append(title);
+ if(s.type==='hero')heroEditor(box,s);
+ else if(['collection','story','toy','fidget','oracle','newsletter'].includes(s.type))sectionCopyInputs(box,s);
+ else {
+ const label=addInput(box,'Section name (only in editor)','title',s.title,'text',v=>{s.title=v;renderSectionList()});label.maxLength=120;
+ }
  if(['text','image','quote','faq','cta','video'].includes(s.type)){
   addInput(box,s.type==='faq'?'FAQ lines: Question | Answer':'Body text / Caption','text',s.text,'textarea',v=>s.text=v);
   if(s.type==='image'){addInput(box,'Image URL (https) or upload below','image',s.image||'','url',v=>s.image=v);addInput(box,'Image alt text','imageAlt',s.imageAlt,'text',v=>s.imageAlt=v);const uploader=document.createElement('input');uploader.type='file';uploader.accept='image/*';uploader.onchange=async e=>{const data=await handlePhoto(e.target.files[0]);if(data){s.image=data;renderSectionEditor();change()}};box.append(uploader)}
@@ -115,7 +190,7 @@ function renderSectionEditor(){
  const n=document.createElement('p');n.className='hint';n.textContent='All sections support background, text color, spacing, alignment and custom headings. Built-in sections retain their native layout.';box.append(n);
 }
 function buildSectionUI(){
- const pane=tab('sections','4 · ส่วน','<h2>04 · ส่วนของเว็บไซต์ / Page sections</h2><p class="help">Drag or use ↑ ↓ to reorder. Hide or remove any section. Add text, galleries, video, testimonials, FAQ or offers.</p><div class="sian-add-row"><select id="sianAddType"></select><button class="btn btn-dark" id="sianAddSection">＋ เพิ่มส่วน / Add</button></div><div id="sianSectionList"></div><div id="sianSectionEditor" class="sian-control-wrap"></div>');
+ const pane=tab('sections','4 · ส่วน','<h2>04 · ส่วนของเว็บไซต์ / Page sections</h2><p class="help">Drag or use ↑ ↓ to reorder. Hide or remove any section. Add text, galleries, video, testimonials, FAQ or offers.</p><div class="sian-add-row"><select id="sianAddType"></select><button class="btn btn-dark" id="sianAddSection">＋ เพิ่มส่วน / Add</button></div><div id="sianSectionEditor" class="sian-control-wrap"></div><h3 class="sian-section-list-heading">↕ Move, add, or hide other sections</h3><div id="sianSectionList"></div>');
  const select=$('#sianAddType');for(const [key,label] of Object.entries(TYPES)){const o=document.createElement('option');o.value=key;o.textContent=label;select.append(o)}
  $('#sianAddSection').onclick=()=>{
   const type=select.value,id='section-'+Date.now().toString(36);
@@ -123,7 +198,8 @@ function buildSectionUI(){
   const sec={id,type,enabled:true,title:TYPES[type].replace(/^[^\s]+\s/,'')||type,text:type==='faq'?'พระแท้ไหม? | ดูภาพหน้าหลังและสอบถามกับร้านโดยตรง':type==='quote'?'เรื่องเล่าจากนักสะสม':'',style:sectionStyle()};
   state.sections.push(sec);currentSection=id;renderSectionList();renderSectionEditor();change();
  };
- renderSectionList();
+ if(!currentSection)currentSection=state.sections.find(x=>x.type==='hero')?.id||null;
+ renderSectionList();renderSectionEditor();
  const next=$('[data-next="publish"]');if(next){next.dataset.next='sections';next.textContent='ถัดไป · จัดส่วน →'}
  const button=document.createElement('button');button.className='btn btn-dark';button.textContent='ถัดไป · เผยแพร่ →';button.onclick=()=>showStep('sale');pane.append(button);
  // Move publish tab to follow sections
@@ -193,7 +269,7 @@ function addSaleStep(){
 function css(){
  const style=document.createElement('style');style.textContent=
  '.sian-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}'+
- '.sian-control-wrap{border:1px solid #dce2d7;border-radius:10px;padding:15px;margin:18px 0;background:#fbfcfa}.sian-control-wrap h3,.sian-product-extra h3{margin:13px 0 9px;font-size:15px}'+
+ '.sian-control-wrap{border:1px solid #b5cbbc;border-radius:10px;padding:15px;margin:12px 0 22px;background:#fbfcfa}.sian-control-wrap h3,.sian-product-extra h3{margin:9px 0;font-size:16px}.sian-edit-context{padding:12px;background:#e9f2e9;border-radius:9px;margin:10px 0 17px}.sian-edit-context strong{font-size:13px}.sian-edit-context p{font-size:12px;margin:4px 0 0;color:#566957}.sian-edit-group{padding:9px 0 4px;margin:15px 0 10px;font-size:13px;border-bottom:1px solid #d1dbd1;color:#365e4b}.sian-input-target{outline:3px solid #ce9d55!important}.sian-section-list-heading{font-size:13px;color:#506257}'+
  '.sian-add-row{display:flex;gap:7px;margin:12px 0}.sian-add-row select{min-width:0;flex:1;padding:10px;border:1px solid #cbd6cf;border-radius:8px}'+
  '.sian-section-row{display:flex;align-items:center;justify-content:space-between;gap:4px;border-bottom:1px solid #e4e7e0;padding:6px 0}'+
  '.sian-section-select{text-align:left;border:1px solid transparent;background:none;border-radius:6px;min-width:0;flex:1;color:#46574c;padding:7px 5px;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}'+
@@ -202,6 +278,16 @@ function css(){
  '.sian-product-extra{border-top:2px solid #bfd4bf;margin:22px 0;padding:13px 0}.sian-product-extra .hint{line-height:1.6}.sian-sales-steps{border-left:3px solid #c3a36b;padding:7px 13px;margin:16px 0;background:#f8f6ed;font-size:13px}'+
  '@media(max-width:500px){.sian-form-grid{grid-template-columns:1fr}.sian-add-row{flex-wrap:wrap}}';document.head.append(style);
 }
+function selectSection(ref,focusKey=''){
+ init();const sec=state.sections.find(s=>s.id===ref||s.type===ref);
+ if(!sec){notice('Could not find section: '+ref);return}
+ currentSection=sec.id;showStep('sections');renderSectionList();renderSectionEditor();
+ const editor=$('#sianSectionEditor');
+ const sidebar=$('.editor');
+ if(sidebar){const top=editor.getBoundingClientRect().top-sidebar.getBoundingClientRect().top+sidebar.scrollTop-16;sidebar.scrollTo({top,behavior:'smooth'})}
+ const field=focusKey?editor.querySelector('[data-section-key="'+focusKey+'"]'):editor.querySelector('input:not([type="file"]),textarea');
+ if(field)setTimeout(()=>{field.focus({preventScroll:true});field.classList.add('sian-input-target');setTimeout(()=>field.classList.remove('sian-input-target'),1400)},180);
+}
 function refresh(){
  init();$('[data-design]').forEach(input=>{const key=input.dataset.design;input.value=state.design[key]??DEFAULT_STYLE[key];const small=input.parentElement.querySelector('small');if(small)small.textContent=input.value});
  for(const [id,key] of [['#sianSetupFee','setupFee'],['#sianMonthlyFee','monthlyFee'],['#sianCheckoutUrl','checkoutUrl'],['#sianBillingEmail','email']]){const input=$(id);if(input)input.value=state.sales[key]??''}
@@ -209,5 +295,5 @@ function refresh(){
  renderSectionList();renderSectionEditor();updateProductShare();
 }
 init();css();renderLookControls();buildProductExtras();publishSiteUrl();buildSectionUI();addSaleStep();refresh();
-window.SianStudio={init,refresh,productSlug,productUrl,getCaption,copyText,DEFAULT_SECTIONS,DEFAULT_STYLE,themeCss};
+window.SianStudio={init,refresh,selectSection,productSlug,productUrl,getCaption,copyText,DEFAULT_SECTIONS,DEFAULT_STYLE,themeCss};
 })();
