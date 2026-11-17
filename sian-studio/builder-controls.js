@@ -185,9 +185,9 @@ function renderSectionEditor(){
  }
  const divider=document.createElement('h3');divider.textContent='Section-specific style / เฉพาะส่วน';box.append(divider);
  s.style=sectionStyle(s.style);
- for(const [key,label,kind] of [['bg','Section background (changes underlying gradient)','color'],['card','Card surface','color'],['text','Text','color'],['padding','Vertical space (px)','number'],['width','Card width (px)','number'],['radius','Corners (px)','number']])addInput(box,label,key,s.style[key],kind,v=>{s.style[key]=v;if(key==='bg')s.style._colorBg=true;if(key==='text')s.style._colorText=true});
- const align=document.createElement('label');align.className='field';align.textContent='Text alignment';const select=document.createElement('select');for(const v of ['left','center','right']){const opt=document.createElement('option');opt.value=opt.textContent=v;select.append(opt)}select.value=s.style.align;select.onchange=()=>{s.style.align=select.value;change()};align.append(select);box.append(align);
- const n=document.createElement('p');n.className='hint';n.textContent='All sections support background, text color, spacing, alignment and custom headings. Built-in sections retain their native layout.';box.append(n);
+ for(const [key,label,kind] of [['bg','Section background (changes underlying gradient)','color'],['card','Card surface','color'],['text','Text','color'],['padding','Vertical space (px)','number'],['width','Card width (px)','number'],['radius','Corners (px)','number']])addInput(box,label,key,s.style[key],kind,v=>{s.style[key]=v;if(key==='bg')s.style._colorBg=true;if(key==='text')s.style._colorText=true;if(key==='card')s.style._customCard=true;if(key==='padding')s.style._customPadding=true;if(key==='width')s.style._customWidth=true;if(key==='radius')s.style._customRadius=true});
+ const align=document.createElement('label');align.className='field';align.textContent='Text alignment';const select=document.createElement('select');for(const v of ['left','center','right']){const opt=document.createElement('option');opt.value=opt.textContent=v;select.append(opt)}select.value=s.style.align;select.onchange=()=>{s.style.align=select.value;s.style._customAlign=true;change()};align.append(select);box.append(align);
+ const n=document.createElement('p');n.className='hint';n.textContent='Built-in sections retain their preset appearance until you change an individual control. Custom blocks support width and surfaces; the catalogue supports product-card color.';box.append(n);
  window.SianStyle?.decorateSectionEditor?.(box,s);
 }
 function buildSectionUI(){
@@ -322,14 +322,14 @@ function updateSectionDesign(ref,key,value){
  sec.style=sectionStyle(sec.style);
  if(['bg','card','text','headingColor'].includes(key)){
   if(!/^#[a-f0-9]{6}$/i.test(value))return false;
-  sec.style[key]=value;
+  sec.style[key]=value;if(key==='bg')sec.style._colorBg=true;if(key==='text')sec.style._colorText=true;if(key==='card')sec.style._customCard=true;
  }else if(key==='align'){
-  if(!['left','center','right'].includes(value))return false;sec.style.align=value;
+  if(!['left','center','right'].includes(value))return false;sec.style.align=value;sec.style._customAlign=true;
  }else if(key==='decoration'){
   if(!['none','lines','dots'].includes(value))return false;sec.style.decoration=value;
  }else{
   const ranges={headingSize:[22,84],padding:[16,160],radius:[0,50],width:[540,1600],buttonRadius:[0,40]};
-  const n=Number(value),r=ranges[key];if(!Number.isFinite(n)||n<r[0]||n>r[1])return false;sec.style[key]=n;
+  const n=Number(value),r=ranges[key];if(!Number.isFinite(n)||n<r[0]||n>r[1])return false;sec.style[key]=n;const flags={padding:'_customPadding',width:'_customWidth',radius:'_customRadius',buttonRadius:'_customButtonRadius'};if(flags[key])sec.style[flags[key]]=true;
  }
  if(sec.id===currentSection)renderSectionEditor();
  change();return true;
