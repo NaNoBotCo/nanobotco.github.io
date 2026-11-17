@@ -268,8 +268,15 @@ async function boot(){
 }
 boot();
 </script>
-<script src="./builder-controls.js"></script>
-<script src="./builder-publisher.js"></script>
-<script src="./social-assets.js"></script>
-<script src="./visual-editor.js"></script>
+<script>
+window.__sianErrors=[];
+if(new URLSearchParams(location.search).has('qa')){
+ window.addEventListener('error',event=>window.__sianErrors.push(String(event.message||'error')+' @'+String(event.filename||'')+':'+event.lineno));
+ window.addEventListener('unhandledrejection',event=>window.__sianErrors.push(String(event.reason||'rejection')));
+}
+</script>
+<script src="./builder-controls.js?v=20261117-uxfix-c233"></script>
+<script src="./builder-publisher.js?v=20261117-uxfix-c233"></script>
+<script src="./social-assets.js?v=20261117-uxfix-c233"></script>
+<script src="./visual-editor.js?v=20261117-uxfix-c233"></script>
 </body></html>
