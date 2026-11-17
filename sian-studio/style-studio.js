@@ -192,7 +192,7 @@ const PRESETS=[
 const SECTION_PRESETS=[
  {id:'paper',name:'Paper',bg:'#f6f1e8',card:'#ffffff',text:'#2a2f29',headingColor:'#3f4339'},
  {id:'night',name:'Night',bg:'#1d2928',card:'#354740',text:'#eee6d6',headingColor:'#f1cca0'},
- {id:'gold',name:'Gold',bg:'#e9d8b8',card:'#fff9e8',text:'#403022',headingColor:'#8b5b2d'},
+ {id:'gold',name:'Gold',bg:'#e9d8b8',card:'#fff9e8',text:'#403022',headingColor:'#593516'},
  {id:'jade',name:'Jade',bg:'#d8e9db',card:'#fafffa',text:'#264637',headingColor:'#255943'},
  {id:'blue',name:'Indigo',bg:'#e4eaf3',card:'#ffffff',text:'#263c52',headingColor:'#355d92'},
  {id:'clear',name:'White',bg:'#ffffff',card:'#ffffff',text:'#26302a',headingColor:'#26302a'}
@@ -329,23 +329,69 @@ function decorateSectionEditor(box,section){
  quick.append(reset);
  const meter=document.createElement('div');meter.className='sian-section-contrast';quick.append(meter);
  const updateMeter=()=>{
-  const engine=window.SianArt;if(!engine?.contrast)return;
-  const bg=section.style.bg||'#f7f3e8',body=section.style.text||'#292c27',heading=section.style.headingColor||body;
-  const r1=engine.contrast(bg,body),r2=engine.contrast(bg,heading),valid=r1>=4.5&&r2>=4.5;
+  if(document.querySelector('#sianQuickStyle')!==quick)return;
+  const engine=window.SianArt,frame=document.getElementById('preview'),doc=frame?.contentDocument;
   meter.replaceChildren();
-  const result=document.createElement('strong');result.textContent=(valid?'✓':'⚠')+' Section readability: text '+r1.toFixed(2)+':1 · heading '+r2.toFixed(2)+':1';
-  result.style.color=valid?'#27623f':'#a03a30';meter.append(result);
-  if(!valid){const fix=document.createElement('button');fix.type='button';fix.className='btn';fix.textContent='Fix text contrast';
+  const message=document.createElement('strong');meter.append(message);
+  if(!engine?.contrast||!doc){message.textContent='Checking the actual storefront preview…';return}
+  const type=section.type,root=doc.querySelector({
+   hero:'.hero',collection:'#collection',story:'#story',toy:'#toy',fidget:'#fidget',oracle:'#oracle',newsletter:'#newsletter'
+  }[type]||'#section-'+section.id);
+  if(!root){message.textContent='This section is hidden or the preview is loading.';return}
+  if(!section.style?._colorBg||!/^#[a-f0-9]{6}$/i.test(section.style.bg)){
+   message.textContent='◌ Gradient or art-direction background: contrast cannot be fully measured here.';
+   const hint=document.createElement('p');hint.textContent='Select a solid section palette to run a rendered contrast check. The art direction has its own color audit.';meter.append(hint);return;
+  }
+  const colorOf=el=>{
+   if(!el)return null;
+   const match=doc.defaultView.getComputedStyle(el).color.match(/rgba?\(\s*([0-9.]+)[,\s]+\s*([0-9.]+)[,\s]+\s*([0-9.]+)/);
+   return match?'#'+[1,2,3].map(i=>Math.round(+match[i]).toString(16).padStart(2,'0')).join(''):null;
+  };
+  const targets={
+   hero:['.hero-copy h1','.hero-lead','.hero .eyebrow'],
+   collection:['.section-head h2','.section-head .muted'],
+   story:['.story-copy h2','.story-copy p'],
+   toy:['.kinetic-copy h2','.kinetic-copy .muted','.toy-metadata span','.toy-metadata b','.toy-equation'],
+   fidget:['.sian-spin-layout h2','.sian-spin-layout p','.sian-spin-controls label'],
+   oracle:['.oracle-hub-top h2','.oracle-hub-top p'],
+   newsletter:['.newsletter-layout h2','.newsletter-layout p']
+  }[type]||['h2','p'];
+  const checks=targets.map(selector=>{
+   const el=root.querySelector(selector),color=colorOf(el);
+   return color?{selector,color,ratio:engine.contrast(section.style.bg,color)}:null;
+  }).filter(Boolean);
+  if(!checks.length){message.textContent='Visual check pending: no sample text found.';return}
+  const worst=Math.min(...checks.map(x=>x.ratio)),bad=checks.filter(x=>x.ratio<4.5);
+  const desiredBody=section.style.text||'#292c27',desiredHeading=section.style.headingColor||desiredBody;
+  const unsafeRequested=([desiredBody,desiredHeading].some(v=>/^#[a-f0-9]{6}$/i.test(v)&&engine.contrast(section.style.bg,v)<4.5));
+  message.textContent=(bad.length?'⚠':'✓')+' Rendered storefront: '+worst.toFixed(2)+':1 minimum across '+checks.length+' text samples';
+  message.style.color=bad.length?'#a03a30':'#27623f';
+  if(bad.length||unsafeRequested){
+   const note=document.createElement('p');note.textContent=bad.length?
+    'Unclear text: '+bad.map(x=>x.selector+' '+x.ratio.toFixed(2)+':1').join(', '):
+    'A chosen color was unsafe and the published preview corrected it automatically.';meter.append(note);
+   const fix=document.createElement('button');fix.type='button';fix.className='btn';fix.textContent='✓ Save accessible text colors';
    fix.onclick=()=>{
-    const dark='#13221e',light='#ffffff';
-    const preferred=engine.contrast(bg,dark)>engine.contrast(bg,light)?dark:light;
-    if(r1<4.5){section.style.text=preferred;section.style._colorText=true}
-    if(r2<4.5)section.style.headingColor=preferred;
+    const dark='#14221E',light='#FFFFFF',bg=section.style.bg;
+    const safeColor=engine.contrast(bg,dark)>=engine.contrast(bg,light)?dark:light;
+    section.style.text=safeColor;section.style.headingColor=safeColor;section.style._colorText=true;
     window.SianStudio?.selectSection?.(section.id,'',{skipFocus:true});change();
-   };meter.append(fix)}
+   };meter.append(fix);
+  }
+  const annotation=document.createElement('p');
+  annotation.textContent='Measured from the rendered preview. Decorative graphics, gradients and image pixels still need visual inspection.';meter.append(annotation);
  };
  updateMeter();
- box.addEventListener('input',()=>setTimeout(updateMeter,70),{once:false});
+ const preview=document.getElementById('preview');
+ if(preview){
+  const onPreview=()=>{
+   if(document.querySelector('#sianQuickStyle')!==quick){preview.removeEventListener('load',onPreview);return}
+   setTimeout(updateMeter,180);
+  };
+  preview.addEventListener('load',onPreview);
+ }
+ box.addEventListener('input',()=>setTimeout(updateMeter,620));
+
 }
 function inspect(ref,{quiet=false}={}){
  const api=window.SianStudio;if(!api?.sectionOf(ref))return;
