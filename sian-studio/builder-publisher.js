@@ -56,6 +56,22 @@ function sitemapXml(items,base){
 }
 function siteManifest(items,base){
  return items.map(p=>({id:p.id,title:p.title,url:base+'/items/'+fileSlug(p)+'.html',photo:p.imagePath&&((p.imagePath.startsWith('https:')?p.imagePath:base+'/'+p.imagePath)),status:p.status,price:p.price}));}
+
+function merchantCsv(items,base){
+ // Google Merchant Center feed scaffold: seller must verify account eligibility, condition, shipping/returns and payment flow.
+ const columns=['id','title','description','link','image_link','additional_image_link','availability','price','brand','condition','product_type'];
+ const quote=v=>'"'+String(v??'').replace(/"/g,'""').replace(/\r?\n/g,' ').slice(0,2000)+'"';
+ const map={available:'in_stock',reserved:'out_of_stock',sold:'out_of_stock'};
+ const rows=items.map(p=>[
+  p.sku||p.id,p.title,p.description||[p.edition,p.temple,p.material].filter(Boolean).join(' · '),
+  base?base+'/items/'+fileSlug(p)+'.html':'',
+  p.imagePath?(p.imagePath.startsWith('https:')?p.imagePath:base+'/'+p.imagePath):'',
+  p.backImagePath?(p.backImagePath.startsWith('https:')?p.backImagePath:base+'/'+p.backImagePath):'',
+  map[p.status]||'out_of_stock',Number(p.price||0).toFixed(2)+' THB',state.config.brand||'',
+  p.itemCondition||'',p.category||'Buddhist amulet'
+ ]);
+ return [columns.map(quote).join(','),...rows.map(row=>row.map(quote).join(','))].join('\r\n')+'\r\n';
+}
 function zipFiles(files){
  // ZIP "stored" (uncompressed). JPEG is already compressed. UTF-8 paths are supported.
  const local=[],central=[];let offset=0;
@@ -91,7 +107,8 @@ async function exportBundle(){
  const files=[{name:'index.html',content:index},{name:'site-enhancements.js',content:enhancements},...prep.files,
  ...prep.products.map(p=>({name:'items/'+fileSlug(p)+'.html',content:oneItemPage(p,base)})),
  {name:'product-feed.json',content:JSON.stringify(siteManifest(prep.products,base),null,2)},
- {name:'README-PUBLISH.txt',content:['SIAN STUDIO · hosted site handoff','This ZIP is NOT deployed. Staff must upload all files to the HTTPS host (preserve items/ and media/).','Domain: '+(base||'NOT SET, DRAFT ONLY'),'Images are seller-submitted. Verify descriptions, title, provenance, owner permissions and product availability.','After deployment verify links, LINE, videos, Image Search, Google Search Console, and Merchant Center eligibility.','Source: https://nanobotco.github.io/sian-studio/'].join('\n')}];
+ {name:'merchant-center-feed.csv',content:merchantCsv(prep.products,base)},
+ {name:'README-PUBLISH.txt',content:['SIAN STUDIO · hosted site handoff','This ZIP is NOT deployed. Staff must upload all files to the HTTPS host (preserve items/ and media/).','Domain: '+(base||'NOT SET, DRAFT ONLY'),'Images are seller-submitted. Verify descriptions, title, provenance, owner permissions and product availability.\nMerchant Center CSV is a starting feed, not a guarantee of listing: complete product condition, shipping, returns, verified merchant account and seller purchase path.','After deployment verify links, LINE, videos, Image Search, Google Search Console, and Merchant Center eligibility.','Source: https://nanobotco.github.io/sian-studio/'].join('\n')}];
  if(base){files.push({name:'sitemap.xml',content:sitemapXml(prep.products,base)},{name:'robots.txt',content:'User-agent: *\nAllow: /\nSitemap: '+base+'/sitemap.xml\n'})}
  else files.push({name:'robots.txt',content:'User-agent: *\nDisallow: /\n'});
  const zip=zipFiles(files),url=URL.createObjectURL(zip),a=document.createElement('a');a.href=url;a.download='sian-'+(state.config.english||'shop').toLowerCase().replace(/[^a-z0-9]+/g,'-').slice(0,36)+'-host-ready.zip';a.click();setTimeout(()=>URL.revokeObjectURL(url),10000);
