@@ -2,7 +2,8 @@ name = "wholesale-desk-ops"
 main = "src/worker.js"
 compatibility_date = "2026-11-17"
 workers_dev = true
-# Initial deployment: Worker does not yet exist. Re-enable keep_vars after first successful deployment.
+keep_vars = true
+preview_urls = false
 
 [assets]
 directory = "./public"
