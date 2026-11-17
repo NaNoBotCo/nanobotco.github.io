@@ -123,7 +123,7 @@ function buildSectionUI(){
  };
  renderSectionList();
  const next=$('[data-next="publish"]');if(next){next.dataset.next='sections';next.textContent='ถัดไป · จัดส่วน →'}
- const button=document.createElement('button');button.className='btn btn-dark';button.textContent='ถัดไป · เผยแพร่ →';button.onclick=()=>showStep('publish');pane.append(button);
+ const button=document.createElement('button');button.className='btn btn-dark';button.textContent='ถัดไป · เผยแพร่ →';button.onclick=()=>showStep('sale');pane.append(button);
  // Move publish tab to follow sections
  const p=$('.step[data-step="publish"]');if(p)p.parentElement.append(p);
 }
@@ -175,7 +175,9 @@ function publishSiteUrl(){
 }
 function addSaleStep(){
  const pane=tab('sale','6 · ขาย','<h2>06 · ปิดการขาย / Client handoff</h2><p class="help">Quote → checkout link → verify payment → publish to hosting → hand over URLs. A receipt or admin approval is required: this demo cannot confirm bank payments.</p><label class="field"><span>Setup fee (THB)</span><input type="number" id="sianSetupFee" min="0"></label><label class="field"><span>Monthly hosting / support (THB)</span><input type="number" id="sianMonthlyFee" min="0"></label><label class="field"><span>Hosted checkout / payment link (HTTPS)</span><input id="sianCheckoutUrl" type="url" placeholder="https://your-payment-provider/checkout/..."></label><label class="field"><span>Support or billing email</span><input id="sianBillingEmail" type="email"></label><div class="sian-sales-steps"><p><b>1.</b> Demonstrate the personalized shop and its individual product links.</p><p><b>2.</b> Agree to the quoted setup and monthly hosting terms.</p><p><b>3.</b> Customer pays via the configured external checkout link; verify the provider receipt separately.</p><p><b>4.</b> Export the optimized site bundle and publish to the assigned domain with DNS/HTTPS.</p><p><b>5.</b> Test product pages, QR share links, Google Search Console and LINE enquiries.</p></div><div class="row-buttons"><button class="btn btn-dark" id="sianCopyQuote">Copy LINE quote</button><button class="btn" id="sianOpenCheckout">Open checkout ↗</button><button class="btn" id="sianCopyHandoff">Copy handoff checklist</button></div><div class="note">No payment is processed in Sian Studio and no site is auto-deployed yet. Backend billing verification, domain provisioning and hosted publishing remain integration work.</div>');
- const tabPublish=$('.step[data-step="publish"]');if(tabPublish)tabPublish.textContent='5 · เผยแพร่';
+ const tabPublish=$('.step[data-step="publish"]');if(tabPublish){tabPublish.textContent='7 · เผยแพร่';tabPublish.parentElement.append(tabPublish)}
+ const feature=$('.step[data-step="features"]');if(feature)feature.textContent='4 · ฟีเจอร์';const sections=$('.step[data-step="sections"]');if(sections)sections.textContent='5 · ส่วน';
+ const more=document.createElement('button');more.className='btn btn-dark';more.textContent='ถัดไป · เผยแพร่ / Publish →';more.onclick=()=>showStep('publish');pane.append(more);
  pane.querySelectorAll('#sianSetupFee,#sianMonthlyFee,#sianCheckoutUrl,#sianBillingEmail').forEach(input=>{
   const key={sianSetupFee:'setupFee',sianMonthlyFee:'monthlyFee',sianCheckoutUrl:'checkoutUrl',sianBillingEmail:'email'}[input.id];
   input.value=state.sales[key]??'';
@@ -198,6 +200,12 @@ function css(){
  '.sian-product-extra{border-top:2px solid #bfd4bf;margin:22px 0;padding:13px 0}.sian-product-extra .hint{line-height:1.6}.sian-sales-steps{border-left:3px solid #c3a36b;padding:7px 13px;margin:16px 0;background:#f8f6ed;font-size:13px}'+
  '@media(max-width:500px){.sian-form-grid{grid-template-columns:1fr}.sian-add-row{flex-wrap:wrap}}';document.head.append(style);
 }
-init();css();renderLookControls();buildProductExtras();publishSiteUrl();buildSectionUI();addSaleStep();updateProductShare();
-window.SianStudio={init,productSlug,productUrl,getCaption,copyText,DEFAULT_SECTIONS,DEFAULT_STYLE,themeCss};
+function refresh(){
+ init();$('[data-design]').forEach(input=>{const key=input.dataset.design;input.value=state.design[key]??DEFAULT_STYLE[key];const small=input.parentElement.querySelector('small');if(small)small.textContent=input.value});
+ for(const [id,key] of [['#sianSetupFee','setupFee'],['#sianMonthlyFee','monthlyFee'],['#sianCheckoutUrl','checkoutUrl'],['#sianBillingEmail','email']]){const input=$(id);if(input)input.value=state.sales[key]??''}
+ const domain=$('#sianSiteUrl');if(domain)domain.value=state.config.siteUrl||'';
+ renderSectionList();renderSectionEditor();updateProductShare();
+}
+init();css();renderLookControls();buildProductExtras();publishSiteUrl();buildSectionUI();addSaleStep();refresh();
+window.SianStudio={init,refresh,productSlug,productUrl,getCaption,copyText,DEFAULT_SECTIONS,DEFAULT_STYLE,themeCss};
 })();
