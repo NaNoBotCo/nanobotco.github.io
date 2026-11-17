@@ -1,0 +1,21 @@
+name = "wholesale-desk-ops"
+main = "src/worker.js"
+compatibility_date = "2026-11-17"
+workers_dev = true
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "wholesale_desk"
+database_id = "bd8cf752-3c5a-40b5-a8a8-2956d00a34c8"
+migrations_dir = "migrations"
+
+[vars]
+# MUST be configured before app opens; placeholders lock the application by design.
+ACCESS_TEAM_DOMAIN = "CHANGE_ME.cloudflareaccess.com"
+ACCESS_AUD = "CHANGE_ME_APPLICATION_AUD"
+AUTHORIZED_EMAILS = "CHANGE_ME@example.com"
