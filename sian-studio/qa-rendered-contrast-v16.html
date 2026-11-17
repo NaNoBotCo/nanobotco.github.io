@@ -18,7 +18,7 @@
   const tr=document.createElement('tr'),errors=[];let checked=0,min=100;
   try{
    win.SianStyle.applyPreset(name);
-   const doc=await wait(()=>{const d=preview.contentDocument;return d?.documentElement?.dataset?.sianArt===name&&d.querySelector('link[href="art-directions.css"]')?.sheet&&d},15000);
+   const doc=await wait(()=>{const d=preview.contentDocument;return d?.documentElement?.dataset?.sianArt===name&&d.querySelector('link[href^="art-directions.css"]')?.sheet&&d},15000);
    await wait(()=>doc.readyState==='complete'&&doc.querySelector('footer .footer-bottom'),7000);
    const css=el=>doc.defaultView.getComputedStyle(doc.querySelector(el));
    const checks=[
