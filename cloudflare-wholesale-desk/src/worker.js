@@ -37,10 +37,14 @@ async function authorize(req,env){
  return email;
 }
 const obj=x=>x&&typeof x==="object"&&!Array.isArray(x),money=n=>Math.round(Number(n||0)*100)/100;
+// TEAM_NAMES (Worker secret): "email=Name,email=Name". Names shown in the app; emails stay out of source.
+function teamOf(env){const names=new Map(String(env.TEAM_NAMES||"").split(",").map(s=>s.split("=").map(x=>x.trim())).filter(x=>x.length===2&&x[0]&&x[1]).map(([e,n])=>[e.toLowerCase(),n.slice(0,40)]));return String(env.AUTHORIZED_EMAILS||"").split(",").map(s=>s.trim().toLowerCase()).filter(Boolean).map(email=>({email,name:names.get(email)||email.split("@")[0]}))}
 function unique(xs,k,name){const a=xs.map(x=>String(x[k]||"").trim()).filter(Boolean);if(new Set(a).size!==a.length)throw {status:422,message:"Duplicate "+name}}
 function validate(next,prev){
  if(!obj(next)||next.version!==1||!obj(next.settings)||!obj(next.pricing)||!Array.isArray(next.products)||!Array.isArray(next.customers)||!Array.isArray(next.documents))throw {status:422,message:"Invalid workspace data"};
  if(next.products.length>5000||next.customers.length>5000||next.documents.length>10000)throw {status:413,message:"Workspace too large"};
+ if(next.settings.shippingOptions!==undefined&&(!Array.isArray(next.settings.shippingOptions)||next.settings.shippingOptions.length>200||next.settings.shippingOptions.some(o=>!obj(o)||!Number.isFinite(Number(o.priceTHB||0))||Number(o.priceTHB||0)<0||!Number.isFinite(Number(o.priceUSD||0))||Number(o.priceUSD||0)<0)))throw {status:422,message:"Invalid shipping options"};
+ if(next.customers.some(c=>c.activities!==undefined&&(!Array.isArray(c.activities)||c.activities.length>5000||c.activities.some(a=>!obj(a)))))throw {status:422,message:"Invalid customer timeline"};
  for(const [label,rows] of [["products",next.products],["customers",next.customers],["documents",next.documents]]){
   if(rows.some(x=>!obj(x)||typeof x.id!=="string"||!x.id))throw {status:422,message:"Invalid "+label+" id"};unique(rows,"id",label+" identifier");
  }
@@ -51,16 +55,19 @@ function validate(next,prev){
   const prior=old.get(d.id);
   if(prior&&prior.status!=="draft"){
    if(d.status!==prior.status&&!(prior.status==="issued"&&d.status==="void"))throw {status:409,message:"Issued document status cannot be changed"};
-   const canonical=x=>{let o={...x};delete o.payments;delete o.updatedAt;delete o.history;delete o.status;return JSON.stringify(o)};
+   const canonical=x=>{let o={...x};delete o.payments;delete o.updatedAt;delete o.history;delete o.status;delete o.delivery;return JSON.stringify(o)};
    if(canonical(prior)!==canonical(d))throw {status:409,message:"Issued document immutable"};
    if(prior.payments.some(p=>!d.payments.find(q=>JSON.stringify(p)===JSON.stringify(q))))throw {status:409,message:"Payments cannot be edited"};
   }
   if(d.status!=="draft"&&!d.number)throw {status:422,message:"Issued documents require a number"};
   if(d.items.some(i=>!obj(i)||!Number.isFinite(Number(i.qty))||Number(i.qty)<=0||!Number.isFinite(Number(i.unitPrice))||Number(i.unitPrice)<0||Number(i.discount||0)<0||Number(i.discount||0)>100))throw {status:422,message:"Invalid invoice line"};
+  if(d.shippingAmount!==undefined&&d.shippingAmount!==""&&(!Number.isFinite(Number(d.shippingAmount))||Number(d.shippingAmount)<0))throw {status:422,message:"Invalid shipping charge"};
+  if(d.delivery!==undefined&&d.delivery!==null&&!obj(d.delivery))throw {status:422,message:"Invalid delivery record"};
   unique(d.payments,"id","payment ID");
   if(d.payments.some(p=>!Number.isFinite(Number(p.amount))||Number(p.amount)<=0))throw {status:422,message:"Invalid payment"};
   const subtotal=money(d.items.reduce((sum,i)=>sum+money(Number(i.qty)*Number(i.unitPrice)*(1-Number(i.discount||0)/100)),0));
-  const total=money(subtotal+(d.vatEnabled?money(subtotal*Number(d.vatRate||0)/100):0));
+  const shipping=money(Math.max(0,Number(d.shippingAmount||0)));
+  const total=money(subtotal+shipping+(d.vatEnabled?money((subtotal+shipping)*Number(d.vatRate||0)/100):0));
   if(money(d.payments.reduce((sum,p)=>sum+Number(p.amount),0))>total+.009)throw {status:422,message:"Payments exceed invoice total"};
   if(d.status==="issued"&&d.salesChannel==="wholesale")for(const line of d.items){
    const product=next.products.find(p=>p.id===line.productId);if(!product)continue;
@@ -69,6 +76,8 @@ function validate(next,prev){
   }
  }
  for(const d of prev?.documents||[])if(d.status!=="draft"&&!next.documents.some(x=>x.id===d.id))throw {status:409,message:"Issued documents may not be deleted"};
+ const receipts=next.documents.flatMap(d=>d.payments.map(p=>String(p.receiptNumber||"").trim()).filter(Boolean));
+ if(new Set(receipts).size!==receipts.length)throw {status:422,message:"Duplicate receipt number"};
 }
 const sec={"cache-control":"no-store","x-content-type-options":"nosniff","referrer-policy":"no-referrer","permissions-policy":"camera=(), microphone=(), geolocation=()","content-security-policy":"default-src 'self';script-src 'self' 'unsafe-inline';style-src 'self' 'unsafe-inline';img-src 'self' data:;connect-src 'self';form-action 'self';base-uri 'none';frame-ancestors 'none'"};
 export default {async fetch(request,env,ctx){
@@ -78,7 +87,7 @@ export default {async fetch(request,env,ctx){
   if(request.method==="OPTIONS")return reject("Cross-origin requests are not supported",405);
   const email=await authorize(request,env); // fail closed, even for static assets
   if(url.pathname.startsWith("/api/")){
-   if(url.pathname==="/api/session"&&request.method==="GET")return out({ok:true,email,role:"admin",storage:"Cloudflare D1"});
+   if(url.pathname==="/api/session"&&request.method==="GET"){const team=teamOf(env);return out({ok:true,email,name:(team.find(t=>t.email===email)||{name:email.split("@")[0]}).name,team,role:"admin",storage:"Cloudflare D1"});}
    if(url.pathname==="/api/workspace"&&request.method==="GET"){
     const row=await env.DB.prepare("SELECT revision, state_json, updated_at, updated_by FROM workspace WHERE id=1").first();
     if(!row)return reject("Run D1 migration first",503);
