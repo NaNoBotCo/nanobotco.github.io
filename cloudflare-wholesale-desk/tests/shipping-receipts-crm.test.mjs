@@ -11,10 +11,19 @@ function app(){
  const els=new Map(),handlers={};
  const el=id=>{if(!els.has(id))els.set(id,{innerHTML:'',textContent:'',value:'',style:{},classList:{add(){},remove(){},toggle(){}},reportValidity:()=>true,showModal(){},close(){}});return els.get(id)};
  const ctx=vm.createContext({console,structuredClone,crypto:{randomUUID:()=>'id-'+Math.random().toString(36).slice(2)},setTimeout:()=>1,clearTimeout(){},window:{addEventListener(){},print(){ctx.printed=true}},document:{addEventListener:(k,f)=>handlers[k]=f,getElementById:el,querySelector:()=>null,querySelectorAll:()=>[]},confirm:()=>true,alert(m){throw Error('alert: '+m)},URL});
- const script=source.match(/<script>([\s\S]*?)<\/script>/)[1].replace('connectCloud();','globalThis.api={initial,ensureDefaults,totals,shippingQuote,applyShipping,nextNumber,newDoc,timeline,customerMatches,renderCustomers,renderCustomerPage,renderReceipts,renderSettings,renderEditor,renderDashboard,printReceipt,teamList,personName,state,setData(v){data=v},getData(){return data},setMe(m,t){me=m;team=t}};');
+ const script=source.match(/<script>([\s\S]*?)<\/script>/)[1].replace('connectCloud();','globalThis.api={initial,ensureDefaults,totals,shippingQuote,applyShipping,nextNumber,newDoc,timeline,customerMatches,renderCustomers,renderCustomerPage,renderReceipts,renderSettings,renderEditor,renderDashboard,renderProducts,renderPricing,printReceipt,teamList,personName,state,setData(v){data=v},getData(){return data},setMe(m,t){me=m;team=t}};');
  vm.runInContext(script,ctx);return {a:ctx.api,el,ctx};
 }
 const line=(qty,unitPrice)=>({id:'l'+qty,productId:'',sku:'X',description:'Item',qty,unit:'vial',unitPrice,discount:0});
+
+test('a desk without the supplier import shows no supplier-list copy',()=>{
+ const {a}=app();const data=a.initial();a.setData(data);
+ assert.doesNotMatch(a.renderDashboard(),/ChatGPT|supplier catalog/);assert.match(a.renderDashboard(),/Add products/);
+ data.products.push({id:'p',sku:'BURGER',name:'Burger tray',spec:'',packCount:1,costTHBPack:0,costUSDPack:0});
+ assert.doesNotMatch(a.renderProducts(),/Lemon Bottle|supplier cost list/);assert.doesNotMatch(a.renderPricing(),/Source PDF|29 Sep/);
+ data.products.push({id:'s',sku:'TR5',name:'Supplier row',spec:'',packCount:10,costTHBPack:600,costUSDPack:20,sourceRow:5});
+ assert.match(a.renderProducts(),/Lemon Bottle/);assert.match(a.renderPricing(),/Source PDF/);
+});
 
 test('shipping adds to the total and VAT is figured on items plus shipping',()=>{
  const {a}=app();const d={items:[line(10,100)],payments:[{amount:500}],shippingAmount:150,vatEnabled:true,vatRate:7};
