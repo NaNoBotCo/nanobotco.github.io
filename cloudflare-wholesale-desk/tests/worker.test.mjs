@@ -12,7 +12,7 @@ test('Access signatures, D1 conflicts, invoice locks, and static-asset protectio
   constructor(sql){this.sql=sql;this.args=[]}
   bind(...args){this.args=args;return this}
   first(){return db.prepare(this.sql).get(...this.args)||null}
-  run(){const r=db.prepare(this.sql).run(...this.args);return {meta:{changes:Number(r.changes)}}}
+  run(){const before=Number(db.prepare('SELECT total_changes() AS n').get().n);db.prepare(this.sql).run(...this.args);const after=Number(db.prepare('SELECT total_changes() AS n').get().n);return {meta:{changes:after-before}}}
   all(){return {results:db.prepare(this.sql).all(...this.args)}}
  }
  const keys=await webcrypto.subtle.generateKey({name:'RSASSA-PKCS1-v1_5',modulusLength:2048,publicExponent:new Uint8Array([1,0,1]),hash:'SHA-256'},true,['sign','verify']);
@@ -50,6 +50,7 @@ test('Access signatures, D1 conflicts, invoice locks, and static-asset protectio
   assert.equal(init.status,200);assert.equal(init.data.revision,0);
   const state={version:1,pricing:{wholesaleMOQ:10},settings:{sellerName:'Test'},products:[],customers:[],documents:[],sequences:{}};
   let resp=await call('/api/workspace',{token:t,method:'PUT',body:{revision:0,state}});assert.equal(resp.status,200,JSON.stringify(resp));
+  assert.equal(resp.data.revision,1,'audit-trigger writes must not cause a false conflict');
   assert.equal((await call('/api/workspace',{token:t,method:'PUT',body:{revision:0,state}})).status,409);
   assert.equal((await call('/api/workspace',{token:t,method:'PUT',body:{revision:1,state},origin:'https://stranger.test'})).status,403);
   state.products=[{id:'p1',sku:'TR5',moqOverride:''}];
