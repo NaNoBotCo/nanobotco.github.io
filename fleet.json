@@ -377,11 +377,12 @@
     {
       "id": "defiant",
       "name": "Defiant",
-      "url": "https://defiant.to/",
+      "url": "https://nanobotco.github.io/defiant/",
       "note": "medical and dental care in Chiang Mai, with a translator at the appointment",
       "lane": "company",
       "audience": "world",
-      "repo": "https://github.com/NaNoBotCo/defiant-site"
+      "repo": "https://github.com/NaNoBotCo/defiant",
+      "sitemap": "https://nanobotco.github.io/defiant/sitemap.xml"
     },
     {
       "id": "hongdam",

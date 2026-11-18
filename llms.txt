@@ -11,13 +11,13 @@ NaN calls herself a **wichaa practitioner** — she makes things that work like 
 ## Doors
 - [Tradition & Knowledge — wichaa.net](https://wichaa.net): a living archive of Lanna manuscripts, wats, amulets, and the old sciences, made legible without losing the soul.
 - [Tools & Instruments — wichaa.net/widgets](https://wichaa.net/widgets): small working instruments — a moon complication, a Jupiter jovilabe, a bound Hun Payont.
-- [Field Services — Defiant](https://defiant.to): expat & medical-tourism concierge in Chiang Mai; the wider fixer / developer work runs through here.
+- [Field Services — Defiant](https://nanobotco.github.io/defiant/): expat & medical-tourism concierge in Chiang Mai; the wider fixer / developer work runs through here.
 - [Play & Experiments — skipdjt](https://nan.wichaa.net/skipdjt/): games and oddments built for the joy of it.
 - [รากศัพท์ · Thai Roots](https://nan.wichaa.net/thairoots/): a root dictionary of Thai — 257 Pali, Sanskrit, and native roots holding 974 words, with a decomposer that takes any word apart.
 
 ## Work with her
 - Bring the toughest, "unsolvable" problem: **530kings@proton.me**
-- Her line: **https://defiant.to**
+- Her line: **https://nanobotco.github.io/defiant/**
 
 ## The numbers hidden here
 - The centipede's body is a binary **katha** (incantation): `11011000001` = **1729**, the Hardy–Ramanujan taxicab number — the smallest number expressible as a sum of two cubes in two ways (1³+12³ = 9³+10³). One bit per body segment.
@@ -69,7 +69,7 @@ Made by Hongdam (https://hongdam.net/), a bilingual web studio in Chiang Rai.
 - [ai.motdang.net](https://ai.motdang.net/): white-label assistants, by seat
 - [Hun Payont](https://hunpayont.net/): free phone apps, free data, and work — made in northern Thailand
 - [One Man Sideshow](https://nanobotco.github.io/onemansideshow/): a sourced city directory run by one person and a fleet of AI agents — the kit free, setup with training ฿25,000 Thai companies / US$25,000 everyone else
-- [Defiant](https://defiant.to/): medical and dental care in Chiang Mai, with a translator at the appointment
+- [Defiant](https://nanobotco.github.io/defiant/): medical and dental care in Chiang Mai, with a translator at the appointment
 - [Hongdam](https://hongdam.net/): bilingual web development, Chiang Rai
 - [Chiang Mai Visa Desk](https://chiangmaivisadesk.com/): work permits, Thai company registration, retirement extensions, 90-day reports and border runs from Chiang Mai
 - [ฮักฝรั่ง](https://hakfarang.net/): เรื่องเงิน วีซ่า และชีวิตกับแฟนฝรั่ง
