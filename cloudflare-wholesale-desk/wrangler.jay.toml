@@ -1,0 +1,19 @@
+# Jay's own Wholesale Desk: same code, its own database and its own Access app.
+# ACCESS_TEAM_DOMAIN, ACCESS_AUD, AUTHORIZED_EMAILS and TEAM_NAMES are Worker secrets,
+# so deploys from this file leave them in place.
+name = "wholesale-desk-jay"
+main = "src/worker.js"
+compatibility_date = "2026-11-17"
+workers_dev = true
+preview_urls = false
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "wholesale_desk_jay"
+database_id = "c28e0451-c1c1-4574-8d8b-12fe3ec872e6"
+migrations_dir = "migrations"

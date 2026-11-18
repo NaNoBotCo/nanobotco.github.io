@@ -63,3 +63,11 @@ jobs:
           accountId: fe332688b1b25b543f8429d7f08292a3
           workingDirectory: cloudflare-wholesale-desk
           command: deploy
+      - name: Deploy Jay's desk (same code, own database)
+        if: ${{ env.CLOUDFLARE_API_TOKEN != '' }}
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: fe332688b1b25b543f8429d7f08292a3
+          workingDirectory: cloudflare-wholesale-desk
+          command: deploy --config wrangler.jay.toml
