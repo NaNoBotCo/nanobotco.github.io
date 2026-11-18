@@ -98,7 +98,8 @@ export default {async fetch(request,env,ctx){
     const text=JSON.stringify(body.state);if(text.length>MAX)return reject("Payload too large",413);
     const now=new Date().toISOString();
     const updated=await env.DB.prepare("UPDATE workspace SET state_json=?, revision=revision+1, updated_at=?, updated_by=? WHERE id=1 AND revision=?").bind(text,now,email,body.revision).run();
-    if(updated.meta?.changes!==1)return reject("Concurrent edit detected; no data overwritten",409);
+    // D1 counts audit-trigger writes too; a successful update may change multiple rows.
+    if(!(updated.meta?.changes>=1))return reject("Concurrent edit detected; no data overwritten",409);
     return out({saved:true,revision:body.revision+1,updatedAt:now});
    }
    if(url.pathname==="/api/audit"&&request.method==="GET"){
