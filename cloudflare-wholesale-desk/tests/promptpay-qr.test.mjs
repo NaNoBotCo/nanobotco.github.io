@@ -60,3 +60,11 @@ test('Settings saves digits only, refuses a bad number, and shows a test code',(
  assert.match(a.renderSettings(),/name="promptpayId"[^>]*value="0812345678"/);assert.match(a.renderSettings(),/Test code · no amount/);
  const html=a.renderSettings();assert.ok(html.indexOf('Getting paid')<html.indexOf('Seller identity'),'PromptPay comes first in Settings');assert.ok(html.indexOf('name="promptpayId"')<html.indexOf('name="bankDetails"'),'PromptPay sits above the other payment text');
 });
+
+test('Thai comes from the bundled Sarabun on screen and in print',()=>{
+ const faces=[...page.matchAll(/@font-face\{font-family:Sarabun;[^}]*src:url\(\.\/fonts\/([^)]+)\)[^}]*unicode-range:U\+0E01-0E5B/g)].map(m=>m[1]);
+ assert.deepEqual(faces,['sarabun-400-thai.woff2','sarabun-600-thai.woff2']);
+ for(const f of faces)assert.ok(readFileSync(new URL('../public/fonts/'+f,import.meta.url)).length>5000,f);
+ assert.match(page,/font-family:Inter,Sarabun,/,'screen font list');
+ assert.match(page,/font:10pt Arial,Sarabun,sans-serif!important/,'print font list');
+});
