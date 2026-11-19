@@ -118,6 +118,39 @@ footer a{color:#fff}
 .lice{font-family:Mali,system-ui,sans-serif;font-size:1.5rem;cursor:pointer;display:inline-block;user-select:none}
 .lice.wave{animation:wave .9s ease-in-out 2}
 @keyframes wave{25%{transform:rotate(-6deg)}75%{transform:rotate(6deg)}}
+/* season plan (Gantt) */
+.g-key{list-style:none;display:flex;flex-wrap:wrap;gap:6px 18px;padding:0;margin:0 0 1rem;font-size:1rem}
+.g-key li{display:flex;align-items:center;gap:8px}
+.g-key .g-bar{position:static;display:inline-block;width:34px;height:16px}
+.g-key .g-dot{position:static;transform:rotate(45deg);margin:0 4px}
+.gantt{background:var(--card);border:3px solid var(--ink);border-radius:18px;padding:14px 16px 10px}
+.g-months{position:relative;display:flex;font-family:Mali,system-ui,sans-serif;font-weight:700;font-size:1rem;color:var(--blue);border-bottom:3px solid var(--ink);padding-bottom:4px}
+.g-months>span{min-width:0;padding-left:3px;border-left:2px solid var(--line);line-height:1.2}
+.g-months>span:first-child{border-left:0;padding-left:0}
+.g-months small{display:block;font-size:.72rem;color:var(--mute)}
+.g-body{padding-top:12px}
+.g-group{font-size:1.05rem;margin:.9rem 0 .2rem;color:var(--blue)}
+.g-group:first-of-type{margin-top:.6rem}
+.g-row{padding:6px 0 8px;border-top:1px dotted var(--line)}
+.g-label{font-size:1rem;line-height:1.35;font-weight:600}
+.g-when{font-weight:400;color:var(--mute);white-space:nowrap}
+.g-track{position:relative;height:24px;margin-top:5px;background:linear-gradient(var(--line),var(--line)) 14.623%/2px 100% no-repeat,linear-gradient(var(--line),var(--line)) 28.774%/2px 100% no-repeat,linear-gradient(var(--line),var(--line)) 43.396%/2px 100% no-repeat,linear-gradient(var(--line),var(--line)) 57.547%/2px 100% no-repeat,linear-gradient(var(--line),var(--line)) 72.17%/2px 100% no-repeat,linear-gradient(var(--line),var(--line)) 86.792%/2px 100% no-repeat}
+.g-bar{position:absolute;top:3px;height:18px;border-radius:999px;border:2px solid var(--ink);min-width:8px}
+.g-bar.done{background:var(--blue)}
+.g-bar.now{background:var(--gold)}
+.g-bar.next{background:var(--card);border-style:dashed}
+.g-bar.open-r{border-top-right-radius:0;border-bottom-right-radius:0;border-right:0}
+.g-bar.open-l{border-top-left-radius:0;border-bottom-left-radius:0;border-left:0}
+.g-dot{position:absolute;top:5px;width:15px;height:15px;margin-left:-7.5px;transform:rotate(45deg);border:2px solid var(--ink);display:block}
+.g-dot.done{background:var(--blue)}
+.g-dot.now{background:var(--gold)}
+.g-dot.next{background:var(--card)}
+.g-dot.big{top:0;width:24px;height:24px;margin-left:-12px;background:var(--gold);border-width:3px}
+.g-today{position:absolute;bottom:-12px;left:var(--today);transform:translateX(-50%);font:700 .8rem/1 Mali,system-ui,sans-serif;color:#fff;background:#d62839;padding:3px 6px;border-radius:6px;white-space:nowrap;z-index:2}
+.g-track::after{content:"";position:absolute;top:-4px;bottom:-4px;left:var(--today);width:3px;margin-left:-1.5px;background:#d62839;z-index:1}
+.gantt.no-today .g-today,.gantt.no-today .g-track::after{display:none}
+@media (max-width:480px){.gantt{padding:12px 10px 8px}.g-months{font-size:.85rem}.g-dot{width:12px;height:12px;margin-left:-6px;top:6px}}
+@media print{.g-today,.g-track::after{display:none}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 @media print{.photo,.lang,.hero{display:none}main section{padding:16px 0}}
 </style>
@@ -170,7 +203,7 @@ footer a{color:#fff}
       </li>
       <li>
         <h3><span lang="en">Who does what before the 1 Dec club meeting</span><span lang="th">ใครทำอะไร ก่อนประชุมสโมสร 1 ธ.ค.</span> <span class="min"><span lang="en">10 min</span><span lang="th">10 นาที</span></span></h3>
-        <p><span lang="en">Names and dates. Then we go raise money.</span><span lang="th">ชื่อและวันที่ แล้วไปหาเงินกัน</span></p>
+        <p><span lang="en">Names and dates. Then we go raise money.</span><span lang="th">ชื่อและวันที่ แล้วไปหาเงินกัน</span> <a href="#plan"><span lang="en">Season plan</span><span lang="th">แผนงานทั้งฤดู</span></a></p>
       </li>
     </ol>
   </div>
@@ -181,7 +214,7 @@ footer a{color:#fff}
     <h2><span lang="en">Money</span><span lang="th">เงินทุน</span></h2>
     <div class="stats">
       <div class="stat"><div class="num">$427,051</div><div class="what"><span lang="en">4 Rotary global grants</span><span lang="th">ทุนโลกของโรตารี 4 ทุน</span></div><div class="sub"><span lang="en">approved or pending: clean water in Mae Chaem and Omkoi, water projects with Jeju Island clubs, a scholarship</span><span lang="th">อนุมัติแล้วหรือรอพิจารณา: น้ำสะอาดที่แม่แจ่มและอมก๋อย โครงการน้ำกับสโมสรที่เกาะเชจู และทุนการศึกษา</span></div></div>
-      <div class="stat"><div class="num"><span lang="en">Last 3</span><span lang="th">3 ทีมสุดท้าย</span></div><div class="what"><span lang="en">in the world, Rotary's 2026 Programs of Scale</span><span lang="th">ของโลก รางวัล Programs of Scale ปี 2569 ของโรตารี</span></div><div class="sub"><span lang="en">"Empowering Highland Communities in Thailand", CMIRC with ITDF; the winner was Haiti</span><span lang="th">"Empowering Highland Communities in Thailand" ของ CMIRC ร่วมกับ ITDF ผู้ชนะคือเฮติ</span></div></div>
+      <div class="stat"><div class="num"><span lang="en">Finalist</span><span lang="th">รอบสุดท้าย</span></div><div class="what"><span lang="en">Rotary's US$2 million Programs of Scale award, 2026</span><span lang="th">รางวัล Programs of Scale ของ<span style="white-space:nowrap">โรตารี</span> 2 ล้านดอลลาร์สหรัฐ ปี 2569</span></div><div class="sub"><span lang="en">"Empowering Highland Communities in Thailand", CMIRC with ITDF, was one of two finalists worldwide. The award went to a water project in Haiti.</span><span lang="th">"Empowering Highland Communities in Thailand" ของ CMIRC ร่วมกับ ITDF เป็น 1 ใน 2 โครงการที่เข้ารอบสุดท้ายจากทั่วโลก รางวัลตกเป็นของโครงการน้ำในเฮติ</span></div></div>
       <div class="stat"><div class="num"><span lang="en">~$30,000</span><span lang="th">ราว $30,000</span></div><div class="what"><span lang="en">raised by the club, 2025–26</span><span lang="th">สโมสรระดมได้ ปี 2568–69</span></div><div class="sub"><span lang="en">the Golf Ball Drop the biggest single piece</span><span lang="th">งานทิ้งลูกกอล์ฟเป็นก้อนใหญ่ที่สุด</span></div></div>
       <div class="stat"><div class="num">700</div><div class="what"><span lang="en">4th graders learn to swim each year</span><span lang="th">นักเรียน ป.4 เรียนว่ายน้ำต่อปี</span></div><div class="sub"><span lang="en">15 hours and full kit, Chiang Mai's 11 municipal schools</span><span lang="th">15 ชั่วโมง พร้อมอุปกรณ์ 11 โรงเรียนเทศบาลเชียงใหม่</span></div></div>
       <div class="stat"><div class="num">800</div><div class="what"><span lang="en">children's eyes tested each year</span><span lang="th">เด็กได้ตรวจสายตาต่อปี</span></div><div class="sub"><span lang="en">about 15% go home with free glasses</span><span lang="th">ราว 15% ได้แว่นสายตาฟรี</span></div></div>
@@ -215,11 +248,11 @@ footer a{color:#fff}
     <ul class="timeline">
       <li><b><span lang="en">Aug</span><span lang="th">ส.ค.</span></b> · <span lang="en">NaN takes the chair; first report on where the club's money comes from</span><span lang="th">นานรับตำแหน่งประธาน รายงานฉบับแรกว่าเงินของสโมสรมาจากไหน</span></li>
       <li><b><span lang="en">10 Oct</span><span lang="th">10 ต.ค.</span></b> · <span lang="en">new Golf Ball Drop website, English + Thai</span><span lang="th">เว็บไซต์งานทิ้งลูกกอล์ฟใหม่ อังกฤษ + ไทย</span></li>
+      <li><b><span lang="en">26 Oct</span><span lang="th">26 ต.ค.</span></b> · <span lang="en">Colin gives up golf and offers his lake balls to replace the muddy ones: like new, previously owned by water hazards. John says yes.</span><span lang="th">คอลินเลิกเล่นกอล์ฟ เสนอลูกกอล์ฟจากบ่อน้ำมาแทนลูกเก่าที่เลอะโคลน สภาพเหมือนใหม่ เจ้าของเดิมคือบ่อน้ำในสนาม จอห์นตอบรับ</span></li>
       <li><b><span lang="en">28 Oct</span><span lang="th">28 ต.ค.</span></b> · <span lang="en">Viki's ticket design to Jarus Printing; Beer picks them up</span><span lang="th">ตั๋วที่วิกกี้ออกแบบส่งโรงพิมพ์จรัส เบียร์ไปรับ</span></li>
       <li><b><span lang="en">3 Nov</span><span lang="th">3 พ.ย.</span></b> · <span lang="en">tickets out at the club meeting</span><span lang="th">แจกตั๋วในการประชุมสโมสร</span></li>
       <li><b><span lang="en">10 Nov</span><span lang="th">10 พ.ย.</span></b> · <span lang="en">Facebook posts and flyers in English + Thai; balloon-ride tickets</span><span lang="th">โพสต์เฟซบุ๊กและใบปลิว อังกฤษ + ไทย ตั๋วขึ้นบอลลูน</span></li>
       <li><b><span lang="en">17 Nov</span><span lang="th">17 พ.ย.</span></b> · <span lang="en">Phrao Safe Swim page, John as founding champion</span><span lang="th">หน้าโครงการว่ายน้ำปลอดภัยพร้าว จอห์นในฐานะผู้ริเริ่มโครงการ</span></li>
-      <li><b><span lang="en">Soon</span><span lang="th">เร็วๆ นี้</span></b> · <span lang="en">Colin's donated lake balls replace the muddy ones: like new, previously owned by water hazards</span><span lang="th">ลูกกอล์ฟจากบ่อน้ำที่คอลินบริจาค มาแทนลูกเก่าที่เลอะโคลน สภาพเหมือนใหม่ เจ้าของเดิมคือบ่อน้ำในสนาม</span></li>
     </ul>
 
     <h3 style="margin-top:1.6rem"><span lang="en">For today</span><span lang="th">สำหรับวันนี้</span></h3>
@@ -239,7 +272,132 @@ footer a{color:#fff}
   </div>
 </section>
 
-<section id="tickets" class="alt">
+<section id="plan" class="alt">
+  <div class="wrap">
+    <h2><span lang="en">Season plan</span><span lang="th">แผนงานทั้งฤดู</span></h2>
+    <p><span lang="en">August to February, from the GBD group, John’s plan and the club’s calendar.</span><span lang="th">สิงหาคมถึงกุมภาพันธ์ จากกลุ่ม GBD แผนของจอห์น และปฏิทินสโมสร</span></p>
+    <ul class="g-key" aria-hidden="true">
+      <li><i class="g-bar done"></i><span lang="en">Done</span><span lang="th">ทำแล้ว</span></li>
+      <li><i class="g-bar now"></i><span lang="en">Now</span><span lang="th">กำลังทำ</span></li>
+      <li><i class="g-bar next"></i><span lang="en">Coming</span><span lang="th">กำลังมา</span></li>
+      <li><i class="g-dot next"></i><span lang="en">One day</span><span lang="th">หนึ่งวัน</span></li>
+    </ul>
+    <div class="gantt" id="gantt" style="--today:52.123%">
+      <div class="g-months" aria-hidden="true">
+        <span style="flex:31"><span lang="en">Aug</span><span lang="th">ส.ค.</span><small><span lang="en">2026</span><span lang="th">2569</span></small></span>
+        <span style="flex:30"><span lang="en">Sep</span><span lang="th">ก.ย.</span></span>
+        <span style="flex:31"><span lang="en">Oct</span><span lang="th">ต.ค.</span></span>
+        <span style="flex:30"><span lang="en">Nov</span><span lang="th">พ.ย.</span></span>
+        <span style="flex:31"><span lang="en">Dec</span><span lang="th">ธ.ค.</span></span>
+        <span style="flex:31"><span lang="en">Jan</span><span lang="th">ม.ค.</span><small><span lang="en">2027</span><span lang="th">2570</span></small></span>
+        <span style="flex:28"><span lang="en">Feb</span><span lang="th">ก.พ.</span></span>
+        <b class="g-today" id="g-today"><span lang="en">Today</span><span lang="th">วันนี้</span></b>
+      </div>
+      <div class="g-body">
+        <h3 class="g-group"><span lang="en">Golf Ball Drop</span><span lang="th">งานทิ้งลูกกอล์ฟ</span></h3>
+        <div class="g-row">
+          <div class="g-label"><span lang="en">Price, prizes and payment settled in the LINE group</span><span lang="th">ตกลงราคา รางวัล และวิธีจ่ายเงินในกลุ่มไลน์</span> <span class="g-when">· <span lang="en">10 Oct – 6 Nov</span><span lang="th">10 ต.ค. – 6 พ.ย.</span></span></div>
+          <div class="g-track" aria-hidden="true">
+            <i class="g-bar done" data-s="2026-10-10" data-e="2026-11-06" style="left:33.019%;width:13.208%"></i>
+          </div>
+        </div>
+        <div class="g-row">
+          <div class="g-label"><span lang="en">Website, English + Thai</span><span lang="th">เว็บไซต์ อังกฤษ + ไทย</span> <span class="g-when">· <span lang="en">10 Oct</span><span lang="th">10 ต.ค.</span></span></div>
+          <div class="g-track" aria-hidden="true">
+            <i class="g-dot done" data-s="2026-10-10" data-e="2026-10-10" style="left:33.255%"></i>
+          </div>
+        </div>
+        <div class="g-row">
+          <div class="g-label"><span lang="en">Tickets designed and printed (Viki, Jarus Printing)</span><span lang="th">ออกแบบและพิมพ์ตั๋ว (วิกกี้ โรงพิมพ์จรัส)</span> <span class="g-when">· <span lang="en">10 Oct – 3 Nov</span><span lang="th">10 ต.ค. – 3 พ.ย.</span></span></div>
+          <div class="g-track" aria-hidden="true">
+            <i class="g-bar done" data-s="2026-10-10" data-e="2026-11-03" style="left:33.019%;width:11.793%"></i>
+          </div>
+        </div>
+        <div class="g-row">
+          <div class="g-label"><span lang="en">Colin offers his lake balls</span><span lang="th">คอลินเสนอลูกกอล์ฟจากบ่อน้ำ</span> <span class="g-when">· <span lang="en">26 Oct</span><span lang="th">26 ต.ค.</span></span></div>
+          <div class="g-track" aria-hidden="true">
+            <i class="g-dot done" data-s="2026-10-26" data-e="2026-10-26" style="left:40.802%"></i>
+          </div>
+        </div>
+        <div class="g-row">
+          <div class="g-label"><span lang="en">Members take tickets and sell them</span><span lang="th">สมาชิกรับตั๋วไปขาย</span> <span class="g-when">· <span lang="en">1 Nov – 10 Jan</span><span lang="th">1 พ.ย. – 10 ม.ค.</span></span></div>
+          <div class="g-track" aria-hidden="true">
+            <i class="g-bar now" data-s="2026-11-01" data-e="2027-01-10" style="left:43.396%;width:33.491%"></i>
+          </div>
+        </div>
+        <div class="g-row">
+          <div class="g-label"><span lang="en">Posters, flyers, X-stands, Facebook</span><span lang="th">โปสเตอร์ ใบปลิว ป้ายตั้ง เฟซบุ๊ก</span> <span class="g-when">· <span lang="en">6 – 17 Nov</span><span lang="th">6 – 17 พ.ย.</span></span></div>
+          <div class="g-track" aria-hidden="true">
+            <i class="g-bar done" data-s="2026-11-06" data-e="2026-11-17" style="left:45.755%;width:5.66%"></i>
+          </div>
+        </div>
+        <div class="g-row">
+          <div class="g-label"><span lang="en">Where we sell: club meeting, CEC breakfast, dinner, Rotary booth at the CityLife Garden Fair (Boonthavorn Gardens), club meeting</span><span lang="th">ขายที่ไหน: ประชุมสโมสร อาหารเช้า CEC มื้อค่ำ บูธโรตารีในงาน CityLife Garden Fair (สวนบุญถาวร) ประชุมสโมสร</span> <span class="g-when">· <span lang="en">3 Nov, 7 Nov, 17 Nov, Sat 21 Nov, Tue 1 Dec</span><span lang="th">3 พ.ย. 7 พ.ย. 17 พ.ย. ส. 21 พ.ย. อ. 1 ธ.ค.</span></span></div>
+          <div class="g-track" aria-hidden="true">
+            <i class="g-dot done" data-s="2026-11-03" data-e="2026-11-03" style="left:44.575%"></i>
+            <i class="g-dot done" data-s="2026-11-07" data-e="2026-11-07" style="left:46.462%"></i>
+            <i class="g-dot done" data-s="2026-11-17" data-e="2026-11-17" style="left:51.179%"></i>
+            <i class="g-dot next" data-s="2026-11-21" data-e="2026-11-21" style="left:53.066%"></i>
+            <i class="g-dot next" data-s="2026-12-01" data-e="2026-12-01" style="left:57.783%"></i>
+          </div>
+        </div>
+        <div class="g-row">
+          <div class="g-label"><span lang="en">Volunteer roles confirmed: ball sellers, ride sellers, tape, parking</span><span lang="th">ยืนยันหน้าที่อาสาสมัคร: ขายลูกกอล์ฟ ขายตั๋วบอลลูน กั้นเทป ที่จอดรถ</span> <span class="g-when">· <span lang="en">1 Dec</span><span lang="th">1 ธ.ค.</span></span></div>
+          <div class="g-track" aria-hidden="true">
+            <i class="g-dot next" data-s="2026-12-01" data-e="2026-12-01" style="left:57.783%"></i>
+          </div>
+        </div>
+        <div class="g-row">
+          <div class="g-label"><span lang="en">Tickets and money due back</span><span lang="th">กำหนดคืนตั๋วและเงิน</span> <span class="g-when">· <span lang="en">Sun 10 Jan</span><span lang="th">อา. 10 ม.ค.</span></span></div>
+          <div class="g-track" aria-hidden="true">
+            <i class="g-dot next" data-s="2027-01-10" data-e="2027-01-10" style="left:76.651%"></i>
+          </div>
+        </div>
+        <div class="g-row">
+          <div class="g-label"><span lang="en">THE DROP, Horizon Village</span><span lang="th">วันงาน ฮอไรซอน วิลเลจ</span> <span class="g-when">· <span lang="en">Sat 30 Jan</span><span lang="th">ส. 30 ม.ค.</span></span></div>
+          <div class="g-track" aria-hidden="true">
+            <i class="g-dot next big" data-s="2027-01-30" data-e="2027-01-30" style="left:86.085%"></i>
+          </div>
+        </div>
+        <div class="g-row">
+          <div class="g-label"><span lang="en">Final accounting with Yao</span><span lang="th">สรุปบัญชีกับคุณเยา</span> <span class="g-when">· <span lang="en">30 Jan – 16 Feb</span><span lang="th">30 ม.ค. – 16 ก.พ.</span></span></div>
+          <div class="g-track" aria-hidden="true">
+            <i class="g-bar next" data-s="2027-01-30" data-e="2027-02-16" style="left:85.849%;width:8.491%"></i>
+          </div>
+        </div>
+        <h3 class="g-group"><span lang="en">Committee</span><span lang="th">คณะกรรมการ</span></h3>
+        <div class="g-row">
+          <div class="g-label"><span lang="en">NaN chairs fundraising; first report 31 Aug</span><span lang="th">นานเป็นประธานฝ่ายระดมทุน รายงานฉบับแรก 31 ส.ค.</span> <span class="g-when">· <span lang="en">from Aug, through the Rotary year</span><span lang="th">ตั้งแต่ ส.ค. ตลอดปีโรตารี</span></span></div>
+          <div class="g-track" aria-hidden="true">
+            <i class="g-bar now open-r" data-s="2026-08-12" data-e="2027-02-28" style="left:5.189%;width:94.811%"></i>
+            <i class="g-dot done" data-s="2026-08-31" data-e="2026-08-31" style="left:14.387%"></i>
+          </div>
+        </div>
+        <div class="g-row">
+          <div class="g-label"><span lang="en">Phrao Safe Swim page</span><span lang="th">หน้าโครงการว่ายน้ำปลอดภัยพร้าว</span> <span class="g-when">· <span lang="en">17 Nov</span><span lang="th">17 พ.ย.</span></span></div>
+          <div class="g-track" aria-hidden="true">
+            <i class="g-dot done" data-s="2026-11-17" data-e="2026-11-17" style="left:51.179%"></i>
+          </div>
+        </div>
+        <div class="g-row">
+          <div class="g-label"><span lang="en">Fundraising committee meeting</span><span lang="th">ประชุมคณะกรรมการระดมทุน</span> <span class="g-when">· <span lang="en">Thu 19 Nov</span><span lang="th">พฤ. 19 พ.ย.</span></span></div>
+          <div class="g-track" aria-hidden="true">
+            <i class="g-dot now" data-s="2026-11-19" data-e="2026-11-19" style="left:52.123%"></i>
+          </div>
+        </div>
+        <h3 class="g-group"><span lang="en">What the money pays for</span><span lang="th">เงินไปที่ไหน</span></h3>
+        <div class="g-row">
+          <div class="g-label"><span lang="en">Swim lessons for 4th graders, 2026–27 school year (agreement with Chiang Mai Municipality)</span><span lang="th">สอนว่ายน้ำนักเรียน ป.4 ปีการศึกษา 2569–2570 (บันทึกความเข้าใจกับเทศบาลนครเชียงใหม่)</span> <span class="g-when">· <span lang="en">the whole school year</span><span lang="th">ตลอดปีการศึกษา</span></span></div>
+          <div class="g-track" aria-hidden="true">
+            <i class="g-bar now open-l open-r" data-s="2026-08-01" data-e="2027-02-28" style="left:0.0%;width:100.0%"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tickets">
   <div class="wrap">
     <h2><span lang="en">Tickets: the fix</span><span lang="th">ตั๋ว: ทางแก้</span></h2>
     <p><span lang="en">Eight emails, one ticket claimed three times, zero villains. Yao caught it before breakfast.</span><span lang="th">อีเมล 8 ฉบับ ตั๋วใบเดียวถูกอ้างถึงสามครั้ง ไม่มีใครผิด คุณเยาเจอก่อนมื้อเช้า</span></p>
@@ -255,7 +413,7 @@ footer a{color:#fff}
   </div>
 </section>
 
-<section id="giving">
+<section id="giving" class="alt">
   <div class="wrap">
     <h2><span lang="en">Giving in one tap</span><span lang="th">บริจาคในแตะเดียว</span></h2>
     <p><span lang="en">Giving to Rotary today is like buying a coffee where you pay at one counter, photograph the receipt, and email it to the barista so she knows it was you.</span><span lang="th">ตอนนี้การบริจาคให้โรตารีเหมือนซื้อกาแฟที่ต้องจ่ายเงินที่เคาน์เตอร์หนึ่ง ถ่ายรูปใบเสร็จ แล้วอีเมลไปบอกบาริสต้าว่าเป็นเรา</span></p>
@@ -278,7 +436,7 @@ footer a{color:#fff}
   </div>
 </section>
 
-<section class="alt links">
+<section class="links">
   <div class="wrap">
     <h2><span lang="en">Links</span><span lang="th">ลิงก์</span></h2>
     <a href="https://nanobotco.github.io/golf-ball-drop/">⛳ <span lang="en">Golf Ball Drop 2027</span><span lang="th">งานทิ้งลูกกอล์ฟ 2570</span></a>
@@ -287,7 +445,7 @@ footer a{color:#fff}
     <a href="https://www.cmirotary.org/donate">🤝 <span lang="en">Give to CMIRC</span><span lang="th">บริจาคให้ CMIRC</span></a>
     <details>
       <summary><span lang="en">Sources</span><span lang="th">ที่มา</span></summary>
-      <p class="src"><span lang="en">Grants: the club's Foundation Update by Glenn Pfaff, cmirotary.org. Programs of Scale: Rotary Foundation's 2026 announcement of the recipient and finalists. Club fundraising 2025–26: reported to the chair in August 2026, not yet matched to the club's books. Swim and eye tests: the club's project pages, with John Schorr's corrections. Phrao: Warm Heart Foundation, 2026 results. Swim course price: 2026 course invoices. Ball drop facts and dates: the GBD LINE group and John's ten-step plan.</span><span lang="th">ทุนโลก: รายงานมูลนิธิของสโมสรโดย Glenn Pfaff บน cmirotary.org · Programs of Scale: ประกาศผู้ชนะและผู้เข้ารอบปี 2569 ของมูลนิธิโรตารี · เงินระดมทุนปี 2568–69: รายงานต่อประธานเมื่อ ส.ค. 2569 ยังไม่ได้เทียบกับบัญชีสโมสร · ว่ายน้ำและตรวจสายตา: หน้าโครงการของสโมสร พร้อมการแก้ไขของจอห์น ชอร์ · พร้าว: ผลปี 2569 ของมูลนิธิวอร์มฮาร์ท · ราคาคอร์สว่ายน้ำ: ใบแจ้งหนี้ปี 2569 · ข้อมูลและวันของงาน: กลุ่มไลน์ GBD และแผนสิบขั้นของจอห์น</span></p>
+      <p class="src"><span lang="en">Grants: the club's Foundation Update by Glenn Pfaff, cmirotary.org. Programs of Scale: Rotary Foundation's 2026 announcement of the recipient and finalists. Club fundraising 2025–26: reported to the chair in August 2026, not yet matched to the club's books. Swim and eye tests: the club's project pages, with John Schorr's corrections. Phrao: Warm Heart Foundation, 2026 results. Swim course price: 2026 course invoices. Ball drop facts and dates: the GBD LINE group and John's ten-step plan. Garden Fair: Citylife's 2026 listing, Sat 21 Nov, Boonthavorn Gardens. Swim lessons: the 2026–27 agreement with Chiang Mai Municipality.</span><span lang="th">ทุนโลก: รายงานมูลนิธิของสโมสรโดย Glenn Pfaff บน cmirotary.org · Programs of Scale: ประกาศผู้ชนะและผู้เข้ารอบปี 2569 ของมูลนิธิโรตารี · เงินระดมทุนปี 2568–69: รายงานต่อประธานเมื่อ ส.ค. 2569 ยังไม่ได้เทียบกับบัญชีสโมสร · ว่ายน้ำและตรวจสายตา: หน้าโครงการของสโมสร พร้อมการแก้ไขของจอห์น ชอร์ · พร้าว: ผลปี 2569 ของมูลนิธิวอร์มฮาร์ท · ราคาคอร์สว่ายน้ำ: ใบแจ้งหนี้ปี 2569 · ข้อมูลและวันของงาน: กลุ่มไลน์ GBD และแผนสิบขั้นของจอห์น · Garden Fair: ประกาศปี 2569 ของ Citylife ส. 21 พ.ย. สวนบุญถาวร · สอนว่ายน้ำ: บันทึกความเข้าใจปีการศึกษา 2569–2570 กับเทศบาลนครเชียงใหม่</span></p>
     </details>
   </div>
 </section>
@@ -355,6 +513,18 @@ footer a{color:#fff}
   function wave(){lice.classList.remove('wave');void lice.offsetWidth;lice.classList.add('wave')}
   lice.addEventListener('click',wave);
   lice.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();wave()}});
+
+  // season plan: status and today line follow the Chiang Mai date
+  (function(){
+    var s0=Date.UTC(2026,7,1), s1=Date.UTC(2027,2,1), t=cmToday;
+    var g=document.getElementById('gantt');
+    if(g){ if(t<s0||t>=s1){g.classList.add('no-today')} else {g.style.setProperty('--today',((t+432e5-s0)/(s1-s0)*100)+'%')} }
+    function u(s){var a=s.split('-');return Date.UTC(+a[0],a[1]-1,+a[2])}
+    document.querySelectorAll('#gantt [data-s]').forEach(function(el){
+      var s=u(el.dataset.s), e=u(el.dataset.e), st=e<t?'done':(s<=t?'now':'next');
+      el.classList.remove('done','now','next'); el.classList.add(st);
+    });
+  })();
 
   setLang(first);
   setInterval(status,30000);
