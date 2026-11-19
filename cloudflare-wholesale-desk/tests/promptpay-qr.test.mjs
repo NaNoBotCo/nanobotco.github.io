@@ -58,4 +58,5 @@ test('Settings saves digits only, refuses a bad number, and shows a test code',(
  try{a.saveSettings()}catch(e){if(!/querySelector|innerHTML|render/.test(e.message))throw e}
  assert.equal(a.getData().settings.promptpayId,'0812345678');assert.equal(a.getData().settings.promptpayName,'Test Account');
  assert.match(a.renderSettings(),/name="promptpayId"[^>]*value="0812345678"/);assert.match(a.renderSettings(),/Test code · no amount/);
+ const html=a.renderSettings();assert.ok(html.indexOf('Getting paid')<html.indexOf('Seller identity'),'PromptPay comes first in Settings');assert.ok(html.indexOf('name="promptpayId"')<html.indexOf('name="bankDetails"'),'PromptPay sits above the other payment text');
 });
