@@ -84,18 +84,18 @@ test('worker: team names, shipping totals, delivery after issue, receipt numbers
  try{
   const s=await call('/api/session');assert.equal(s.data.name,'NaN');assert.deepEqual(s.data.team,[{email:'one@example.com',name:'NaN'},{email:'two@example.com',name:'two'}]);
   let rev=0;const put=async state=>{const r=await call('/api/workspace',{revision:rev,state});if(r.status===200)rev=r.data.revision;return r};
-  const inv={id:'i',number:'INV-1',type:'invoice',status:'issued',salesChannel:'retail',currency:'THB',vatEnabled:true,vatRate:7,shippingAmount:100,shippingMethod:'Thailand standard',items:[{id:'l',qty:1,unitPrice:1000,discount:0}],payments:[]};
+  const inv={id:'i',number:'INV-2026-0001',type:'invoice',status:'issued',salesChannel:'retail',currency:'THB',vatEnabled:true,vatRate:7,shippingAmount:100,shippingMethod:'Thailand standard',items:[{id:'l',qty:1,unitPrice:1000,discount:0}],payments:[]};
   const state={version:1,pricing:{wholesaleMOQ:10},settings:{shippingOptions:[{id:'s',priceTHB:100,priceUSD:3}]},products:[],customers:[{id:'c',name:'B',activities:[{id:'a',text:'hi'}]}],documents:[inv],sequences:{}};
   assert.equal((await put(state)).status,200);
-  const paid=structuredClone(state);paid.documents[0].payments.push({id:'p1',receiptNumber:'RC-1',amount:1177});
+  const paid=structuredClone(state);paid.documents[0].payments.push({id:'p1',receiptNumber:'RC-2026-0001',amount:1177});
   assert.equal((await put(paid)).status,200,'payment up to items + shipping + VAT (1,177) accepted');
-  const over=structuredClone(paid);over.documents[0].payments.push({id:'p2',receiptNumber:'RC-2',amount:1});
+  const over=structuredClone(paid);over.documents[0].payments.push({id:'p2',receiptNumber:'RC-2026-0002',amount:1});
   assert.equal((await put(over)).status,422,'payment beyond the total rejected');
   const shipped=structuredClone(paid);shipped.documents[0].delivery={status:'shipped',tracking:'TH1'};
   assert.equal((await put(shipped)).status,200,'delivery can be recorded after issue');
   const moved=structuredClone(shipped);moved.documents[0].shippingAmount=0;
   assert.equal((await put(moved)).status,409,'shipping charge is locked after issue');
-  const dup=structuredClone(shipped);dup.documents.push({id:'j',number:'INV-2',type:'invoice',status:'issued',salesChannel:'retail',currency:'THB',items:[{id:'l',qty:1,unitPrice:10}],payments:[{id:'q',receiptNumber:'RC-1',amount:5}]});
+  const dup=structuredClone(shipped);dup.documents.push({id:'j',number:'INV-2026-0002',type:'invoice',status:'issued',salesChannel:'retail',currency:'THB',items:[{id:'l',qty:1,unitPrice:10}],payments:[{id:'q',receiptNumber:'RC-2026-0001',amount:5}]});
   assert.equal((await put(dup)).status,422,'duplicate receipt number rejected');
   const neg=structuredClone(shipped);neg.documents.push({id:'k',type:'invoice',status:'draft',number:'',items:[],payments:[],shippingAmount:-5});
   assert.equal((await put(neg)).status,422,'negative shipping rejected');

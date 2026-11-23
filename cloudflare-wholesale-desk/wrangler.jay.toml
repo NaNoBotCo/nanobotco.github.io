@@ -1,6 +1,7 @@
 # Jay's own Wholesale Desk: same code, its own database and its own Access app.
 # ACCESS_TEAM_DOMAIN, ACCESS_AUD, AUTHORIZED_EMAILS and TEAM_NAMES are Worker secrets,
 # so deploys from this file leave them in place.
+# SELLER_CODE (Worker secret, or Settings in the app) is the seller code at the front of document numbers; none set yet.
 name = "wholesale-desk-jay"
 main = "src/worker.js"
 compatibility_date = "2026-11-17"

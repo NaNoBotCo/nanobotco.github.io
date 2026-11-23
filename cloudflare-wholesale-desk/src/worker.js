@@ -40,10 +40,13 @@ const obj=x=>x&&typeof x==="object"&&!Array.isArray(x),money=n=>Math.round(Numbe
 // TEAM_NAMES (Worker secret): "email=Name,email=Name". Names shown in the app; emails stay out of source.
 function teamOf(env){const names=new Map(String(env.TEAM_NAMES||"").split(",").map(s=>s.split("=").map(x=>x.trim())).filter(x=>x.length===2&&x[0]&&x[1]).map(([e,n])=>[e.toLowerCase(),n.slice(0,40)]));return String(env.AUTHORIZED_EMAILS||"").split(",").map(s=>s.trim().toLowerCase()).filter(Boolean).map(email=>({email,name:names.get(email)||email.split("@")[0]}))}
 function unique(xs,k,name){const a=xs.map(x=>String(x[k]||"").trim()).filter(Boolean);if(new Set(a).size!==a.length)throw {status:422,message:"Duplicate "+name}}
+// Document numbers: SELLER-KIND-YEAR-NUMBER (LL-INV-2026-0002); a desk with no seller code writes KIND-YEAR-NUMBER.
+const SELLER=/^[A-Z][A-Z0-9]{1,3}$/,DOCNO=/^(?:[A-Z][A-Z0-9]{1,3}-)?(INV|QT|PI|RC)-\d{4}-\d{4,6}$/,DOCKIND={invoice:"INV",quote:"QT",proforma:"PI"};
 function validate(next,prev){
  if(!obj(next)||next.version!==1||!obj(next.settings)||!obj(next.pricing)||!Array.isArray(next.products)||!Array.isArray(next.customers)||!Array.isArray(next.documents))throw {status:422,message:"Invalid workspace data"};
  if(next.products.length>5000||next.customers.length>5000||next.documents.length>10000)throw {status:413,message:"Workspace too large"};
  if(next.settings.shippingOptions!==undefined&&(!Array.isArray(next.settings.shippingOptions)||next.settings.shippingOptions.length>200||next.settings.shippingOptions.some(o=>!obj(o)||!Number.isFinite(Number(o.priceTHB||0))||Number(o.priceTHB||0)<0||!Number.isFinite(Number(o.priceUSD||0))||Number(o.priceUSD||0)<0)))throw {status:422,message:"Invalid shipping options"};
+ if(next.settings.sellerCode!==undefined&&next.settings.sellerCode!==""&&!SELLER.test(String(next.settings.sellerCode)))throw {status:422,message:"Seller code: 2 to 4 capital letters or digits, like LL"};
  if(next.customers.some(c=>c.activities!==undefined&&(!Array.isArray(c.activities)||c.activities.length>5000||c.activities.some(a=>!obj(a)))))throw {status:422,message:"Invalid customer timeline"};
  for(const [label,rows] of [["products",next.products],["customers",next.customers],["documents",next.documents]]){
   if(rows.some(x=>!obj(x)||typeof x.id!=="string"||!x.id))throw {status:422,message:"Invalid "+label+" id"};unique(rows,"id",label+" identifier");
@@ -60,6 +63,9 @@ function validate(next,prev){
    if(prior.payments.some(p=>!d.payments.find(q=>JSON.stringify(p)===JSON.stringify(q))))throw {status:409,message:"Payments cannot be edited"};
   }
   if(d.status!=="draft"&&!d.number)throw {status:422,message:"Issued documents require a number"};
+  // a number given now follows the shape, with its document's kind; numbers issued earlier stay as they were
+  if(d.status!=="draft"&&(!prior||prior.status==="draft")&&DOCNO.exec(String(d.number))?.[1]!==DOCKIND[d.type])throw {status:422,message:"Document number must look like LL-"+DOCKIND[d.type]+"-2026-0001"};
+  for(const p of d.payments){if(prior?.payments?.some(q=>q.id===p.id))continue;const r=String(p.receiptNumber||"").trim();if(r&&DOCNO.exec(r)?.[1]!=="RC")throw {status:422,message:"Receipt number must look like LL-RC-2026-0001"}}
   if(d.items.some(i=>!obj(i)||!Number.isFinite(Number(i.qty))||Number(i.qty)<=0||!Number.isFinite(Number(i.unitPrice))||Number(i.unitPrice)<0||Number(i.discount||0)<0||Number(i.discount||0)>100))throw {status:422,message:"Invalid invoice line"};
   if(d.shippingAmount!==undefined&&d.shippingAmount!==""&&(!Number.isFinite(Number(d.shippingAmount))||Number(d.shippingAmount)<0))throw {status:422,message:"Invalid shipping charge"};
   if(d.delivery!==undefined&&d.delivery!==null&&!obj(d.delivery))throw {status:422,message:"Invalid delivery record"};
@@ -87,7 +93,7 @@ export default {async fetch(request,env,ctx){
   if(request.method==="OPTIONS")return reject("Cross-origin requests are not supported",405);
   const email=await authorize(request,env); // fail closed, even for static assets
   if(url.pathname.startsWith("/api/")){
-   if(url.pathname==="/api/session"&&request.method==="GET"){const team=teamOf(env);return out({ok:true,email,name:(team.find(t=>t.email===email)||{name:email.split("@")[0]}).name,team,role:"admin",storage:"Cloudflare D1"});}
+   if(url.pathname==="/api/session"&&request.method==="GET"){const team=teamOf(env);return out({ok:true,email,name:(team.find(t=>t.email===email)||{name:email.split("@")[0]}).name,team,role:"admin",storage:"Cloudflare D1",sellerCode:SELLER.test(String(env.SELLER_CODE||""))?env.SELLER_CODE:""});}
    if(url.pathname==="/api/workspace"&&request.method==="GET"){
     const row=await env.DB.prepare("SELECT revision, state_json, updated_at, updated_by FROM workspace WHERE id=1").first();
     if(!row)return reject("Run D1 migration first",503);
